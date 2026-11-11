@@ -1,0 +1,1857 @@
+[
+  {
+    "id": "problems-and-algorithms-1",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 1,
+    "text": "ISyE/Math/CS 425 Introduction to Combinatorial Optimization 1. Problems and Algorithms Prof. Carla Michini University of Wisconsin-Madison"
+  },
+  {
+    "id": "problems-and-algorithms-2",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 2,
+    "text": "Outline ▶We will see two Combinatorial Optimization problems: ▶The Traveling Salesman Problem. ▶The Matching Problem. ▶We will see their similarities and differences. ▶We will understand the size of a problem and the running time of an algorithm."
+  },
+  {
+    "id": "problems-and-algorithms-4",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 4,
+    "text": "Oil company problem ▶Oil company. ▶47 drilling platforms. ▶Each platform has a set of controls to regulate rate of flow. ▶Periodically it is necessary to visit certain platforms to regulate rates of flows. ▶Traveling is done by helicopter, which leaves from and returns to the helicopter base. ▶Oil company wants a method for routing the helicopter in such a way that the required platforms are visited, and the total flying time is minimized. ▶We assume that the flying time is proportional to the distance traveled."
+  },
+  {
+    "id": "problems-and-algorithms-5",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 5,
+    "text": "Euclidean Traveling Salesman Problem (TSP) Euclidean TSP ▶Input: a set V of points in the Euclidean plane: V = {(xi, yi) : i = 1, . . . , n}. ▶Distance between (xi, yi) and (xj, yj) is √ (xi −xj)2 + (yi −yj)2. ▶Objective: find a tour passing through each point of V, for which the sum of the distances is minimized. ▶V consists of the platforms to be visited, plus the helicopter base. ▶Is it profitable to pass through a platform more than once?"
+  },
+  {
+    "id": "problems-and-algorithms-6",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 6,
+    "text": "Euclidean Traveling Salesman Problem (TSP) Euclidean TSP ▶Input: a set V of points in the Euclidean plane: V = {(xi, yi) : i = 1, . . . , n}. ▶Distance between (xi, yi) and (xj, yj) is √ (xi −xj)2 + (yi −yj)2. ▶Objective: find a tour passing through each point of V once, for which the sum of the distances is minimized. ▶V consists of the platforms to be visited, plus the helicopter base. ▶Is it profitable to pass through a platform more than once?"
+  },
+  {
+    "id": "problems-and-algorithms-8",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 8,
+    "text": "Brute force algorithm Brute force algorithm. Finite number of solutions! 1. List all ……… different possible solutions. 2. Evaluate them. 3. Pick the best. If it takes one nanosecond (= 10−9 seconds) to evaluate a single solution, then for n = 23, it takes 178 centuries for the algorithm to terminate!"
+  },
+  {
+    "id": "problems-and-algorithms-9",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 9,
+    "text": "Brute force algorithm Brute force algorithm. Finite number of solutions! 1. List all (n −1)!/2 different possible solutions. 2. Evaluate them. 3. Pick the best. If it takes one nanosecond (= 10−9 seconds) to evaluate a single solution, then for n = 23, it takes 178 centuries for the algorithm to terminate!"
+  },
+  {
+    "id": "problems-and-algorithms-10",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 10,
+    "text": "Brute force algorithm Brute force algorithm. Finite number of solutions! 1. List all (n −1)!/2 different possible solutions. 2. Evaluate them. 3. Pick the best. If it takes one nanosecond (= 10−9 seconds) to evaluate a single solution, then for n = 23, it takes 178 centuries for the algorithm to terminate! Question: How does 2n compare with n!?"
+  },
+  {
+    "id": "problems-and-algorithms-11",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 11,
+    "text": "Nearest Neighbor Algorithm Nearest Neighbor Algorithm. Faster method, but does not guarantee to produce the optimal solution. 1. Pick any starting point. 2. Go to the nearest point not yet visited. 3. Repeat this until all points have been visited. 4. Return to the starting point."
+  },
+  {
+    "id": "problems-and-algorithms-12",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 12,
+    "text": "Nearest Neighbor Algorithm Nearest Neighbor Algorithm. Faster method, but does not guarantee to produce the optimal solution. 1. Pick any starting point. 2. Go to the nearest point not yet visited. 3. Repeat this until all points have been visited. 4. Return to the starting point. Video example"
+  },
+  {
+    "id": "problems-and-algorithms-13",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 13,
+    "text": "Nearest Neighbor Algorithm Nearest Neighbor Algorithm. Faster method, but does not guarantee to produce the optimal solution. 1. Pick any starting point. 2. Go to the nearest point not yet visited. 3. Repeat this until all points have been visited. 4. Return to the starting point. Video example Question: Why the final tour in the video is not optimal?"
+  },
+  {
+    "id": "problems-and-algorithms-14",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 14,
+    "text": "Nearest Neighbor Algorithm Nearest Neighbor Algorithm. Faster method, but does not guarantee to produce the optimal solution. 1. Pick any starting point. 2. Go to the nearest point not yet visited. 3. Repeat this until all points have been visited. 4. Return to the starting point. Video example Question: Why the final tour in the video is not optimal? Question: Can you construct a class of instances of the Euclidian TSP where the Nearest Neighbor Algorithm performs “badly”?"
+  },
+  {
+    "id": "problems-and-algorithms-15",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 15,
+    "text": "Circuit drawing problem ▶Uses a plotter to draw a logic circuit ▶Plotter operates by moving a pen back and forth, and simultaneously rolling a sheet of paper forward and backwards ▶At the end, the pen should return to the starting position ▶The problem is to minimize the time required to draw the figure: ▶“pen-down” time, when actually drawing + ▶“pen-up” time, when the pen is not contacting the paper, ▶Question: Is it profitable, during “pen-down” time, to draw a line twice?"
+  },
+  {
+    "id": "problems-and-algorithms-17",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 17,
+    "text": "Circuit drawing problem ▶Pen-down time is fixed, but we can reduce the pen-up time. ▶Some amount of pen-up motion is necessary. Question: Why?"
+  },
+  {
+    "id": "problems-and-algorithms-18",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 18,
+    "text": "Circuit drawing problem ▶A node is a point of the figure from which a positive number of lines, other than 2, emanates. ▶A node is odd if there is an odd number of lines coming out, and even otherwise."
+  },
+  {
+    "id": "problems-and-algorithms-19",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 19,
+    "text": "Circuit drawing problem Theorem The figure can be drawn, returning to the starting point, without tracing the same line twice and with no pen-up motion if and only if it is connected and there are no odd nodes."
+  },
+  {
+    "id": "problems-and-algorithms-20",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 20,
+    "text": "Circuit drawing problem Theorem The figure can be drawn, returning to the starting point, without tracing the same line twice and with no pen-up motion if and only if it is connected and there are no odd nodes. Theorem There is an even number of odd nodes. Why?"
+  },
+  {
+    "id": "problems-and-algorithms-21",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 21,
+    "text": "Circuit drawing problem Theorem The figure can be drawn, returning to the starting point, without tracing the same line twice and with no pen-up motion if and only if it is connected and there are no odd nodes. Theorem There is an even number of odd nodes. Why? ▶We minimize pen-up motion by finding a set of new lines that we can add to the figure turning every odd node into an even node, and such that the total traversal time of the new lines is as small as possible. ▶We assume that the time required to draw a line is proportional to the distance."
+  },
+  {
+    "id": "problems-and-algorithms-22",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 22,
+    "text": "Euclidean matching problem Euclidean matching problem ▶Input: a set V of points in the Euclidean plane, |V| even. ▶Objective: find a set of lines, such that each point is an end of exactly one line, and such that the sum of the lengths of the lines is minimized."
+  },
+  {
+    "id": "problems-and-algorithms-25",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 25,
+    "text": "Similarities and differences Similarities: ▶Selecting sets of lines connecting points in the plane. ▶The number of feasible solutions is far too large to consider them all in a reasonable amount of time. ▶Most simple heuristics for the problems do not perform very well. Major difference: ▶There exists an eﬀicient algorithm for the Euclidean matching problem. ▶No such algorithm is known for the Euclidean TSP, and most researchers believe that no such algorithm exists. ▶If there would exist an eﬀicient algorithm for Euclidean TSP, then there would also exist an eﬀicient algorithm for about every combinatorial optimization problem."
+  },
+  {
+    "id": "problems-and-algorithms-26",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 26,
+    "text": "Similarities and differences Similarities: ▶Selecting sets of lines connecting points in the plane. ▶The number of feasible solutions is far too large to consider them all in a reasonable amount of time. ▶Most simple heuristics for the problems do not perform very well. Major difference: ▶There exists an eﬀicient algorithm for the Euclidean matching problem. ▶No such algorithm is known for the Euclidean TSP, and most researchers believe that no such algorithm exists. ▶If there would exist an eﬀicient algorithm for Euclidean TSP, then there would also exist an eﬀicient algorithm for about every combinatorial optimization problem."
+  },
+  {
+    "id": "problems-and-algorithms-28",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 28,
+    "text": "Measuring running times ▶What is an “eﬀicient” algorithm? ▶We estimate the eﬀiciency by giving an upper bound on the number of steps it requires to solve a problem of a given size. ▶This only provides an estimate of an algorithm’s eﬀiciency (because the bounds are taken over all possible instances of a given problem). ▶Having a better bound does not necessarily mean better performance in practice. ▶We count the number of “elementary” operations in the execution of the algorithm: read, write, addition, multiplication, division, comparison."
+  },
+  {
+    "id": "problems-and-algorithms-29",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 29,
+    "text": "Size of a problem ▶A combinatorial optimization problem consists of a discrete structure, together with a set of numbers. ▶The size of such a problem is the length of an encoding of the structure plus the cardinality of the set of numbers used. ▶Given an instance of a problem, let s be its size. We can say “the number of steps is bounded by 5s2 + 3s”."
+  },
+  {
+    "id": "problems-and-algorithms-30",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 30,
+    "text": "Size of a problem ▶A combinatorial optimization problem consists of a discrete structure, together with a set of numbers. ▶The size of such a problem is the length of an encoding of the structure plus the cardinality of the set of numbers used. ▶Given an instance of a problem, let s be its size. We can say “the number of steps is bounded by 5s2 + 3s”. Example: ▶An instance of the Euclidean TSP can be specified by giving the (xi, yi) coordinates of the n points to be visited. ▶So the size of an instance is s = 2n."
+  },
+  {
+    "id": "problems-and-algorithms-31",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 31,
+    "text": "Magnitude of the bound ▶We are interested in the performance on instances of large size. ▶We concentrate on the magnitude of the bound: 5s2 + 3s is “order s2”. ▶Formally: if f(s) and g(s) are positive real-valued functions on the set of nonnegative integers, we say f(s) ∈O(g(s)) if there exists a constant c > 0 such that f(s) ≤c · g(s) for all large enough values of s. Examples: 5s2 + 3s ∈O(s2) and 35 · 2s + s3 ∈O(2s). ▶Efficient algorithms are the ones that have running-time bounds of O(sk), for some k ∈N. ▶These algorithms are called polynomial-time algorithms, and their running times does not increase too rapidly as the problem size increases."
+  },
+  {
+    "id": "problems-and-algorithms-32",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 32,
+    "text": "Example: Nearest Neighbor Algorithm for TSP Nearest Neighbor Algorithm 1. Pick any starting point. 2. Go to the nearest point not yet visited. 3. Repeat this until all points have been visited. 4. Return to the starting point."
+  },
+  {
+    "id": "problems-and-algorithms-33",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 33,
+    "text": "Example: Nearest Neighbor Algorithm for TSP ▶Initialization: initialize one object with three fields per point (xi, yi, mark = 0). 3n steps ▶Pass n −1 times : take a point vj, scan through all other objects (at most n −1 times ). For each object: ▶Check if the mark is equal to 0. (1 compare = 1 step ) ▶Compute the distance2 to vj and store it. (3 additions + 2 multiplications + 1 write = 6 steps ) ▶Keep track of the point vi∗that has the least distance2. (1 comparison + 1 write = 2 steps ) Then output vi∗as the next point in the tour 1 step , set vi∗’s mark field to 1 1 step and continue the search from vi∗. At most 3n + (n −1)((n −1) · 9 + 2) steps ∈O(n2)."
+  },
+  {
+    "id": "problems-and-algorithms-34",
+    "unit": "Problems and Algorithms",
+    "file": "1. Problems and Algorithms (1).pdf",
+    "page": 34,
+    "text": "Example: Nearest Neighbor Algorithm for TSP ▶The size of an instance of the Euclidean TSP is s = 2n. ▶Number of steps ∈O(n2) = O(( 2)2),s thus ∈O(s2). ▶Nearest Neighbor Algorithm is a polynomial-time algorithm."
+  },
+  {
+    "id": "minimum-spanning-trees-1",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 1,
+    "text": "ISyE/Math/CS 425 Introduction to Combinatorial Optimization 2.1 Minimum Spanning Trees Prof. Carla Michini University of Wisconsin-Madison"
+  },
+  {
+    "id": "minimum-spanning-trees-3",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 3,
+    "text": "Graphs, subgraphs, paths ▶A graph G = (V, E) consists of ▶a set V = V(G) of nodes, ▶a set E = E(G) of edges. a b ▶Each edge e ∈E consists of an unordered pair of distinct nodes, its c ends, we write e = {v, w} = vw. ▶An edge e is incident to a node v if v ∈e. d e f ▶Two nodes v, w are adjacent, if vw is an edge. ▶Two edges e ̸= f are adjacent if they have an end in common."
+  },
+  {
+    "id": "minimum-spanning-trees-4",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 4,
+    "text": "Graphs, subgraphs, paths ▶A graph G = (V, E) consists of ▶a set V = V(G) of nodes, ▶a set E = E(G) of edges. a b ▶Each edge e ∈E consists of an unordered pair of distinct nodes, its c ends, we write e = {v, w} = vw. ▶An edge e is incident to a node v if v ∈e. d e f ▶Two nodes v, w are adjacent, if vw is an edge. ▶Two edges e ̸= f are adjacent if they have an end in common."
+  },
+  {
+    "id": "minimum-spanning-trees-5",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 5,
+    "text": "Graphs, subgraphs, paths ▶A graph G = (V, E) consists of ▶a set V = V(G) of nodes, ▶a set E = E(G) of edges. a b ▶Each edge e ∈E consists of an unordered pair of distinct nodes, its c ends, we write e = {v, w} = vw. ▶An edge e is incident to a node v if v ∈e. d e f ▶Two nodes v, w are adjacent, if vw is an edge. ▶Two edges e ̸= f are adjacent if they have an end in common."
+  },
+  {
+    "id": "minimum-spanning-trees-6",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 6,
+    "text": "Graphs, subgraphs, paths a b ▶A subgraph H of G is a graph such that V(H) ⊆V(G), and c E(H) ⊆E(G). ▶A subgraph H of G is spanning if V(H) = V(G). d e f"
+  },
+  {
+    "id": "minimum-spanning-trees-7",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 7,
+    "text": "Graphs, subgraphs, paths a b ▶A subgraph H of G is a graph such that V(H) ⊆V(G), and c E(H) ⊆E(G). ▶A subgraph H of G is spanning if V(H) = V(G). d e f"
+  },
+  {
+    "id": "minimum-spanning-trees-8",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 8,
+    "text": "Graphs, subgraphs, paths a b ▶A subgraph H of G is a graph such that V(H) ⊆V(G), and c E(H) ⊆E(G). ▶A subgraph H of G is spanning if V(H) = V(G). d e f"
+  },
+  {
+    "id": "minimum-spanning-trees-9",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 9,
+    "text": "Graphs, subgraphs, paths ▶For F ⊆E, G \\ F denotes the subgraph H obtained by deleting F, that is, V(H) = V and a b E(H) = E \\ F. ▶For U ⊆V, G \\ U denotes the c subgraph H obtained by deleting U, that is, V(H) = V \\ U and E(H) = E \\ F, where F is the set of all edges incident with nodes in U. d e f ▶G \\ U may be referred to as the subgraph G[V \\ U] of G induced by V \\ U."
+  },
+  {
+    "id": "minimum-spanning-trees-10",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 10,
+    "text": "Graphs, subgraphs, paths ▶For F ⊆E, G \\ F denotes the subgraph H obtained by deleting F, a b that is, V(H) = V and E(H) = E \\ F. c ▶For U ⊆V, G \\ U denotes the subgraph H obtained by deleting U, that is, V(H) = V \\ U and E(H) = E \\ F, where F is the set of d e f all edges incident with nodes in U. G \\ {ab, ef} ▶G \\ U may be referred to as the subgraph G[V \\ U] of G induced by V \\ U."
+  },
+  {
+    "id": "minimum-spanning-trees-11",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 11,
+    "text": "Graphs, subgraphs, paths ▶For F ⊆E, G \\ F denotes the subgraph H obtained by deleting F, a b that is, V(H) = V and E(H) = E \\ F. ▶For U ⊆V, G \\ U denotes the subgraph H obtained by deleting U, that is, V(H) = V \\ U and E(H) = E \\ F, where F is the set of d e f all edges incident with nodes in U. G \\ {c} ▶G \\ U may be referred to as the subgraph G[V \\ U] of G induced by V \\ U."
+  },
+  {
+    "id": "minimum-spanning-trees-12",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 12,
+    "text": "Graphs, subgraphs, paths ▶A path P in a graph G is a sequence P = v0, e1, v1, . . . , ek, vk a b where ei = vi−1vi for 1 ≤i ≤k. c ▶We often just write P = v0, v1, . . . , vk. ▶We say that P is from v0 to vk, or d e f that it is a (v0, vk)-path. ▶We say that the length of P is k. ▶G is connected if every pair of nodes is joined by a path."
+  },
+  {
+    "id": "minimum-spanning-trees-13",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 13,
+    "text": "Graphs, subgraphs, paths ▶A path P in a graph G is a sequence a b P = v0, e1, v1, . . . , ek, vk c where ei = vi−1vi for 1 ≤i ≤k. ▶We often just write P = v0, v1, . . . , vk. d e f ▶We say that P is from v0 to vk, or that it is a (v0, vk)-path. A (c, d)-path: ▶We say that the length of P is k. P = d, e, b, c ▶G is connected if every pair of nodes is joined by a path."
+  },
+  {
+    "id": "minimum-spanning-trees-14",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 14,
+    "text": "Graphs, subgraphs, paths P = v0, e1, v1, . . . , ek, vk a b ▶P is closed if v0 = vk. c ▶P is edge-simple if e1, . . . , ek are distinct. ▶P is simple if v0, . . . , vk are distinct. d e f ▶P is a circuit (or cycle) if it is A (c, d)-path: edge-simple and closed, P = d, e, b, c v0, . . . , vk−1 are distinct, and k ≥1."
+  },
+  {
+    "id": "minimum-spanning-trees-15",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 15,
+    "text": "Graphs, subgraphs, paths P = v0, e1, v1, . . . , ek, vk a b ▶P is closed if v0 = vk. c ▶P is edge-simple if e1, . . . , ek are distinct. ▶P is simple if v0, . . . , vk are distinct. d e f ▶P is a circuit (or cycle) if it is A (d, f)-path: edge-simple and closed, P = d, e, b, c, e, f v0, . . . , vk−1 are distinct, and k ≥1."
+  },
+  {
+    "id": "minimum-spanning-trees-16",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 16,
+    "text": "Graphs, subgraphs, paths P = v0, e1, v1, . . . , ek, vk a b ▶P is closed if v0 = vk. c ▶P is edge-simple if e1, . . . , ek are distinct. ▶P is simple if v0, . . . , vk are distinct. d e f ▶P is a circuit (or cycle) if it is edge-simple and closed, A circuit: C = a, b, e, c, a v0, . . . , vk−1 are distinct, and k ≥1."
+  },
+  {
+    "id": "minimum-spanning-trees-17",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 17,
+    "text": "Connector problem ▶A company has a number of oﬀices and wants to design a network linking them. ▶For certain pairs v, w of oﬀices, a link joining v and w of positive cost cvw can be built. ▶Problem: construct links so that every pair of oﬀices can communicate, minimizing the total construction cost."
+  },
+  {
+    "id": "minimum-spanning-trees-18",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 18,
+    "text": "Connector problem ▶A company has a number of oﬀices and wants to design a network linking them. ▶For certain pairs v, w of oﬀices, a link joining v and w of positive cost cvw can be built. ▶Problem: construct links so that every pair of oﬀices can communicate, minimizing the total construction cost. Given a connected graph G and a positive cost ce, ∀e ∈E, find a minimum-cost spanning connected subgraph of G. (Where the cost of a subgraph is the sum of the costs of its edges.)"
+  },
+  {
+    "id": "minimum-spanning-trees-19",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 19,
+    "text": "Structure of optimal subgraphs Lemma 2.1 An edge e = uv of G is an edge of a circuit of G if and only if there is a path in G \\ e from u to v. Let’s prove it!"
+  },
+  {
+    "id": "minimum-spanning-trees-20",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 20,
+    "text": "Structure of optimal subgraphs Lemma 2.1 An edge e = uv of G is an edge of a circuit of G if and only if there is a path in G \\ e from u to v. Let’s prove it! Thus, if we delete an edge of a circuit from a connected graph, the new graph is still connected. Why?"
+  },
+  {
+    "id": "minimum-spanning-trees-21",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 21,
+    "text": "Reduction to MST problem ▶So an optimal solution to the connector problem will not have any circuits. ▶A graph having no circuit is called a forest; a connected forest is called a tree. ▶We can solve the connector problem by solving the following: Minimum spanning tree (MST) problem Given a connected graph G and a real cost ce, ∀e ∈E, find a minimum cost spanning tree of G. ▶Connector problem and MST problem are equivalent for positive edge costs. ▶We solve the MST problem for arbitrary edge-costs."
+  },
+  {
+    "id": "minimum-spanning-trees-22",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 22,
+    "text": "Exercise Let’s try to solve a MST problem!"
+  },
+  {
+    "id": "minimum-spanning-trees-23",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 23,
+    "text": "Kruskal’s algorithm for MST 1. Initialize H = (V, F) as (V, ∅). 2. At each step add to F a least-cost edge e /∈F such that H remains a (spanning) forest. 3. Stop when H is a (spanning) tree. At each step the algorithm maintains a spanning forest. At the end the spanning forest is connected (a tree)."
+  },
+  {
+    "id": "minimum-spanning-trees-24",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 24,
+    "text": "Kruskal’s algorithm for MST 1. Initialize H = (V, F) as (V, ∅). 2. At each step add to F a least-cost edge e /∈F such that H remains a (spanning) forest. 3. Stop when H is a (spanning) tree. At each step the algorithm maintains a spanning forest. At the end the spanning forest is connected (a tree)."
+  },
+  {
+    "id": "minimum-spanning-trees-25",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 25,
+    "text": "Kruskal’s algorithm for MST 1. Initialize H = (V, F) as (V, ∅). 2. At each step add to F a least-cost edge e /∈F such that H remains a (spanning) forest. 3. Stop when H is a (spanning) tree. At each step the algorithm maintains a spanning forest. At the end the spanning forest is connected (a tree)."
+  },
+  {
+    "id": "minimum-spanning-trees-26",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 26,
+    "text": "Kruskal’s algorithm for MST 1. Initialize H = (V, F) as (V, ∅). 2. At each step add to F a least-cost edge e /∈F such that H remains a (spanning) forest. 3. Stop when H is a (spanning) tree. At each step the algorithm maintains a spanning forest. At the end the spanning forest is connected (a tree)."
+  },
+  {
+    "id": "minimum-spanning-trees-27",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 27,
+    "text": "Kruskal’s algorithm for MST 1. Initialize H = (V, F) as (V, ∅). 2. At each step add to F a least-cost edge e /∈F such that H remains a (spanning) forest. 3. Stop when H is a (spanning) tree. At each step the algorithm maintains a spanning forest. At the end the spanning forest is connected (a tree)."
+  },
+  {
+    "id": "minimum-spanning-trees-28",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 28,
+    "text": "Kruskal’s algorithm for MST 1. Initialize H = (V, F) as (V, ∅). 2. At each step add to F a least-cost edge e /∈F such that H remains a (spanning) forest. 3. Stop when H is a (spanning) tree. At each step the algorithm maintains a spanning forest. At the end the spanning forest is connected (a tree)."
+  },
+  {
+    "id": "minimum-spanning-trees-29",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 29,
+    "text": "Kruskal’s algorithm for MST 1. Initialize H = (V, F) as (V, ∅). 2. At each step add to F a least-cost edge e /∈F such that H remains a (spanning) forest. 3. Stop when H is a (spanning) tree. At each step the algorithm maintains a spanning forest. At the end the spanning forest is connected (a tree)."
+  },
+  {
+    "id": "minimum-spanning-trees-30",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 30,
+    "text": "Prim’s algorithm for MST 1. Initialize H = (V(H), T) as ({r}, ∅) for some r ∈V. 2. At each step add to T a least-cost edge e /∈T such that H remains a tree. 3. Stop when H is spanning (tree). At each step the algorithm maintains a tree. At the end the tree is spanning."
+  },
+  {
+    "id": "minimum-spanning-trees-31",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 31,
+    "text": "Prim’s algorithm for MST 1. Initialize H = (V(H), T) as ({r}, ∅) for some r ∈V. 2. At each step add to T a least-cost edge e /∈T such that H remains a tree. 3. Stop when H is spanning (tree). At each step the algorithm maintains a tree. At the end the tree is spanning."
+  },
+  {
+    "id": "minimum-spanning-trees-32",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 32,
+    "text": "Prim’s algorithm for MST 1. Initialize H = (V(H), T) as ({r}, ∅) for some r ∈V. 2. At each step add to T a least-cost edge e /∈T such that H remains a tree. 3. Stop when H is spanning (tree). At each step the algorithm maintains a tree. At the end the tree is spanning."
+  },
+  {
+    "id": "minimum-spanning-trees-33",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 33,
+    "text": "Prim’s algorithm for MST 1. Initialize H = (V(H), T) as ({r}, ∅) for some r ∈V. 2. At each step add to T a least-cost edge e /∈T such that H remains a tree. 3. Stop when H is spanning (tree). At each step the algorithm maintains a tree. At the end the tree is spanning."
+  },
+  {
+    "id": "minimum-spanning-trees-34",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 34,
+    "text": "Prim’s algorithm for MST 1. Initialize H = (V(H), T) as ({r}, ∅) for some r ∈V. 2. At each step add to T a least-cost edge e /∈T such that H remains a tree. 3. Stop when H is spanning (tree). At each step the algorithm maintains a tree. At the end the tree is spanning."
+  },
+  {
+    "id": "minimum-spanning-trees-35",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 35,
+    "text": "Prim’s algorithm for MST 1. Initialize H = (V(H), T) as ({r}, ∅) for some r ∈V. 2. At each step add to T a least-cost edge e /∈T such that H remains a tree. 3. Stop when H is spanning (tree). At each step the algorithm maintains a tree. At the end the tree is spanning."
+  },
+  {
+    "id": "minimum-spanning-trees-36",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 36,
+    "text": "Prim’s algorithm for MST 1. Initialize H = (V(H), T) as ({r}, ∅) for some r ∈V. 2. At each step add to T a least-cost edge e /∈T such that H remains a tree. 3. Stop when H is spanning (tree). At each step the algorithm maintains a tree. At the end the tree is spanning."
+  },
+  {
+    "id": "minimum-spanning-trees-37",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 37,
+    "text": "We now show the correctness of both MST algorithms…"
+  },
+  {
+    "id": "minimum-spanning-trees-38",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 38,
+    "text": "Cuts ▶For a graph G = (V, E) and U ⊆V, we denote by δ(U) = {e ∈E : e = uv, u ∈U, v ∈V \\ U}. ▶δ(U) is called a cut of G. ▶If U = ∅or U = V, δ(U) = ∅is called a trivial cut ▶Exercise: For each non-trivial cut δ(U), and for two nodes u ∈U and v ∈V \\ U, there is no (u, v)-path in G \\ δ(U)."
+  },
+  {
+    "id": "minimum-spanning-trees-39",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 39,
+    "text": "Intermediate results Lemma 2.1 An edge e = uv of G is an edge of a circuit of G if and only if there is a path in G \\ e from u to v. Theorem 2.3 A graph G = (V, E) is connected if and only if there is no set U ⊆V, ∅̸= U ̸= V, with δ(U) = ∅."
+  },
+  {
+    "id": "minimum-spanning-trees-40",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 40,
+    "text": "Intermediate results Lemma 2.7 Let H = (V, T) be a spanning tree of G, let e = vw be an edge of G but not H, and let f be an edge of a simple path in T from v to w. Then the subgraph H′ = (V, T ∪{e} \\ {f}) is a spanning tree of G. A subset F of edges of G is extendible to a MST if F is contained in the edge-set of some MST of G. Theorem 2.4 Suppose that B ⊆E, that B is extendible to a MST, and that e is a minimum-cost edge of some cut D satisfying D ∩B = ∅. Then B ∪{e} is extendible to a MST."
+  },
+  {
+    "id": "minimum-spanning-trees-41",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 41,
+    "text": "Correctness of MST algorithms Theorem 2.5 For any connected graph G with arbitrary edge costs c, Prim’s Algorithm finds a MST. Theorem 2.6 For any connected graph G with arbitrary edge costs c, Kruskal’s Algorithm finds a MST."
+  },
+  {
+    "id": "minimum-spanning-trees-42",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 42,
+    "text": "Eﬀiciency of MST algorithms How we store a connected graph G = (V, E) in a computer: ▶We keep a list of edges. ▶An element of the list corresponding to edge f = uv ∈E is of the form (u, v, cf) where cf is the cost of f. Question: What is the length of this encoding?"
+  },
+  {
+    "id": "minimum-spanning-trees-43",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 43,
+    "text": "Eﬀiciency of MST algorithms How we store a connected graph G = (V, E) in a computer: ▶We keep a list of edges. ▶An element of the list corresponding to edge f = uv ∈E is of the form (u, v, cf) where cf is the cost of f. Question: What is the length of this encoding? 3m"
+  },
+  {
+    "id": "minimum-spanning-trees-44",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 44,
+    "text": "Eﬀiciency of MST algorithms How we store a connected graph G = (V, E) in a computer: ▶We keep a list of edges. ▶An element of the list corresponding to edge f = uv ∈E is of the form (u, v, cf) where cf is the cost of f. Question: What is the length of this encoding? 3m"
+  },
+  {
+    "id": "minimum-spanning-trees-45",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 45,
+    "text": "Eﬀiciency of Prim’s algorithm Prim’s algorithm for MST 1. Initialize H = (V(H), T) as ({r}, ∅) for some r ∈V. 2. At each step add to T a least-cost edge e /∈T such that H remains a tree. 3. Stop when H is spanning (tree)."
+  },
+  {
+    "id": "minimum-spanning-trees-46",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 46,
+    "text": "Eﬀiciency of Prim’s algorithm Prim’s Algorithm can be restated using an observation from the proof of Theorem 2.5: Prim’s algorithm for MST 1. Initialize H = (V(H), T) as ({r}, ∅). 2. While H is not a (spanning) tree Add to T a minimum-cost edge from δ(V(H))."
+  },
+  {
+    "id": "minimum-spanning-trees-47",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 47,
+    "text": "Eﬀiciency of Prim’s algorithm Implementation of the “while loop”: ▶We keep V(H) as a characteristic vector x (that is, xu = 1 if u ∈V(H), and xu = 0 if u /∈V(H))."
+  },
+  {
+    "id": "minimum-spanning-trees-48",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 48,
+    "text": "Eﬀiciency of Prim’s algorithm Implementation of the “while loop”: ▶We keep V(H) as a characteristic vector x (that is, xu = 1 if u ∈V(H), and xu = 0 if u /∈V(H)). ▶At each step we run through E, checking for each f = uv whether f ∈δ(V(H)) by checking whether xu ̸= xv and if so comparing cf to the current minimum encountered. So e can be chosen in O(m) time."
+  },
+  {
+    "id": "minimum-spanning-trees-49",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 49,
+    "text": "Eﬀiciency of Prim’s algorithm Implementation of the “while loop”: ▶We keep V(H) as a characteristic vector x (that is, xu = 1 if u ∈V(H), and xu = 0 if u /∈V(H)). ▶At each step we run through E, checking for each f = uv whether f ∈δ(V(H)) by checking whether xu ̸= xv and if so comparing cf to the current minimum encountered. So e can be chosen in O(m) time. ▶Then x is updated by putting xv = 1 where v is the end of e for which xv was 0. The number of steps performed in one “while loop” is O(m)."
+  },
+  {
+    "id": "minimum-spanning-trees-50",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 50,
+    "text": "Eﬀiciency of Prim’s algorithm How many times is the “while” loop performed? Lemma 2.2 A spanning connected subgraph of G is a spanning tree if and only if it has exactly n −1 edges. Proof: Exercise ▶Therefore the “while” loop is performed n −1 times. So Prim’s algorithm has a running time of O(nm). Note: Lemma 2.2 implies that every connected graph G with n nodes and m edges has m ≥n −1. Thus, in all complexity estimations we assume that n = O(m) and that m = O(n2)"
+  },
+  {
+    "id": "minimum-spanning-trees-51",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 51,
+    "text": "Eﬀiciency of Kruskal’s algorithm Kruskal’s algorithm for MST 1. Initialize H = (V, F) as (V, ∅). 2. At each step add to F a least-cost edge e /∈F such that H remains a (spanning) forest. 3. Stop when H is a (spanning) tree."
+  },
+  {
+    "id": "minimum-spanning-trees-52",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 52,
+    "text": "Eﬀiciency of Kruskal’s algorithm ▶In Kruskal’s algorithm, once an edge e = vw becomes unavailable to add to F, that is, H contains a path from v to w, it remains so. Kruskal’s Algorithm can be restated: Kruskal’s algorithm for MST 1. Order E as {e1, . . . , em}, where ce1 ≤ce2 ≤· · · ≤cem. 2. Initialize H = (V, F) as (V, ∅). 3. For i = 1, . . . , m If the ends of ei are in different components of H Add ei to F"
+  },
+  {
+    "id": "minimum-spanning-trees-53",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 53,
+    "text": "Eﬀiciency of Kruskal’s algorithm Kruskal’s algorithm for MST 1. Order E as {e1, . . . , em}, where ce1 ≤ce2 ≤· · · ≤cem. 2. Initialize H = (V, F) as (V, ∅). 3. For i = 1, . . . , m If the ends of ei are in different components of H Add ei to F Phase 1: Sorting. Can be done in O(m log m). Phase 2: We keep the partition of V into “blocks”: the node-sets of components of H. ▶2m “finds”: we find the block P containing a given v. ▶n −1 “merges”: two blocks P, Q are replaced by P ∪Q, because edge uv with u ∈P, v ∈Q has been added to F."
+  },
+  {
+    "id": "minimum-spanning-trees-54",
+    "unit": "Minimum Spanning Trees",
+    "file": "2.1 Minimum Spanning Trees (1).pdf",
+    "page": 54,
+    "text": "Eﬀiciency of Kruskal’s algorithm How can we implement “find” and “merge”? ▶We keep for each v the name block(v) ▶each “find” can be done in 1 elementary step ▶each “’merge” can be done by changing block(w) to block(v) for every w labelled block(u). ▶Updating all the block(u) requires at most n elementary steps for a single merge. The total work in the phase 2 of the algorithm is O(m + n2). ▶We get a running time for Kruskal’s Algorithm of O(m log m + m + n2) = O(m log m + n2)."
+  },
+  {
+    "id": "shortest-paths-1",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 1,
+    "text": "ISyE/Math/CS 425 Introduction to Combinatorial Optimization 2.2 Shortest Paths Prof. Carla Michini University of Wisconsin-Madison"
+  },
+  {
+    "id": "shortest-paths-2",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 2,
+    "text": "Outline ▶We will see the Minimum Driving Distances Problem and the Shortest (Di)Path Problem. ▶We will study Ford’s algorithm and the Ford-Bellman algorithm for solving them. ▶We will study more eﬀicient algorithms for important special cases: ▶Acyclic digraphs, ▶Nonnegative costs, ▶Unit costs."
+  },
+  {
+    "id": "shortest-paths-4",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 4,
+    "text": "The Minimum Driving Distances Problem ▶We want to make a table of the minimum driving distances from the corner of Walnut St and Pacific Ave to every other street corner in the city of San Francisco, CA."
+  },
+  {
+    "id": "shortest-paths-5",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 5,
+    "text": "The Minimum Driving Distances Problem ▶The routes must obey the directions on one-way streets. ▶We need a graph where each edge has a direction. ▶If a street can be traversed in both directions, we use two “parallel” edges with opposite directions."
+  },
+  {
+    "id": "shortest-paths-6",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 6,
+    "text": "Digraphs ▶A digraph G = (V, E) consists of a set V = V(G) of nodes, and E = E(G) of arcs. ▶Each arc consists of an ordered pair of distinct nodes. ▶Given an arc e = vw, v is the tail t(e) = v, and w is the head h(e) = w."
+  },
+  {
+    "id": "shortest-paths-7",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 7,
+    "text": "Digraphs ▶A path P = v0, e1, v1, . . . , ek, vk is a sequence of nodes and arcs where ei = vi−1vi, or ei = vivi−1. ▶An arc ei of path P is forward if ei = vi−1vi and is reverse otherwise. ▶A dipath is a path in which every arc is forward. ▶A dicircuit is a dipath that is also a circuit in the underlying graph. ▶The cost of dipath P is ∑k c(P) = i=1 cei, where ce is the cost of arc e."
+  },
+  {
+    "id": "shortest-paths-8",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 8,
+    "text": "Digraphs ▶The street map of San Francisco defines a digraph: ▶The nodes are the street corners. ▶For each section of street joining two corners, and each direction in which it is legal to drive along it, there is an arc."
+  },
+  {
+    "id": "shortest-paths-9",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 9,
+    "text": "Digraphs The Minimum Driving Distances Problem can be formulated as: Shortest (Di)Path Problem Input: A digraph G, a node r ∈V, and costs ce, ∀e ∈E. Objective: For each v ∈V, find a dipath from r to v of least cost (if one exists). ▶By modifying G, we can assume that dipaths exist from r to all the nodes. Why?"
+  },
+  {
+    "id": "shortest-paths-10",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 10,
+    "text": "Exercise Let’s try to solve a Shortest Path problem!"
+  },
+  {
+    "id": "shortest-paths-11",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 11,
+    "text": "Idea for algorithm: ▶Suppose we have a dipath P from r to v of cost c(P). ▶Suppose we have a dipath P′ from r to w of cost c(P′). ▶Suppose we find an arc vw ∈E satisfying c(P′) > c(P) + cvw. ▶By appending vw to the dipath P, we get a cheaper dipath to w of cost c(P) + cvw. 60 r 18 ▶If P′ is a shortest path from r to w this cannot happen!"
+  },
+  {
+    "id": "shortest-paths-12",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 12,
+    "text": "Idea for algorithm: ▶Suppose we have a dipath P from r to v of cost c(P). ▶Suppose we have a dipath P′ from r to w of cost c(P′). ▶Suppose we find an arc vw ∈E satisfying c(P′) > c(P) + cvw. ▶By appending vw to the dipath P, we get a cheaper dipath to w of cost c(P) + cvw. 60>18+15 r 18 ▶If P′ is a shortest path from r to w this cannot happen!"
+  },
+  {
+    "id": "shortest-paths-13",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 13,
+    "text": "Feasible potential ▶Let y ∈RV be a vector such that each entry of y corresponds to a node in V. ▶A vector y ∈RV that satisfies yv + cvw ≥yw ∀vw ∈E (*) yr = 0 is called feasible potential. ▶If y∗is such that y∗v is the least cost of a dipath to v, ∀v ∈V, then y∗satisfies (*). Thus y∗is a feasible potential."
+  },
+  {
+    "id": "shortest-paths-14",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 14,
+    "text": "Feasible potential Viceversa: Proposition 2.9 Let y be a feasible potential and let P be a dipath from r to v. Then c(P) ≥yv. Let’s prove it!"
+  },
+  {
+    "id": "shortest-paths-15",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 15,
+    "text": "Structure of optimal solutions ▶Subpaths of shortest dipaths are shortest dipaths. Why? ▶Hence, for every node v ̸= r, the only arc we need is the last arc of one least-cost dipath to v. ▶There are n −1 nodes v ̸= r, thus we collect n −1 such arcs in total. The subgraph induced by these arcs contains a dipath from r to every other node. ▶So this is the arc-set of a “directed” spanning tree of G."
+  },
+  {
+    "id": "shortest-paths-16",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 16,
+    "text": "Ford’s algorithm ▶The stopping condition is provided by Proposition 2.9: If we have ∀v ∈V a feasible potential yv and a dipath from r to v of cost yv, then each dipath is of least cost. ▶We will find a feasible potential y, and the predecessor p(v) of v for each v ∈V. ▶Given a vector y, an arc vw is incorrect if yv + cvw < yw. ▶To correct vw means to set yw = yv + cvw p(w) = v."
+  },
+  {
+    "id": "shortest-paths-17",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 17,
+    "text": "Ford’s algorithm 1. Initialize yr = 0, p(r) = 0 and yv = ∞, p(v) = −1 for every v ̸= r 2. While y is not a feasible potential Find an incorrect arc vw and correct it"
+  },
+  {
+    "id": "shortest-paths-18",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 18,
+    "text": "Ford’s algorithm 1. Initialize yr = 0, p(r) = 0 and yv = ∞, p(v) = −1 for every v ̸= r 2. While y is not a feasible potential Find an incorrect arc vw and correct it Initialization"
+  },
+  {
+    "id": "shortest-paths-19",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 19,
+    "text": "Ford’s algorithm 1. Initialize yr = 0, p(r) = 0 and yv = ∞, p(v) = −1 for every v ̸= r 2. While y is not a feasible potential Find an incorrect arc vw and correct it Iteration 1"
+  },
+  {
+    "id": "shortest-paths-20",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 20,
+    "text": "Ford’s algorithm 1. Initialize yr = 0, p(r) = 0 and yv = ∞, p(v) = −1 for every v ̸= r 2. While y is not a feasible potential Find an incorrect arc vw and correct it Iteration 1"
+  },
+  {
+    "id": "shortest-paths-21",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 21,
+    "text": "Ford’s algorithm 1. Initialize yr = 0, p(r) = 0 and yv = ∞, p(v) = −1 for every v ̸= r 2. While y is not a feasible potential Find an incorrect arc vw and correct it Iteration 2"
+  },
+  {
+    "id": "shortest-paths-22",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 22,
+    "text": "Ford’s algorithm 1. Initialize yr = 0, p(r) = 0 and yv = ∞, p(v) = −1 for every v ̸= r 2. While y is not a feasible potential Find an incorrect arc vw and correct it Iteration 2"
+  },
+  {
+    "id": "shortest-paths-23",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 23,
+    "text": "Ford’s algorithm 1. Initialize yr = 0, p(r) = 0 and yv = ∞, p(v) = −1 for every v ̸= r 2. While y is not a feasible potential Find an incorrect arc vw and correct it Iteration 3"
+  },
+  {
+    "id": "shortest-paths-24",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 24,
+    "text": "Ford’s algorithm 1. Initialize yr = 0, p(r) = 0 and yv = ∞, p(v) = −1 for every v ̸= r 2. While y is not a feasible potential Find an incorrect arc vw and correct it Iteration 3"
+  },
+  {
+    "id": "shortest-paths-25",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 25,
+    "text": "Ford’s algorithm 1. Initialize yr = 0, p(r) = 0 and yv = ∞, p(v) = −1 for every v ̸= r 2. While y is not a feasible potential Find an incorrect arc vw and correct it Iteration 4"
+  },
+  {
+    "id": "shortest-paths-26",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 26,
+    "text": "Ford’s algorithm 1. Initialize yr = 0, p(r) = 0 and yv = ∞, p(v) = −1 for every v ̸= r 2. While y is not a feasible potential Find an incorrect arc vw and correct it Iteration 4"
+  },
+  {
+    "id": "shortest-paths-27",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 27,
+    "text": "Ford’s algorithm 1. Initialize yr = 0, p(r) = 0 and yv = ∞, p(v) = −1 for every v ̸= r 2. While y is not a feasible potential Find an incorrect arc vw and correct it Iteration 5"
+  },
+  {
+    "id": "shortest-paths-28",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 28,
+    "text": "Ford’s algorithm 1. Initialize yr = 0, p(r) = 0 and yv = ∞, p(v) = −1 for every v ̸= r 2. While y is not a feasible potential Find an incorrect arc vw and correct it Iteration 5"
+  },
+  {
+    "id": "shortest-paths-29",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 29,
+    "text": "Negative-cost dicircuits ▶If we have a negative-cost dicircuit the algorithm does not terminate."
+  },
+  {
+    "id": "shortest-paths-30",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 30,
+    "text": "Negative-cost dicircuits ▶If we have a negative-cost dicircuit the algorithm does not terminate."
+  },
+  {
+    "id": "shortest-paths-31",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 31,
+    "text": "Negative-cost dicircuits ▶If we have a negative-cost dicircuit the algorithm does not terminate."
+  },
+  {
+    "id": "shortest-paths-32",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 32,
+    "text": "Negative-cost dicircuits ▶If we have a negative-cost dicircuit the algorithm does not terminate."
+  },
+  {
+    "id": "shortest-paths-33",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 33,
+    "text": "Negative-cost dicircuits ▶If we have a negative-cost dicircuit the algorithm does not terminate."
+  },
+  {
+    "id": "shortest-paths-34",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 34,
+    "text": "Negative-cost dicircuits ▶If we have a negative-cost dicircuit the algorithm does not terminate."
+  },
+  {
+    "id": "shortest-paths-35",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 35,
+    "text": "Negative-cost dicircuits ▶If we have a negative-cost dicircuit the algorithm does not terminate."
+  },
+  {
+    "id": "shortest-paths-36",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 36,
+    "text": "Negative-cost dicircuits ▶If we have a negative-cost dicircuit the algorithm does not terminate."
+  },
+  {
+    "id": "shortest-paths-37",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 37,
+    "text": "Negative-cost dicircuits ▶If we have a negative-cost dicircuit the algorithm does not terminate."
+  },
+  {
+    "id": "shortest-paths-38",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 38,
+    "text": "Negative-cost dicircuits ▶If we have a negative-cost dicircuit the algorithm does not terminate."
+  },
+  {
+    "id": "shortest-paths-39",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 39,
+    "text": "Negative-cost dicircuits ▶If we have a negative-cost dicircuit the algorithm does not terminate."
+  },
+  {
+    "id": "shortest-paths-40",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 40,
+    "text": "Negative-cost dicircuits ▶If we have a negative-cost dicircuit the algorithm does not terminate."
+  },
+  {
+    "id": "shortest-paths-41",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 41,
+    "text": "Negative-cost dicircuits ▶If we have a negative-cost dicircuit the algorithm does not terminate."
+  },
+  {
+    "id": "shortest-paths-42",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 42,
+    "text": "Negative-cost dicircuits ▶If we have a negative-cost dicircuit the algorithm does not terminate."
+  },
+  {
+    "id": "shortest-paths-43",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 43,
+    "text": "Negative-cost dicircuits ▶If we have a negative-cost dicircuit the algorithm does not terminate."
+  },
+  {
+    "id": "shortest-paths-44",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 44,
+    "text": "Negative-cost dicircuits ▶If we have a negative-cost dicircuit the algorithm does not terminate."
+  },
+  {
+    "id": "shortest-paths-45",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 45,
+    "text": "Negative-cost dicircuits ▶If we have a negative-cost dicircuit the algorithm does not terminate."
+  },
+  {
+    "id": "shortest-paths-46",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 46,
+    "text": "Negative-cost dicircuits ▶If we have a negative-cost dicircuit the algorithm does not terminate. ▶We will see algorithms that also recognize when a negative-cost dicircuit exists. ▶In several applications one searches for negative-cost dicircuits."
+  },
+  {
+    "id": "shortest-paths-47",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 47,
+    "text": "Negative-cost dicircuits: Example Money-making sequence of currency exchanges. ▶Let rvw be the amount of currency w that can be purchased with one unit of currency v. ▶A sequence v0, v1, . . . , vk = v0 of currency exchanges is money-making if and only if ∏k rvi−1vi > 1 i=1"
+  },
+  {
+    "id": "shortest-paths-48",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 48,
+    "text": "Negative-cost dicircuits: Example Money-making sequence of currency exchanges. ▶Let rvw be the amount of currency w that can be purchased with one unit of currency v. ▶A sequence v0, v1, . . . , vk = v0 of currency exchanges is money-making if and only if ∏k ∏k rvi−1vi > 1 ⇔ log( rvi−1vi) > 0 i=1 i=1 ∑k ∑k ⇔ log rvi−1vi > 0 ⇔ (−log rvi−1vi) < 0. i=1 i=1"
+  },
+  {
+    "id": "shortest-paths-49",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 49,
+    "text": "Negative-cost dicircuits: Example Money-making sequence of currency exchanges. ▶Let rvw be the amount of currency w that can be purchased with one unit of currency v. ▶A sequence v0, v1, . . . , vk = v0 of currency exchanges is money-making if and only if ∏k ∏k rvi−1vi > 1 ⇔ log( rvi−1vi) > 0 i=1 i=1 ∑k ∑k ⇔ log rvi−1vi > 0 ⇔ (−log rvi−1vi) < 0. i=1 i=1 ▶Using costs cvw = −log rvw, dicircuits of negative cost correspond to money-making sequences."
+  },
+  {
+    "id": "shortest-paths-50",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 50,
+    "text": "Correcness of Ford’s algorithm We now show that Ford’s algorithm terminates with least-cost dipaths, if there are no negative-cost dicircuits…"
+  },
+  {
+    "id": "shortest-paths-51",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 51,
+    "text": "Intermediate results For every v ∈V(G), we denote by yjv the value of yv at iteration j, and by pj(v) be the predecessor of v at iteration j. Key observation: If at iteration j we correct arc ab, we have yjb < yj−1b , and yjv = yj−1v for every other node v (Why?)."
+  },
+  {
+    "id": "shortest-paths-52",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 52,
+    "text": "Intermediate results For every v ∈V(G), we denote by yjv the value of yv at iteration j, and by pj(v) be the predecessor of v at iteration j. Proposition 2.10 (part 1) At each iteration j of Ford’s algorithm, ∀v ∈V with yjv ̸= ∞: 1. There is a dipath from r to v of cost equal to yjv. 2. If (G, c) has no negative-cost dicircuit, there is a simple dipath from r to v of cost equal to yjv. Proposition 2.10 (part 2) At each iteration j of Ford’s algorithm, ∀v ∈V with pj(v) ̸= −1: If (G, c) has no negative-cost dicircuit, then pj defines a simple dipath from r to v of cost at most yjv. Note: the path in part 2 is defined by the predecessors pj, the path in part 1 might be different."
+  },
+  {
+    "id": "shortest-paths-53",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 53,
+    "text": "Part 1: example Proposition 2.10 (part 1) At each iteration j of Ford’s algorithm, ∀v ∈V with yjv ̸= ∞: 1. There is a dipath from r to v of cost equal to yjv. 2. If (G, c) has no negative-cost dicircuit, there is a simple dipath from r to v of cost equal to yjv. Consider the example in the next slide. ▶At iteration 7 there exists a dipath to node a of length y7a = 4. This is r, a, b, c, d, a (note that the dipath is not the path given by the predecessors). ▶This dipath is not simple, since it contains the sequence a, b, c, d, a. In fact, G contains a negative cost dicircuit. We now prove Proposition 2.10, part 1."
+  },
+  {
+    "id": "shortest-paths-54",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 54,
+    "text": "5 5 a 5 a 1 2 1 2 r d b r d b -2 -2 -2 -2 Graph 1 c Iteration 1 1 c 5 5 5 a 5 a 2 1 1 2 r d b 7 r d b 7 -2 -2 -2 -2 cIteration 2 1 Iteration 3 1 5c 5 5 5 a 5 a 1 2 1 2 r 3 d b 7 r 3 d b 7 -2 -2 -2 -2 1 c 1 cIteration 4 5 Iteration 5 1 4 4 5 a 5 a 1 2 1 2 r 3 d b 7 r -1 d b 7 -2 -2 -2 -2 1 c 1 cIteration 6 1 Iteration 7 1"
+  },
+  {
+    "id": "shortest-paths-55",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 55,
+    "text": "Part 2 To prove Proposition 2.10 (part 2) we need an additional lemma. Lemma * Consider an iteration j of Ford’s algorithm. We have (i) yju + cuv ≤yjv ∀uv ∈E : u = pj(v). Moreover, if at iteration j we have corrected arc ab ∈E, we have: (ii) yja + cab = yjb and a = pj(b). (iii) yjb + cbv < yjv for each arc of the form bv with b = pj(v). Main remark: Since we correct arc ab, we have yjb < yj−1b , and yjv = yj−1v for all v ̸= b."
+  },
+  {
+    "id": "shortest-paths-56",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 56,
+    "text": "Part 2 To prove Proposition 2.10 (part 2) we need an additional lemma. Lemma * Consider an iteration j of Ford’s algorithm. We have (i) yju + cuv ≤yjv ∀uv ∈E : u = pj(v). Moreover, if at iteration j we have corrected arc ab ∈E, we have: (ii) yja + cab = yjb and a = pj(b). (iii) yjb + cbv < yjv for each arc of the form bv with b = pj(v). Main remark: Since we correct arc ab, we have yjb < yj−1b , and yjv = yj−1v for all v ̸= b."
+  },
+  {
+    "id": "shortest-paths-57",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 57,
+    "text": "Part 2: example Proposition 2.10 (part 2) At each iteration j of Ford’s algorithm, ∀v ∈V with pj(v) ̸= −1: If (G, c) has no negative-cost dicircuit, then pj defines a simple dipath from r to v of cost at most yjv. Consider the example in the next slide. ▶At iteration 5 the dipath to node a defined by the predecessors p5 is a, b, c, d, a. The dipath has cost −1 < 4 = y5a. ▶This dipath is not simple, since it contains the sequence a, b, c, d, a. In fact, G contains a negative cost dicircuit. We now prove Proposition 2.10, part 2."
+  },
+  {
+    "id": "shortest-paths-58",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 58,
+    "text": "5 5 a 5 a 1 2 1 2 r d b r d b -2 -2 -2 -2 Graph 1 c Iteration 1 1 c 5 5 5 a 5 a 2 1 1 2 r d b 7 r d b 7 -2 -2 -2 -2 cIteration 2 1 Iteration 3 1 5c 5 4 5 a 5 a 1 2 1 2 r 3 d b 7 r 3 d b 7 -2 -2 -2 -2 1 c 1 cIteration 4 5 Iteration 5 5"
+  },
+  {
+    "id": "shortest-paths-59",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 59,
+    "text": "5 5 a 5 a 1 2 1 2 r d b r d b -2 -2 -2 -2 Graph 1 c Iteration 1 1 c 5 5 5 a 5 a 2 1 1 2 r d b 7 r d b 7 -2 -2 -2 -2 cIteration 2 1 Iteration 3 1 5c 5 4 5 a 5 a 1 2 1 2 r 3 d b 7 r 3 d b 7 -2 -2 -2 -2 1 c 1 cIteration 4 5 Iteration 5 5"
+  },
+  {
+    "id": "shortest-paths-60",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 60,
+    "text": "Correctness of Ford’s algorithm Theorem 2.11 If (G, c) has no negative-cost dicircuit, then Ford’s algorithm terminates after a finite number of iterations. At termination, for each v ∈V, p defines a least-cost dipath from r to v of cost yv. Proof: see Notes."
+  },
+  {
+    "id": "shortest-paths-61",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 61,
+    "text": "Refinements of Ford’s Algorithm Basic step of Ford’s algorithm 1. Choose an arc e. 2. If e is incorrect, then correct it. ▶We can perform each basic step in constant time. ▶The nb of steps depends on the order in which arcs are chosen. ▶Suppose that arcs of the graph are chosen in sequence S ▶Let S = {e1, . . . , e|S|} (there might be repetitions!!). ▶There are choices for S that result in very bad performance of the algorithm."
+  },
+  {
+    "id": "shortest-paths-62",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 62,
+    "text": "Refinements of Ford’s Algorithm Basic step i of Ford’s algorithm 1. Choose arc ei from S. 2. If ei is incorrect, then correct it. ▶We can perform each basic step in constant time. ▶The nb of steps depends on the order in which arcs are chosen. ▶Suppose that arcs of the graph are chosen in sequence S ▶Let S = {e1, . . . , e|S|} (there might be repetitions!!). ▶There are choices for S that result in very bad performance of the algorithm."
+  },
+  {
+    "id": "shortest-paths-63",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 63,
+    "text": "Refinements of Ford’s Algorithm Basic idea for looking for good choices for S: ▶Let P = v0, e1, v1, . . . , ek, vk from r = v0 to v = vk. ▶After the first time that Ford’s algorithm chooses the arc e1 we will have yv1 ≤yr + ce1 ≤ce1. ▶After the first subsequent time that the algorithm chooses e2 we will have yv2 ≤yv1 + ce2 ≤ce1 + ce2. ▶Once e1, e2, . . . , ek have been chosen in that order, we will have yv ≤c(P). ▶We say that P is embedded in S if its arcs occur as a subsequence of S."
+  },
+  {
+    "id": "shortest-paths-64",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 64,
+    "text": "Refinements of Ford’s Algorithm Basic idea for looking for good choices for S: ▶Let P = v0, e1, v1, . . . , ek, vk from r = v0 to v = vk. ▶After the first time that Ford’s algorithm chooses the arc e1 we will have yv1 ≤yr + ce1 ≤ce1. ▶After the first subsequent time that the algorithm chooses e2 we will have yv2 ≤yv1 + ce2 ≤ce1 + ce2. ▶Once e1, e2, . . . , ek have been chosen in that order, we will have yv ≤c(P). ▶We say that P is embedded in S if its arcs occur as a subsequence of S."
+  },
+  {
+    "id": "shortest-paths-65",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 65,
+    "text": "Refinements of Ford’s Algorithm Proposition 2.16 Suppose that Ford’s algorithm uses sequence S. Let P be a path from r to v ∈V embedded in S. After scanning S we have yv ≤c(P). ▶Let S be such that there is a least-cost dipath P∗to v embedded in S. After scanning S, yv ≤c(P∗). By Proposition 2.10(part 2), the dipath ¯P to v given by the vector of predecessors is such that c(¯P) ≤yv. Thus c(¯P) = c(P∗), i.e. ¯P is a least-cost dipath to v. ▶If S is such that for every node v there is a least-cost dipath to v embedded in S, then S will bring the algorithm to termination. ▶We want S to have this property, and we want S to be short, since its length is the running time of the algorithm."
+  },
+  {
+    "id": "shortest-paths-66",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 66,
+    "text": "The Ford-Bellman algorithm ▶Every simple dipath in G is embedded in S1, S2, . . . , Sn−1, where for each i, Si is an arbitrary ordering of E. ▶We speak of a sequence of “passes” through E. ▶Since each arc is handled in constant time per pass, by Proposition 2.16 we get a shortest path algorithm that runs in time O(mn). G has 4 nodes, thus we only need three passes. For example: S1 = ad, ba, ra, rb. S2 = ba, ad, rb, ra. S3 = rb, ba, ra, ad."
+  },
+  {
+    "id": "shortest-paths-67",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 67,
+    "text": "The Ford-Bellman algorithm ▶If there is no negative-cost dicircuit, then n −1 passes are suﬀicient to determine a feasible potential. ▶If y is not a feasible potential after n −1 passes, then there exists a negative-cost dicircuit."
+  },
+  {
+    "id": "shortest-paths-68",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 68,
+    "text": "Ford-Bellman algorithm 1. Initialize y, p 2. Set i = 0 3. While i < n and y is not a feasible potential replace i by i + 1 for each e ∈E if e is incorrect, correct e"
+  },
+  {
+    "id": "shortest-paths-69",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 69,
+    "text": "The Ford-Bellman algorithm Theorem 2.17 ▶If i < n at termination, the Ford-Bellman algorithm computes a least-cost dipath from r to v for all v ∈V. ▶Otherwise, if i = n at termination, it detects that there is a negative-cost dicircuit. ▶In either case it runs in time O(mn)."
+  },
+  {
+    "id": "shortest-paths-70",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 70,
+    "text": "Acyclic digraphs ▶Suppose that G has a topological sort, i.e., an ordering v1, v2, . . . , vn of V so that vivj ∈E implies i < j. Example: Topological sort: d, h, i, g, j, b, a, f."
+  },
+  {
+    "id": "shortest-paths-71",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 71,
+    "text": "Acyclic digraphs ▶Suppose that G has a topological sort, i.e., an ordering v1, v2, . . . , vn of V so that vivj ∈E implies i < j. ▶If we order E in the sequence S so that vivj precedes vkvl if i < k, then every dipath of G is embedded in S. Example: Topological sort: d, h, i, g, j, b, a, f. S = da, df, dg, di,"
+  },
+  {
+    "id": "shortest-paths-72",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 72,
+    "text": "Acyclic digraphs ▶Suppose that G has a topological sort, i.e., an ordering v1, v2, . . . , vn of V so that vivj ∈E implies i < j. ▶If we order E in the sequence S so that vivj precedes vkvl if i < k, then every dipath of G is embedded in S. Example: Topological sort: d, h, i, g, j, b, a, f. S = da, df, dg, di, hg, hj,"
+  },
+  {
+    "id": "shortest-paths-73",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 73,
+    "text": "Acyclic digraphs ▶Suppose that G has a topological sort, i.e., an ordering v1, v2, . . . , vn of V so that vivj ∈E implies i < j. ▶If we order E in the sequence S so that vivj precedes vkvl if i < k, then every dipath of G is embedded in S. Example: Topological sort: d, h, i, g, j, b, a, f. S = da, df, dg, di, hg, hj, ib, ig, ij,"
+  },
+  {
+    "id": "shortest-paths-74",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 74,
+    "text": "Acyclic digraphs ▶Suppose that G has a topological sort, i.e., an ordering v1, v2, . . . , vn of V so that vivj ∈E implies i < j. ▶If we order E in the sequence S so that vivj precedes vkvl if i < k, then every dipath of G is embedded in S. Example: Topological sort: d, h, i, g, j, b, a, f. S = da, df, dg, di, hg, hj, ib, ig, ij, gf,"
+  },
+  {
+    "id": "shortest-paths-75",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 75,
+    "text": "Acyclic digraphs ▶Suppose that G has a topological sort, i.e., an ordering v1, v2, . . . , vn of V so that vivj ∈E implies i < j. ▶If we order E in the sequence S so that vivj precedes vkvl if i < k, then every dipath of G is embedded in S. Example: Topological sort: d, h, i, g, j, b, a, f. S = da, df, dg, di, hg, hj, ib, ig, ij, gf, jb,"
+  },
+  {
+    "id": "shortest-paths-76",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 76,
+    "text": "Acyclic digraphs ▶Suppose that G has a topological sort, i.e., an ordering v1, v2, . . . , vn of V so that vivj ∈E implies i < j. ▶If we order E in the sequence S so that vivj precedes vkvl if i < k, then every dipath of G is embedded in S. Example: Topological sort: d, h, i, g, j, b, a, f. S = da, df, dg, di, hg, hj, ib, ig, ij, gf, jb, ba,"
+  },
+  {
+    "id": "shortest-paths-77",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 77,
+    "text": "Acyclic digraphs ▶Suppose that G has a topological sort, i.e., an ordering v1, v2, . . . , vn of V so that vivj ∈E implies i < j. ▶If we order E in the sequence S so that vivj precedes vkvl if i < k, then every dipath of G is embedded in S. Example: Topological sort: d, h, i, g, j, b, a, f. S = da, df, dg, di, hg, hj, ib, ig, ij, gf, jb, ba, af."
+  },
+  {
+    "id": "shortest-paths-78",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 78,
+    "text": "Acyclic digraphs ▶Suppose that G has a topological sort, i.e., an ordering v1, v2, . . . , vn of V so that vivj ∈E implies i < j. ▶If we order E in the sequence S so that vivj precedes vkvl if i < k, then every dipath of G is embedded in S. Example: Topological sort: d, h, i, g, j, b, a, f. S = da, df, dg, di, hg, hj, ib, ig, ij, gf, jb, ba, af. ▶It follows that Ford’s Algorithm will solve the shortest path problem in just one pass through E."
+  },
+  {
+    "id": "shortest-paths-79",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 79,
+    "text": "Acyclic digraphs When does a digraph have a topological sort? We say that a digraph G is acyclic if it has no dicircuit. Observation G has a topological sort if and only if G is acyclic. Proof: see Notes."
+  },
+  {
+    "id": "shortest-paths-80",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 80,
+    "text": "Acyclic digraphs When does a digraph have a topological sort? We say that a digraph G is acyclic if it has no dicircuit. Observation G has a topological sort if and only if G is acyclic. Proof: see Notes."
+  },
+  {
+    "id": "shortest-paths-81",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 81,
+    "text": "Acyclic digraphs ▶A usual representation of a digraph is to store all the arcs having tail v in a list Lv. To scan v means to do the following: For each vw ∈Lv: if vw is incorrect, correct vw. Shortest paths in an acyclic digraph 1. Find a topological sort v1, . . . , vn of G with r = v1 2. Initialize y, p 3. For i = 1 to n Scan vi Notice that, if r = vi with i > 1, then there can be no dipath from r to v1, . . . , vi−1 so these nodes can be deleted. Hence we may assume that v1 = r."
+  },
+  {
+    "id": "shortest-paths-82",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 82,
+    "text": "Acyclic digraphs ▶Acyclic digraphs admit a topological sort ▶There is a O(m) algorithm to find a topological sort ▶The graph is acyclic, so all dipaths are simple ▶We can order the arcs in sequence S with no repetitions, so that each dipath is embedded is S. ▶|S| = m, i.e. we have a “one pass” algorithm! Theorem 2.18 The shortest path problem on an acyclic digraph can be solved in time O(m)."
+  },
+  {
+    "id": "shortest-paths-83",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 83,
+    "text": "Nonnegative Costs ▶In many applications of the shortest path problem we know that c ≥0. ▶It is possible to design a “one-pass” algorithm based on an ordering of the nodes. ▶This ordering is computed during the course of execution. ▶If v1, v2, . . . , vi have been determined and scanned, then vi+1 is chosen to be the unscanned node v for which yv is minimum."
+  },
+  {
+    "id": "shortest-paths-84",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 84,
+    "text": "Dijkstra’s algorithm 1. Initialize y, p 2. Set Q = V 3. While Q ̸= ∅ Choose v ∈Q with yv minimum Delete v from Q Scan v"
+  },
+  {
+    "id": "shortest-paths-85",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 85,
+    "text": "Dijkstra’s algorithm 1. Initialize y, p 2. Set Q = V 3. While Q ̸= ∅ Choose v ∈Q with yv minimum Delete v from Q Scan v Q = { r, a, b, p, q}"
+  },
+  {
+    "id": "shortest-paths-86",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 86,
+    "text": "Dijkstra’s algorithm 1. Initialize y, p 2. Set Q = V 3. While Q ̸= ∅ Choose v ∈Q with yv minimum Delete v from Q Scan v Q = { r, a, b, p, q}"
+  },
+  {
+    "id": "shortest-paths-87",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 87,
+    "text": "Dijkstra’s algorithm 1. Initialize y, p 2. Set Q = V 3. While Q ̸= ∅ Choose v ∈Q with yv minimum Delete v from Q Scan v Q = { r, a, b, p, q}"
+  },
+  {
+    "id": "shortest-paths-88",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 88,
+    "text": "Dijkstra’s algorithm 1. Initialize y, p 2. Set Q = V 3. While Q ̸= ∅ Choose v ∈Q with yv minimum Delete v from Q Scan v Q = { r, a, b, p, q}"
+  },
+  {
+    "id": "shortest-paths-89",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 89,
+    "text": "Dijkstra’s algorithm 1. Initialize y, p 2. Set Q = V 3. While Q ̸= ∅ Choose v ∈Q with yv minimum Delete v from Q Scan v Q = { r, a, b, p, q}"
+  },
+  {
+    "id": "shortest-paths-90",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 90,
+    "text": "Dijkstra’s algorithm 1. Initialize y, p 2. Set Q = V 3. While Q ̸= ∅ Choose v ∈Q with yv minimum Delete v from Q Scan v Q = { r, a, b, p, q}"
+  },
+  {
+    "id": "shortest-paths-91",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 91,
+    "text": "Dijkstra’s algorithm 1. Initialize y, p 2. Set Q = V 3. While Q ̸= ∅ Choose v ∈Q with yv minimum Delete v from Q Scan v Q = { r, a, b, p, q}"
+  },
+  {
+    "id": "shortest-paths-92",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 92,
+    "text": "Dijkstra’s algorithm 1. Initialize y, p 2. Set Q = V 3. While Q ̸= ∅ Choose v ∈Q with yv minimum Delete v from Q Scan v Q = { r, a, b, p, q}"
+  },
+  {
+    "id": "shortest-paths-93",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 93,
+    "text": "Dijkstra’s algorithm 1. Initialize y, p 2. Set Q = V 3. While Q ̸= ∅ Choose v ∈Q with yv minimum Delete v from Q Scan v Q = { r, a, b, p, q}"
+  },
+  {
+    "id": "shortest-paths-94",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 94,
+    "text": "Dijkstra’s algorithm 1. Initialize y, p 2. Set Q = V 3. While Q ̸= ∅ Choose v ∈Q with yv minimum Delete v from Q Scan v Q = { r, a, b, p, q}"
+  },
+  {
+    "id": "shortest-paths-95",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 95,
+    "text": "Dijkstra’s algorithm 1. Initialize y, p 2. Set Q = V 3. While Q ̸= ∅ Choose v ∈Q with yv minimum Delete v from Q Scan v Q = { r, a, b, p, q}"
+  },
+  {
+    "id": "shortest-paths-96",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 96,
+    "text": "Dijkstra’s algorithm 1. Initialize y, p 2. Set Q = V 3. While Q ̸= ∅ Choose v ∈Q with yv minimum Delete v from Q Scan v Q = { r, a, b, p, q}"
+  },
+  {
+    "id": "shortest-paths-97",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 97,
+    "text": "Correctness of Dijkstra’s algorithm We now show the correctness of Dijkstra’s algorithm…"
+  },
+  {
+    "id": "shortest-paths-98",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 98,
+    "text": "Correctness of Dijkstra’s algorithm We now show the correctness of Dijkstra’s algorithm…"
+  },
+  {
+    "id": "shortest-paths-99",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 99,
+    "text": "Correctness of Dijkstra’s algorithm For each w ∈V, let y′w be the value of yw when w is chosen to be scanned. Proposition 2.19 If u is scanned before v, then y′u ≤y′v. Proof: see Notes. Theorem Dijkstra’s algorithm is valid. Proof: see Notes."
+  },
+  {
+    "id": "shortest-paths-100",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 100,
+    "text": "Dijkstra’s algorithm ▶The running time of the algorithm is given by the time to find v plus the time to scan v. ▶We need O(m) to scan all given nodes. ▶Choosing v requires considerable time: 1 + 2 + · · · + (n −2) + (n −1) = O(n2) comparisons. ▶The running time is O(n2). Theorem 2.20 lf c ≥0, then the shortest path problem can be solved in time O(n2)."
+  },
+  {
+    "id": "shortest-paths-101",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 101,
+    "text": "Unit costs ▶All arc-costs are 1: problem of finding a dipath from r to v having as few arcs as possible. Proposition 2.21 If each ce = 1, then in Dijkstra’s algorithm the final value of yv is the first finite value assigned to it. Moreover, if v is assigned its first finite yv before q is, then yv ≤yq. Proof: see Notes."
+  },
+  {
+    "id": "shortest-paths-102",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 102,
+    "text": "Unit costs ▶When picking v ∈Q such that yv is minimum, we choose among the set Q of those unscanned nodes v having yv finite. ▶Proposition 2.21 tells us that we can simply choose the element of Q that was added to Q first, that is, we can keep Q as a queue, and v can be found in constant time. ▶So Dijkstra’s Algorithm has a running time of O(m) in the case of unit costs. ▶We no longer need to maintain the yv."
+  },
+  {
+    "id": "shortest-paths-103",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 103,
+    "text": "Breadth-first search 1. Initialize p 2. Set Q = {r} 3. While Q ̸= ∅ Delete v from the front of Q For each vw ∈Lv If p(w) = −1 Add w to the back of Q Set p(w) = v"
+  },
+  {
+    "id": "shortest-paths-110",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 110,
+    "text": "Example Q = { 1, 4, 7, 6, 10, 3, 9, 2, 5, }"
+  },
+  {
+    "id": "shortest-paths-111",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 111,
+    "text": "Example Q = { 1, 4, 7, 6, 10, 3, 9, 2, 5, }"
+  },
+  {
+    "id": "shortest-paths-112",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 112,
+    "text": "Example Q = { 1, 4, 7, 6, 10, 3, 9, 2, 5, }"
+  },
+  {
+    "id": "shortest-paths-113",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 113,
+    "text": "Example Q = { 1, 4, 7, 6, 10, 3, 9, 2, 5, 8, }"
+  },
+  {
+    "id": "shortest-paths-114",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 114,
+    "text": "Example Q = { 1, 4, 7, 6, 10, 3, 9, 2, 5, 8, 11}"
+  },
+  {
+    "id": "shortest-paths-115",
+    "unit": "Shortest Paths",
+    "file": "2.2 Shortest paths (1) (4).pdf",
+    "page": 115,
+    "text": "Example Q = { 1, 4, 7, 6, 10, 3, 9, 2, 5, 8, 11}"
+  },
+  {
+    "id": "maximum-flow-1",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 1,
+    "text": "ISyE/Math/CS 425 Introduction to Combinatorial Optimization 3. Maximum Flow Problems Prof. Carla Michini University of Wisconsin-Madison"
+  },
+  {
+    "id": "maximum-flow-2",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 2,
+    "text": "Outline ▶We will see the Maximum Flow Problem and the Minimum Cut Problem. ▶We will prove the Max-Flow Min-Cut Theorem. ▶We will study the Augmenting Path algorithm for solving both problems at once."
+  },
+  {
+    "id": "maximum-flow-4",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 4,
+    "text": "Trucks problem ▶We want to send as many trucks as possible from one point r in a street network to another point s. ▶For each street segment e, there is an upper bound ue on the number of trucks that are allowed to use e."
+  },
+  {
+    "id": "maximum-flow-5",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 5,
+    "text": "Dipaths in a digraph ▶Problem: on a digraph G, find a family (P1, . . . , Pk) of (r, s)-dipaths in G, such that each arc e is an arc of at most ue of the dipaths and such that k is maximized."
+  },
+  {
+    "id": "maximum-flow-6",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 6,
+    "text": "Dipaths in a digraph ▶Problem: on a digraph G, find a family (P1, . . . , Pk) of (r, s)-dipaths in G, such that each arc e is an arc of at most ue of the dipaths and such that k is maximized. Example: P1 = r, p, a, s ."
+  },
+  {
+    "id": "maximum-flow-7",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 7,
+    "text": "Dipaths in a digraph ▶Problem: on a digraph G, find a family (P1, . . . , Pk) of (r, s)-dipaths in G, such that each arc e is an arc of at most ue of the dipaths and such that k is maximized. Example: P1 = r, p, a, s, P2 = r, q, b, s ."
+  },
+  {
+    "id": "maximum-flow-8",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 8,
+    "text": "Dipaths in a digraph ▶Problem: on a digraph G, find a family (P1, . . . , Pk) of (r, s)-dipaths in G, such that each arc e is an arc of at most ue of the dipaths and such that k is maximized. Example: P1 = r, p, a, s, P2 = r, q, b, s and P3 = r, q, a, p, b, s."
+  },
+  {
+    "id": "maximum-flow-9",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 9,
+    "text": "Flows For every arc e ∈E, we define xe := |{i : Pi uses e}|. Remark 1: we can restrict to simple dipaths and to simple digraphs. Remark 2: for each v ∈V \\ {r, s}, Pi must enter and leave v the same number of times."
+  },
+  {
+    "id": "maximum-flow-10",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 10,
+    "text": "Flows xe = |{i : Pi uses e}| satisfies: ∑ ∑ xwv − xvw = 0 ∀v ∈V \\ {r, s} (1) wv∈E vw∈E 0 ≤xe ≤ue ∀e ∈E (2) xe integer ∀e ∈E (3) ▶r is the source, s is the sink. ▶x is an (r, s)-flow if it satisfies (1). ▶It is feasible if it also satisfies (2). ▶It is integral if it also satisfies (3)."
+  },
+  {
+    "id": "maximum-flow-11",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 11,
+    "text": "Flows ∑ ∑ xwv − xvw = 0 ∀v ∈V \\ {r, s} (1) wv∈E vw∈E 0 ≤xe ≤ue ∀e ∈E (2) xe integer ∀e ∈E (3) ▶The net flow into v is ∑ ∑ fx(v) := xwv − xvw. wv∈E vw∈E ▶The value of x is fx(s). ▶The number k of dipaths satisfies k = fx(s). ▶x is acyclic if there is no dicircuit C, each of whose arcs e has xe > 0."
+  },
+  {
+    "id": "maximum-flow-12",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 12,
+    "text": "Dipaths & Flows One can recover dipaths from integral feasible flows: Proposition 3.1 There exists a family (P1, . . . , Pk) of (r, s)-dipaths such that |{i : Pi uses e}| ≤ue for all e ∈E if and only if there exists an integral feasible (r, s)-flow of value k. Let’s prove it!"
+  },
+  {
+    "id": "maximum-flow-13",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 13,
+    "text": "Maximum Integral Flow Problem By Proposition 3.1, we can solve our problem if we can solve the following: Maximum Integral Flow Problem maximize fx(s) subject to fx(v) = 0 ∀v ∈V \\ {r, s} 0 ≤xe ≤ue ∀e ∈E xe integer ∀e ∈E"
+  },
+  {
+    "id": "maximum-flow-14",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 14,
+    "text": "Maximum Flow problem ▶If there is no restriction of integrality, the problem is called the maximum flow problem ▶The numbers ue are called capacities. We allow them to be non-negative real numbers or ∞. The latter just means that there is no upper bound on xe."
+  },
+  {
+    "id": "maximum-flow-15",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 15,
+    "text": "Flows & cuts There is a natural way to get upper bounds for the maximum value of a flow. 10 10 10 10 1 r 10 10 s 10 10 10 10 How?"
+  },
+  {
+    "id": "maximum-flow-16",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 16,
+    "text": "Flows & cuts ▶A cut is a set δ(R) := {vw : vw ∈E, v ∈R, w /∈R}, for some R ⊆V. ∑ ▶The capacity of a cut δ(R) is u(δ(R)) = vw∈δ(R) uvw. ▶An (r, s)-cut is a cut δ(R) for which r ∈R, s /∈R. ▶For any A ⊆V we use ¯A to denote V \\ A."
+  },
+  {
+    "id": "maximum-flow-17",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 17,
+    "text": "Flows & cuts ▶A cut is a set δ(R) := {vw : vw ∈E, v ∈R, w /∈R}, for some R ⊆V. ∑ ▶The capacity of a cut δ(R) is u(δ(R)) = vw∈δ(R) uvw. ▶An (r, s)-cut is a cut δ(R) for which r ∈R, s /∈R. ▶For any A ⊆V we use ¯A to denote V \\ A."
+  },
+  {
+    "id": "maximum-flow-18",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 18,
+    "text": "Max-Flow Min-Cut Theorem We now show how to upper bound the maximum flow value. Proposition 3.3 For any (r, s)-cut δ(R) and any (r, s)-flow x, we have x(δ(R)) −x(δ(¯R)) = fx(s). Proof: see Notes."
+  },
+  {
+    "id": "maximum-flow-19",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 19,
+    "text": "Max-Flow Min-Cut Theorem We now show how to upper bound the maximum flow value. Proposition 3.3 For any (r, s)-cut δ(R) and any (r, s)-flow x, we have x(δ(R)) −x(δ(¯R)) = fx(s). Proof: see Notes. R = {r, p, q} gives x(δ(R)) −x(δ(¯R)) = 4 −1 = 3."
+  },
+  {
+    "id": "maximum-flow-20",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 20,
+    "text": "Max-Flow Min-Cut Theorem We now show how to upper bound the maximum flow value. Proposition 3.3 For any (r, s)-cut δ(R) and any (r, s)-flow x, we have x(δ(R)) −x(δ(¯R)) = fx(s). Corollary 3.4 For any feasible (r, s)-flow x and any (r, s)-cut δ(R), we have fx(s) ≤u(δ(R)) Proof: see Notes."
+  },
+  {
+    "id": "maximum-flow-21",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 21,
+    "text": "Max-Flow Min-Cut Theorem Corollary 3.4 For any feasible (r, s)-flow x and any (r, s)-cut δ(R), we have fx(s) ≤u(δ(R)) ▶Therefore, the maximum flow value is bounded by the minimum cut capacity. ▶So if we can find a flow and a cut such that the value of the flow is equal to the capacity of the cut then we know that the flow is maximum. ▶We will show that this can always be done!"
+  },
+  {
+    "id": "maximum-flow-22",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 22,
+    "text": "Max-Flow Min-Cut Theorem Theorem 3.5 (Max-Flow Min-Cut Theorem) If there is a maximum (r, s)-flow, then max{fx(s) : x feasible (r, s)-flow} = = min{u(δ(R)) : δ(R) an (r, s)-cut}. p 1, 0 a 1, 1 1, 1 1, 1 3, 2 3, 2 r s 4, 3 4, 3 1, 1 q1, 0 b"
+  },
+  {
+    "id": "maximum-flow-23",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 23,
+    "text": "Max-Flow Min-Cut Theorem ▶We prove the theorem by solving both optimization problems. ▶How can we solve the maximum flow problem? ▶Given a feasible flow x, we find one of larger value. ▶Idea: We find an (r, s)-dipath P for which xe < ue for each arc e of P, then we increase x by the same value on all arcs of P. 1, 0 1, 0 r 1, 0 s 1, 0 1, 0"
+  },
+  {
+    "id": "maximum-flow-24",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 24,
+    "text": "Max-Flow Min-Cut Theorem ▶We prove the theorem by solving both optimization problems. ▶How can we solve the maximum flow problem? ▶Given a feasible flow x, we find one of larger value. ▶Idea: We find an (r, s)-dipath P for which xe < ue for each arc e of P, then we increase x by the same value on all arcs of P. 1, 0 1, 0 r 1, 0 s 1, 0 1, 0"
+  },
+  {
+    "id": "maximum-flow-25",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 25,
+    "text": "Max-Flow Min-Cut Theorem ▶We prove the theorem by solving both optimization problems. ▶How can we solve the maximum flow problem? ▶Given a feasible flow x, we find one of larger value. ▶Idea: We find an (r, s)-dipath P for which xe < ue for each arc e of P, then we increase x by the same value on all arcs of P. 1, 1 1, 0 r 1, 1 s 1, 0 1, 1"
+  },
+  {
+    "id": "maximum-flow-26",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 26,
+    "text": "Max-Flow Min-Cut Theorem ▶We prove the theorem by solving both optimization problems. ▶How can we solve the maximum flow problem? ▶Given a feasible flow x, we find one of larger value. ▶Idea: We find an (r, s)-dipath P for which xe < ue for each arc e of P, then we increase x by the same value on all arcs of P. 1, 1 1, 0 r 1, 1 s 1, 0 1, 1 ▶There are no more such dipaths, but the flow is not maximum! ▶This idea is not enough to solve the problem."
+  },
+  {
+    "id": "maximum-flow-27",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 27,
+    "text": "Max-Flow Min-Cut Theorem What we have: 1, 1 1, 0 r 1, 1 s 1, 0 1, 1 What we want: 1, 1 1, 1 r 1, 0 s 1, 1 1, 1"
+  },
+  {
+    "id": "maximum-flow-28",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 28,
+    "text": "Max-Flow Min-Cut Theorem What we have: 1, 1 1, 0 r 1, 1 s 1, 0 1, 1 What we want: 1, 1 1, 1 r 1, 0 s 1, 1 1, 1"
+  },
+  {
+    "id": "maximum-flow-29",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 29,
+    "text": "Max-Flow Min-Cut Theorem ▶We call a path x-incrementing if ▶Every forward arc e has xe < ue, ▶Every reverse arc e has xe > 0. ▶An x-augmenting path is an (r, s)-path that is x-incrementing. ▶Given an x-augmenting path we can find a flow of larger value: ▶Raise xe by some positive ϵ on each forward arc, ▶Lower xe by ϵ on each reverse arc. ▶Question: Why is it a flow? This idea allows us to show the fundamental Max-Flow Min-Cut Theorem…"
+  },
+  {
+    "id": "maximum-flow-30",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 30,
+    "text": "Max-Flow Min-Cut Theorem ▶We call a path x-incrementing if ▶Every forward arc e has xe < ue, ▶Every reverse arc e has xe > 0. ▶An x-augmenting path is an (r, s)-path that is x-incrementing. ▶Given an x-augmenting path we can find a flow of larger value: ▶Raise xe by some positive ϵ on each forward arc, ▶Lower xe by ϵ on each reverse arc. ▶Question: Why is it a flow? This idea allows us to show the fundamental Max-Flow Min-Cut Theorem…"
+  },
+  {
+    "id": "maximum-flow-31",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 31,
+    "text": "Max-Flow Min-Cut Theorem Theorem 3.5 (Max-Flow Min-Cut Theorem) If there is a maximum (r, s)-flow, then max{fx(s) : x feasible (r, s)-flow} = = min{u(δ(R)) : δ(R) an (r, s)-cut}. Proof: see Notes."
+  },
+  {
+    "id": "maximum-flow-32",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 32,
+    "text": "Max-Flow Min-Cut Theorem Theorem 3.5 (Max-Flow Min-Cut Theorem) If there is a maximum (r, s)-flow, then max{fx(s) : x feasible (r, s)-flow} = = min{u(δ(R)) : δ(R) an (r, s)-cut}. Proof: see Notes. Theorem 3.6 A feasible flow x is maximum if and only ifthere is no x-augmenting path. Proof: see Notes."
+  },
+  {
+    "id": "maximum-flow-33",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 33,
+    "text": "The Augmenting Path Algorithm ▶Beginning with x = 0, repeatedly find an x-augmenting path P and augment x by the maximum value permitted. ▶This value is ϵ := min(ϵ1, ϵ2), where ϵ1 := min{ue −xe : e forward in P}, ϵ2 := min{xe : e reverse in P}. We call ϵ the x-width of P. ▶If such a path with x-width ∞is found, then there is no maximum flow, and the algorithm terminates. ▶If there is no x-augmenting path, then by Theorem 3.6 x is a maximum flow and the set R of nodes reachable by an x-incrementing path from r determines a minimum cut; again, the algorithm terminates."
+  },
+  {
+    "id": "maximum-flow-34",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 34,
+    "text": "The Augmenting Path Algorithm for Integral Flows ▶In the Maximum Integral Flow Problem, we have the further constraint that the flow x must be integral. ▶In this case, we can replace capacities ue with the integral ⌊ue⌋. ▶In the Augmenting Path Algorithm, in each iteration the flow x remains integral. ▶Therefore the maximum flow found will be integral."
+  },
+  {
+    "id": "maximum-flow-35",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 35,
+    "text": "Searching for augmenting paths ▶How do we search for augmenting paths? ▶Define an auxiliary digraph G(x), depending on G, u and the current flow x, as follows. V(G(x)) = V, E(G(x)) = {vw : vw ∈E and xvw < uvw or wv ∈E and xwv > 0}."
+  },
+  {
+    "id": "maximum-flow-36",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 36,
+    "text": "Example of auxiliary digraph Original digraph G with u, x Auxiliary digraph G(x) ▶x-augmenting paths correspond to (r, s)-dipaths in G(x). ▶Each iteration of the maximum flow algorithm can be performed in O(m) time using breadth-first search."
+  },
+  {
+    "id": "maximum-flow-37",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 37,
+    "text": "Example of the Augmenting Path Algorithm Digraph G with flow Auxiliary digraph p 1, 0 a 1, 0 1, 0 1, 0 3, 0 3, 0 r s 4, 0 4, 0 1, 0 q1, 0 b"
+  },
+  {
+    "id": "maximum-flow-38",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 38,
+    "text": "Example of the Augmenting Path Algorithm Digraph G with flow Auxiliary digraph p 1, 0 a p a 1, 0 1, 0 1, 0 3, 0 3, 0 r s r s 4, 0 4, 0 1, 0 q1, 0 b qb"
+  },
+  {
+    "id": "maximum-flow-39",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 39,
+    "text": "Example of the Augmenting Path Algorithm Digraph G with flow Auxiliary digraph p 1, 0 a p a 1, 0 1, 0 1, 0 3, 0 3, 0 r s r s 4, 0 4, 0 1, 0 q1, 0 b qb"
+  },
+  {
+    "id": "maximum-flow-40",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 40,
+    "text": "Example of the Augmenting Path Algorithm Digraph G with flow Auxiliary digraph p 1, 1 a 1, 0 1, 1 1, 1 3, 0 3, 0 r s 4, 0 4, 0 1, 0 q1, 0 b"
+  },
+  {
+    "id": "maximum-flow-41",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 41,
+    "text": "Example of the Augmenting Path Algorithm Digraph G with flow Auxiliary digraph p 1, 1 a p a 1, 0 1, 1 1, 1 3, 0 3, 0 r s r s 4, 0 4, 0 1, 0 q1, 0 b qb"
+  },
+  {
+    "id": "maximum-flow-42",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 42,
+    "text": "Example of the Augmenting Path Algorithm Digraph G with flow Auxiliary digraph p 1, 1 a p a 1, 0 1, 1 1, 1 3, 0 3, 0 r s r s 4, 0 4, 0 1, 0 q1, 0 b qb"
+  },
+  {
+    "id": "maximum-flow-43",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 43,
+    "text": "Example of the Augmenting Path Algorithm Digraph G with flow Auxiliary digraph p 1, 1 a 1, 0 1, 1 1, 1 3, 0 3, 0 r s 4, 1 4, 1 1, 1 q1, 0 b"
+  },
+  {
+    "id": "maximum-flow-44",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 44,
+    "text": "Example of the Augmenting Path Algorithm Digraph G with flow Auxiliary digraph p 1, 1 a p a 1, 0 1, 1 1, 1 3, 0 3, 0 r s r s 4, 1 4, 1 1, 1 q1, 0 b qb"
+  },
+  {
+    "id": "maximum-flow-45",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 45,
+    "text": "Example of the Augmenting Path Algorithm Digraph G with flow Auxiliary digraph p 1, 1 a p a 1, 0 1, 1 1, 1 3, 0 3, 0 r s r s 4, 1 4, 1 1, 1 q1, 0 b qb"
+  },
+  {
+    "id": "maximum-flow-46",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 46,
+    "text": "Example of the Augmenting Path Algorithm Digraph G with flow Auxiliary digraph p 1, 1 a 1, 1 1, 1 1, 1 3, 1 3, 1 r s 4, 2 4, 2 1, 1 q1, 0 b"
+  },
+  {
+    "id": "maximum-flow-47",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 47,
+    "text": "Example of the Augmenting Path Algorithm Digraph G with flow Auxiliary digraph p 1, 1 a p a 1, 1 1, 1 1, 1 3, 1 3, 1 r s r s 4, 2 4, 2 1, 1 q1, 0 b qb"
+  },
+  {
+    "id": "maximum-flow-48",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 48,
+    "text": "Example of the Augmenting Path Algorithm Digraph G with flow Auxiliary digraph p 1, 1 a p a 1, 1 1, 1 1, 1 3, 1 3, 1 r s r s 4, 2 4, 2 1, 1 q1, 0 b qb"
+  },
+  {
+    "id": "maximum-flow-49",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 49,
+    "text": "Example of the Augmenting Path Algorithm Digraph G with flow Auxiliary digraph p 1, 0 a 1, 1 1, 1 1, 1 3, 2 3, 2 r s 4, 3 4, 3 1, 1 q1, 0 b"
+  },
+  {
+    "id": "maximum-flow-50",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 50,
+    "text": "Example of the Augmenting Path Algorithm Digraph G with flow Auxiliary digraph p 1, 0 a p a 1, 1 1, 1 1, 1 3, 2 3, 2 r s r s 4, 3 4, 3 1, 1 q1, 0 b qb"
+  },
+  {
+    "id": "maximum-flow-51",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 51,
+    "text": "Example of the Augmenting Path Algorithm Digraph G with flow Auxiliary digraph p 1, 0 a p a 1, 1 1, 1 1, 1 3, 2 3, 2 r s r s 4, 3 4, 3 1, 1 q1, 0 b qb"
+  },
+  {
+    "id": "maximum-flow-52",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 52,
+    "text": "Example of the Augmenting Path Algorithm Digraph G with flow Auxiliary digraph p 1, 0 a 1, 1 1, 1 1, 1 3, 2 3, 2 r s 4, 3 4, 3 1, 1 q1, 0 b"
+  },
+  {
+    "id": "maximum-flow-53",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 53,
+    "text": "Number of augmentations The running time of the algorithm depends directly on the number of augmentations required. Theorem 3.9 If each component of u is either integral or ∞, and the maximum flow value is K < ∞, then the maximum flow algorithm terminates after at most K augmentations. Proof. ▶When u is integral, x remains integral, and each augmentation is of value at least 1."
+  },
+  {
+    "id": "maximum-flow-54",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 54,
+    "text": "Number of augmentations The bound of Theorem 3.9 can actually be attained. Example: M, 0 M, 0 r 1, 0 s M, 0 M, 0"
+  },
+  {
+    "id": "maximum-flow-55",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 55,
+    "text": "Number of augmentations The bound of Theorem 3.9 can actually be attained. Example: M, 0 M, 0 r 1, 0 s M, 0 M, 0"
+  },
+  {
+    "id": "maximum-flow-56",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 56,
+    "text": "Number of augmentations The bound of Theorem 3.9 can actually be attained. Example: M, 1 M, 0 r 1, 1 s M, 0 M, 1"
+  },
+  {
+    "id": "maximum-flow-57",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 57,
+    "text": "Number of augmentations The bound of Theorem 3.9 can actually be attained. Example: M, 1 M, 0 r 1, 1 s M, 0 M, 1"
+  },
+  {
+    "id": "maximum-flow-58",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 58,
+    "text": "Number of augmentations The bound of Theorem 3.9 can actually be attained. Example: M, 1 M, 1 r 1, 0 s M, 1 M, 1"
+  },
+  {
+    "id": "maximum-flow-59",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 59,
+    "text": "Number of augmentations The bound of Theorem 3.9 can actually be attained. Example: M, 1 M, 1 r 1, 0 s M, 1 M, 1"
+  },
+  {
+    "id": "maximum-flow-60",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 60,
+    "text": "Shortest Augmenting Paths ▶We will now see a bound on the number of augmentations that does not depend on the capacities. ▶We call an x-augmenting path shortest if it has the minimum possible number of arcs. Theorem 3.10 If each augmentation of the augmenting path algorithm is on a shortest augmenting path, then there are at most nm augmentations."
+  },
+  {
+    "id": "maximum-flow-61",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 61,
+    "text": "Shortest Augmenting Paths Corollary 3.11 The augmenting path algorithm with breadth-first search solves the maximum flow problem in time O(nm2). Proof. ▶By Theorem 3.10 there are at most nm augmentations. ▶Breadth-first search finds a shortest augmenting path in time O(m)."
+  },
+  {
+    "id": "maximum-flow-62",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 62,
+    "text": "3.3 Applications of Maximum Flow and Minimum Cut"
+  },
+  {
+    "id": "maximum-flow-63",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 63,
+    "text": "Bipartite Matchings and Covers ▶We are given two sets P and Q of people, and the pairs (p, q) that like each other. ▶The marriage problem is to arrange as many (monogamous) marriages as possible with the restriction that married people should like each other."
+  },
+  {
+    "id": "maximum-flow-64",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 64,
+    "text": "Bipartite graphs P Q ▶We can associate with the input a graph G = (V, E) such that b V = P ∪Q and E ⊆{pq : p ∈P, q ∈Q}. ▶Such graphs, where there is a b partition of the nodes into two sets such that every edge has its ends in different sets, are called bipartite. b ▶{P, Q} is called a bipartition of G. b"
+  },
+  {
+    "id": "maximum-flow-65",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 65,
+    "text": "Matchings P Q b ▶A matching of G is a subset M of E such that no two edges in M share an end. b ▶The marriage problem asks for a matching of G of maximum size. b b"
+  },
+  {
+    "id": "maximum-flow-66",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 66,
+    "text": "Covers b r ▶A cover of a graph G is a set C of nodes such that every edge of G has at least one end in C. r r"
+  },
+  {
+    "id": "maximum-flow-67",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 67,
+    "text": "Covers Observation For any matching M and any cover C, we have |M| ≤|C|. Proof. ▶For each edge vw ∈M, at least one of its ends is in C. ▶Because matching edges cannot have an end in common, the corresponding nodes of C are all distinct. r ▶Therefore, |M| ≤|C|."
+  },
+  {
+    "id": "maximum-flow-68",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 68,
+    "text": "Covers b ▶It follows that, if we can find a b matching M and a cover C with |M| = |C|, then we know that M is maximum. r r"
+  },
+  {
+    "id": "maximum-flow-69",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 69,
+    "text": "König’s Theorem Theorem 3.14 (König’s Theorem) For a bipartite graph G, max{|M| : M a matching} = min{|C| : C a cover}. Let’s prove it using maximum flows!"
+  },
+  {
+    "id": "maximum-flow-70",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 70,
+    "text": "Proof of König’s Theorem We show how: ▶The Max-Flow Min-Cut Theorem implies König’s Theorem. ▶A maximum flow algorithm provides an eﬀicient algorithm for constructing a maximum matching and a minimum cover. Given G with bipartition {P, Q}, we form a digraph G′ = (V′, E′) with capacity vector u as follows."
+  },
+  {
+    "id": "maximum-flow-71",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 71,
+    "text": "Proof of König’s Theorem ▶V′ = V ∪{r, s}, where r, s are new nodes. ▶For each edge pq of G with p ∈P, q ∈Q, there is an arc pq ∈E′ with capacity ∞. ▶For each p ∈P there is an arc rp ∈E′ of capacity 1. ▶For each q ∈Q there is an arc qs ∈E′ of capacity 1. b b∞ 1 1 b b P Q r b s b b b b"
+  },
+  {
+    "id": "maximum-flow-72",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 72,
+    "text": "Proof of König’s Theorem ▶Let x be an integral feasible flow in G′ of value k. ▶This implies that x is {0, 1}-valued. Why? ▶Define M ⊆E by: pq ∈M if xpq = 1 and pq /∈M if xpq = 0. ▶Then M is a matching of G. Why? ▶|M| = k by applying Proposition 3.3 to (r, s)-cut δ({r} ∪P). b ∞ 1 1 b P Q r s b b"
+  },
+  {
+    "id": "maximum-flow-73",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 73,
+    "text": "Proof of König’s Theorem ▶Let x be an integral feasible flow in G′ of value k. ▶This implies that x is {0, 1}-valued. Why? ▶Define M ⊆E by: pq ∈M if xpq = 1 and pq /∈M if xpq = 0. ▶Then M is a matching of G. Why? ▶|M| = k by applying Proposition 3.3 to (r, s)-cut δ({r} ∪P). ∞ 1 1 P Q r s"
+  },
+  {
+    "id": "maximum-flow-74",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 74,
+    "text": "Proof of König’s Theorem ▶Now consider a minimum cut δ′({r} ∪U) where U ⊆V. ▶Since it has finite capacity (why?), there can be no edge of G from P ∩U to Q \\ U. ▶Therefore, every edge of G is incident with an element of C := (P \\ U) ∪(Q ∩U). That is, C is a cover. ▶The capacity of the cut is |P \\ U| + |Q ∩U| = |C|, so C is a cover of cardinality equal to the max size of a matching. b ∞ 1 1 b P Q r s b b"
+  },
+  {
+    "id": "maximum-flow-75",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 75,
+    "text": "Proof of König’s Theorem ▶Now consider a minimum cut δ′({r} ∪U) where U ⊆V. ▶Since it has finite capacity (why?), there can be no edge of G from P ∩U to Q \\ U. ▶Therefore, every edge of G is incident with an element of C := (P \\ U) ∪(Q ∩U). That is, C is a cover. ▶The capacity of the cut is |P \\ U| + |Q ∩U| = |C|, so C is a cover of cardinality equal to the max size of a matching. b ∞ 1 1 b P Q r s b b"
+  },
+  {
+    "id": "maximum-flow-76",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 76,
+    "text": "Proof of König’s Theorem ▶If the maximum integral (r, s)-flow on G′ has value k, we can construct a matching M∗of size k. ▶By the Max-Flow Min-Cut theorem, the capacity of the minimum (r, s)-cut in G′ is k. ▶Given a minimum (r, s)-cut in G′ of cardinality k, we can construct a cover C∗of cardinality k. ▶Since |M| ≤|C| for any matching M and for any cover C of G, we conclude that M∗is a maximum matching and that C∗is a minimum cover, and they have the same size"
+  },
+  {
+    "id": "maximum-flow-77",
+    "unit": "Maximum Flow",
+    "file": "3. Maximum Flow (1) (1).pdf",
+    "page": 77,
+    "text": "Proof of König’s Theorem ▶Hence we can find a maximum cardinality matching in G by solving the maximum flow problem on G′. ▶There will be at most |P| ≤n augmentations, by Theorem 3.9, since the maximum matching size is at most |P|. ▶So we get an algorithm for maximum bipartite matching having running time O(mn)."
+  }
+]

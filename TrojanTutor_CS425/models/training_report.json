@@ -1,0 +1,11 @@
+{
+  "model_type": "TF-IDF + supervised SGD logistic-loss classifiers",
+  "trained_on": "265 lecture pages and authored CS425 question patterns",
+  "topic_training_examples": 306,
+  "topic_test_examples": 78,
+  "topic_heldout_phrase_accuracy": 0.551,
+  "unit_page_chunk_test_accuracy": 0.984,
+  "unit_training_examples": 253,
+  "unit_test_examples": 64,
+  "limitations": "Not an LLM; cannot generate unconstrained explanations. Slides have duplicates across successive animation pages, so unit test score is optimistic."
+}

@@ -1,0 +1,783 @@
+[
+ {
+  "id": "tsp",
+  "unit": "Problems and Algorithms",
+  "title": "The Traveling Salesman Problem",
+  "refs": [
+   5,
+   8,
+   25
+  ],
+  "aliases": [
+   "tsp",
+   "traveling salesman",
+   "travelling salesman",
+   "traveling salesperson",
+   "salesman problem",
+   "tour",
+   "helicopter",
+   "oil platforms",
+   "euclidean tsp"
+  ],
+  "simple": "The Traveling Salesman Problem, or TSP, gives you a set of points. You must find one tour that visits every point exactly once, comes back to the start, and has the smallest total distance. In the lecture the points are oil platforms plus the helicopter base, and distance stands in for flying time.",
+  "analogy": "Picture a delivery driver planning one loop through every stop, trying to burn as little fuel as possible.",
+  "example": "Take four points at the corners of a square with side one. Going around the edge costs four. Zig-zagging along both diagonals costs about four point eight three. So the edge loop is the best tour.",
+  "why": "TSP is the lecture's standard example of a problem with a huge number of candidate solutions where no efficient exact algorithm is known, and most researchers believe none exists.",
+  "trap": "TSP is not about getting to one destination quickly. It is one loop that must cover everything.",
+  "check": "With straight-line distances, why would passing through the same point twice never help?"
+ },
+ {
+  "id": "brute_force",
+  "unit": "Problems and Algorithms",
+  "title": "Brute force and factorial growth",
+  "refs": [
+   8
+  ],
+  "aliases": [
+   "brute force",
+   "enumerate all",
+   "try every tour",
+   "factorial",
+   "n minus 1 factorial",
+   "178 centuries",
+   "all possible solutions",
+   "2 to the n"
+  ],
+  "simple": "Brute force means list every possible solution, evaluate each one, and pick the best. For the TSP with n points there are n minus one factorial, divided by two, different tours.",
+  "analogy": "It is like checking every possible seating chart at a wedding before choosing one.",
+  "example": "With five points there are only twelve tours, which is easy. With twenty-three points there are about five point six times ten to the twentieth tours. At one nanosecond each, that is about one hundred seventy-eight centuries, exactly the number on the slide.",
+  "why": "Factorial growth is even faster than exponential growth, so brute force is hopeless long before the inputs look large.",
+  "trap": "A fast computer does not rescue brute force. Each extra point multiplies the work by roughly n.",
+  "check": "Why does a single extra point multiply the work instead of just adding a little?"
+ },
+ {
+  "id": "nearest_neighbor",
+  "unit": "Problems and Algorithms",
+  "title": "The Nearest Neighbor heuristic",
+  "refs": [
+   11,
+   32,
+   33,
+   34
+  ],
+  "aliases": [
+   "nearest neighbor",
+   "nearest neighbour",
+   "greedy tour",
+   "not optimal heuristic",
+   "nearest unvisited"
+  ],
+  "simple": "Nearest Neighbor builds a tour quickly. Pick any starting point, repeatedly walk to the closest point you have not visited yet, and when everything is visited, return to the start. It is fast, but it does not guarantee the best tour.",
+  "analogy": "It is like clearing grocery aisles by always walking to the nearest unvisited aisle. You may finish the nearby ones fast, then face a long walk back across the store.",
+  "example": "Each step scans at most n points, and there are about n steps, so the running time is on the order of n squared. The lecture counts the steps carefully and gets a polynomial bound.",
+  "why": "Choosing the locally cheapest next step can strand you far from the remaining points, which is why a greedy choice can give a poor complete tour.",
+  "trap": "Fast does not mean optimal. Nearest Neighbor is a heuristic, not an exact algorithm.",
+  "check": "Can you describe a layout of points where grabbing the nearest point first leads to one very long final leg?"
+ },
+ {
+  "id": "matching",
+  "unit": "Problems and Algorithms",
+  "title": "The Euclidean matching problem",
+  "refs": [
+   22,
+   19,
+   25
+  ],
+  "aliases": [
+   "euclidean matching",
+   "matching problem",
+   "perfect matching",
+   "pair up points",
+   "circuit drawing",
+   "plotter",
+   "odd nodes",
+   "even number of odd nodes",
+   "pen up"
+  ],
+  "simple": "In Euclidean matching you have an even number of points. You pair them up so each point is in exactly one pair, and you minimize the total length of the pairing lines. The lecture motivates it with a plotter drawing a circuit: pairing up the odd nodes with the shortest extra lines lets the pen draw everything without lifting.",
+  "analogy": "Think of assigning dance partners so that everyone has exactly one partner and the total walking distance between partners is smallest.",
+  "example": "Four points at the corners of a rectangle two wide and one tall. Pairing along the two short sides costs two. Pairing along the long sides costs four. Pairing along the diagonals costs about four point five. The short sides win.",
+  "why": "Matching looks a lot like TSP, but an efficient algorithm exists for matching, while none is known for TSP.",
+  "trap": "Matching and TSP both pick lines between points, but a matching never forms a tour. Each point is used exactly once.",
+  "check": "Why must the number of odd nodes in any figure be even?"
+ },
+ {
+  "id": "polynomial_time",
+  "unit": "Problems and Algorithms",
+  "title": "Running time and polynomial-time algorithms",
+  "refs": [
+   31,
+   28,
+   29,
+   34
+  ],
+  "aliases": [
+   "polynomial time",
+   "polynomial",
+   "big o",
+   "order of",
+   "running time",
+   "efficient algorithm",
+   "size of a problem",
+   "complexity",
+   "o of n squared",
+   "exponential",
+   "input size"
+  ],
+  "simple": "We judge an algorithm by how many elementary steps it needs as a function of the input size, and we focus on the order of magnitude, ignoring constants. An algorithm is called efficient, or polynomial time, if its step count is bounded by the input size raised to some fixed power.",
+  "analogy": "Think of how cooking time grows when the guest list doubles. A polynomial recipe gets a few times slower. An exponential one becomes impossible.",
+  "example": "Say the input size doubles from ten to twenty. A squared bound goes from one hundred to four hundred. Two to the power of the size goes from about one thousand to over one million. The lecture says five s squared plus three s is order s squared.",
+  "why": "Constants and small terms stop mattering for large inputs, so the growth rate is what separates practical algorithms from hopeless ones.",
+  "trap": "A better bound does not always mean better performance in practice, because the bound covers the worst case over all inputs.",
+  "check": "For the Euclidean TSP the input size is two n. Why is an n squared algorithm still polynomial in that size?"
+ },
+ {
+  "id": "graph_basics",
+  "unit": "Minimum Spanning Trees",
+  "title": "Graphs, paths, and circuits",
+  "refs": [
+   3,
+   6,
+   12,
+   14
+  ],
+  "aliases": [
+   "graph",
+   "node",
+   "nodes",
+   "vertex",
+   "vertices",
+   "edge",
+   "subgraph",
+   "path",
+   "circuit",
+   "cycle",
+   "connected",
+   "adjacent",
+   "incident",
+   "spanning subgraph",
+   "induced subgraph",
+   "simple path"
+  ],
+  "simple": "A graph is a set of nodes plus a set of edges, where each edge joins two different nodes. A path walks node to edge to node. A circuit, or cycle, is a closed path that never repeats an edge or a node, except that it ends where it began. A graph is connected if every pair of nodes is joined by a path.",
+  "analogy": "Think of cities as nodes and roads as edges.",
+  "example": "Nodes a, b, c with edges a b, b c, and c a form a circuit: go a to b to c and back to a without reusing a road.",
+  "why": "These words are the vocabulary for everything else in the unit, especially circuits, because spanning trees are exactly the connected graphs with no circuits.",
+  "trap": "A path may repeat nodes. A simple path may not, and a circuit is a special closed path.",
+  "check": "Is a closed walk that revisits a node in the middle a circuit by this definition?"
+ },
+ {
+  "id": "tree_forest",
+  "unit": "Minimum Spanning Trees",
+  "title": "Trees, forests, and spanning trees",
+  "refs": [
+   21,
+   50
+  ],
+  "aliases": [
+   "tree",
+   "forest",
+   "spanning tree",
+   "n minus 1 edges",
+   "acyclic",
+   "no circuit",
+   "lemma 2.2",
+   "connected forest"
+  ],
+  "simple": "A forest is a graph with no circuit. A tree is a connected forest. A spanning tree is a tree that includes every node of the graph. A connected graph on n nodes is a spanning tree exactly when it has n minus one edges.",
+  "analogy": "A tree is a network with no loops and no redundancy: remove any one link and something becomes cut off.",
+  "example": "With five nodes, every spanning tree has exactly four edges. That is why Kruskal stops after four accepted edges on the demo graph.",
+  "why": "If a connected graph has a circuit, you can delete an edge of it and stay connected, so any cheapest connected network can be assumed to have no circuits.",
+  "trap": "Having n minus one edges is not enough on its own. The graph must also be connected.",
+  "check": "If a connected graph has n nodes, what is the least number of edges it can have, and why?"
+ },
+ {
+  "id": "mst",
+  "unit": "Minimum Spanning Trees",
+  "title": "Minimum spanning tree",
+  "refs": [
+   17,
+   19,
+   21
+  ],
+  "aliases": [
+   "mst",
+   "minimum spanning tree",
+   "minimum cost spanning tree",
+   "connector problem",
+   "cheapest network",
+   "spanning tree problem",
+   "cheapest connected"
+  ],
+  "simple": "A minimum spanning tree, or MST, is a set of edges that connects every node, has no cycles, and has the smallest possible total edge cost. It comes from the connector problem: connect all offices as cheaply as possible.",
+  "analogy": "Think of laying cable to link every office in a company for the least total cost. You never lay a cable that only closes a loop.",
+  "example": "On the demo graph with nodes A through E, the MST uses edges B C at one, A C at two, D E at two, and B D at five, for a total of ten.",
+  "why": "Positive costs plus deletable circuit edges mean an optimal connected network has no circuits, so it is a tree.",
+  "trap": "An MST minimizes the cost of the whole network. It does not give the cheapest route between two particular nodes.",
+  "check": "Can the MST and the set of shortest paths from one node use different edges?",
+  "contrast": {
+   "shortest_path": "Take a triangle from a node r to nodes a and b, with r a costing two, r b costing two, and a b costing one. The MST uses a b plus one of the other edges for a total of three. The shortest-path tree from r uses both r a and r b, for a total of four. They minimize different things."
+  }
+ },
+ {
+  "id": "cut",
+  "unit": "Minimum Spanning Trees",
+  "title": "Cuts in a graph",
+  "refs": [
+   38,
+   39
+  ],
+  "aliases": [
+   "cut",
+   "delta of u",
+   "crossing edge",
+   "crossing edges",
+   "trivial cut",
+   "partition of nodes",
+   "theorem 2.3"
+  ],
+  "simple": "A cut splits the nodes into two groups, U and everything else. The cut itself is the set of edges with one end on each side.",
+  "analogy": "Draw a line across a map dividing the cities in two. The cut is every road that crosses the line.",
+  "example": "Nodes a, b, c, d, edges a b, a c, b d, c d, and U equals a and b. The cut is a c and b d. The edges a b and c d stay inside one side.",
+  "why": "A graph is connected exactly when every non-trivial cut has at least one edge, since an empty cut means the two sides cannot reach each other.",
+  "trap": "A cut is a set of edges, not a set of nodes. The nodes only describe where to slice.",
+  "check": "If a cut is empty, what does that say about connectivity?"
+ },
+ {
+  "id": "kruskal",
+  "unit": "Minimum Spanning Trees",
+  "title": "Kruskal's algorithm",
+  "refs": [
+   23,
+   51,
+   52,
+   53,
+   54
+  ],
+  "aliases": [
+   "kruskal",
+   "kruskals",
+   "kruskal algorithm",
+   "sort edges",
+   "skip cycle",
+   "avoid cycles",
+   "avoid cycle",
+   "forest",
+   "cheapest edge",
+   "union find",
+   "find and merge",
+   "reject edge"
+  ],
+  "simple": "Kruskal's algorithm sorts the edges from cheapest to most expensive and goes down the list. It keeps an edge unless the edge would create a cycle. It stops when the chosen edges form a spanning tree.",
+  "analogy": "Imagine hiring bridge builders and always taking the cheapest unbuilt bridge, but skipping any bridge that connects two places that are already linked.",
+  "example": "On the demo graph: B C costs one, accept. A C costs two, accept. D E costs two, accept. A B costs four, but A and B are already connected through C, so skip. B D costs five, accept. That is four edges, total ten.",
+  "why": "An edge whose ends are already connected would close a loop, which adds cost but connects nothing new, and a tree cannot contain a cycle. An edge joining two different components is the cheapest edge leaving that component, so the cut rule says it is safe.",
+  "trap": "Kruskal does not grow one tree. It keeps a forest of many pieces that merge together over time.",
+  "check": "When Kruskal looks at an edge, how can it quickly tell whether the edge would form a cycle?",
+  "demo": "kruskal",
+  "contrast": {
+   "prim": "Kruskal keeps a forest and merges pieces. Prim keeps a single tree and grows it. Both end with the same total cost, though they may pick different edges when costs tie."
+  }
+ },
+ {
+  "id": "prim",
+  "unit": "Minimum Spanning Trees",
+  "title": "Prim's algorithm",
+  "refs": [
+   30,
+   45,
+   46,
+   47,
+   50
+  ],
+  "aliases": [
+   "prim",
+   "prims",
+   "prim algorithm",
+   "grow a tree",
+   "grow tree",
+   "start from a node",
+   "minimum crossing edge",
+   "tree from root"
+  ],
+  "simple": "Prim's algorithm starts from one node and grows a single tree. At each step it adds the cheapest edge that connects the tree to a node that is not in it yet. It stops when the tree spans every node.",
+  "analogy": "Imagine spreading a network outward from headquarters, always taking the cheapest connection to a new office.",
+  "example": "On the demo graph starting at A: the cheapest edge out is A C at two. Then B C at one. Then B D at five. Then D E at two. Total ten.",
+  "why": "Each step picks a cheapest edge of the cut between the tree and everything else, and the cut rule says that keeps the partial tree extendible to an MST.",
+  "trap": "Prim always has one connected tree. Do not confuse that with the forest Kruskal keeps.",
+  "check": "Which cut is Prim looking at when it chooses its next edge?"
+ },
+ {
+  "id": "mst_correctness",
+  "unit": "Minimum Spanning Trees",
+  "title": "Why the MST algorithms are correct",
+  "refs": [
+   40,
+   41
+  ],
+  "aliases": [
+   "correctness",
+   "theorem 2.4",
+   "theorem 2.5",
+   "theorem 2.6",
+   "cut property",
+   "cut rule",
+   "extendible",
+   "why does greedy work",
+   "exchange argument",
+   "lemma 2.7",
+   "safe edge",
+   "prove prim",
+   "prove kruskal"
+  ],
+  "simple": "Both algorithms are correct because of one idea, the cut rule. Suppose your edges so far can still be completed into an MST. Pick any cut that none of your edges cross, and add the cheapest edge crossing it. Your edges can still be completed into an MST.",
+  "analogy": "Think of it as an exchange: if the best tree lacked your cheap edge, you could swap it in and not make things worse.",
+  "example": "Suppose an MST T lacks the cheapest edge e across a cut. Adding e to T creates a cycle, and that cycle must cross the cut again at some other edge f, which costs at least as much as e. Swap f for e, and you still have a spanning tree that costs no more.",
+  "why": "That swap argument, Lemma two point seven, is what turns a local greedy choice into a global guarantee.",
+  "trap": "The cut must not contain any edge already chosen. That condition is what keeps the choice safe.",
+  "check": "Where exactly does the proof use the fact that the cut contains none of the chosen edges?"
+ },
+ {
+  "id": "mst_runtime",
+  "unit": "Minimum Spanning Trees",
+  "title": "Running time of Prim and Kruskal",
+  "refs": [
+   50,
+   54,
+   42,
+   47,
+   52
+  ],
+  "aliases": [
+   "running time of prim",
+   "running time of kruskal",
+   "complexity of prim",
+   "complexity of kruskal",
+   "o of nm",
+   "efficiency",
+   "how fast is kruskal",
+   "how fast is prim",
+   "edge list"
+  ],
+  "simple": "The graph is stored as an edge list, so its size is three m. Prim does n minus one rounds, and each round scans all m edges, giving order n times m. Kruskal sorts the edges in order m log m, then handles merges, giving order m log m plus n squared in the lecture's simple version.",
+  "analogy": "Prim re-scans the whole edge list every time it adds an edge. Kruskal sorts once and then makes a single pass.",
+  "example": "A connected graph has at least n minus one edges, so n is at most order m, and m is at most order n squared.",
+  "why": "Those two facts let the lecture simplify its bounds.",
+  "trap": "These are the lecture's straightforward implementations. Fancier data structures run faster.",
+  "check": "Why does Prim perform exactly n minus one rounds?"
+ },
+ {
+  "id": "shortest_path",
+  "unit": "Shortest Paths",
+  "title": "The shortest path problem",
+  "refs": [
+   9,
+   15,
+   4
+  ],
+  "aliases": [
+   "shortest path",
+   "shortest paths",
+   "shortest dipath",
+   "least cost path",
+   "driving distances",
+   "directions",
+   "digraph",
+   "dipath",
+   "source r",
+   "single source"
+  ],
+  "simple": "You have a directed graph where each arc has a cost, and a starting node r. For every other node, you want the cheapest directed path from r.",
+  "analogy": "It is like driving directions from one place to every other address, obeying one-way streets.",
+  "example": "Arcs: r to a costs four, r to b costs one, b to a costs two. The direct route to a costs four, but going through b costs three, so that is the shortest.",
+  "why": "Subpaths of shortest paths are themselves shortest paths, so the best routes from r can be collected into a directed spanning tree.",
+  "trap": "Fewest arcs is the same as cheapest only when every arc costs one.",
+  "check": "Why must every part of a shortest path itself be a shortest path?",
+  "contrast": {
+   "mst": "A shortest-path tree minimizes the cost from the source to each node. An MST minimizes the total cost of the entire network. They can choose different edges."
+  }
+ },
+ {
+  "id": "feasible_potential",
+  "unit": "Shortest Paths",
+  "title": "Feasible potentials",
+  "refs": [
+   13,
+   14,
+   16
+  ],
+  "aliases": [
+   "feasible potential",
+   "potential",
+   "certificate",
+   "proposition 2.9",
+   "lower bound on distance",
+   "y v",
+   "optimality certificate"
+  ],
+  "simple": "A feasible potential is a set of numbers, one per node, with the root at zero, such that no single arc can improve any of them. That is, for every arc, the number at its start plus the arc cost is at least the number at its end.",
+  "analogy": "Think of price tags that nobody can undercut by taking one more hop.",
+  "example": "Using r to a at four, r to b at one, b to a at two: set r zero, b one, a three. Every arc passes the test. The path r, b, a costs exactly three, matching a's number, which proves it is shortest.",
+  "why": "Any path from r to v costs at least the potential at v. So a path whose cost equals the potential is proven shortest.",
+  "trap": "A potential is a lower bound. It only certifies a shortest path when an actual path matches it.",
+  "check": "Why does any path from r to v have cost at least the potential of v?"
+ },
+ {
+  "id": "ford_algorithm",
+  "unit": "Shortest Paths",
+  "title": "Ford's algorithm and relaxation",
+  "refs": [
+   11,
+   16,
+   17
+  ],
+  "aliases": [
+   "ford",
+   "fords algorithm",
+   "relaxation",
+   "relax",
+   "relaxing",
+   "incorrect arc",
+   "correct an arc",
+   "predecessor",
+   "tentative distance",
+   "label correcting",
+   "improve an arc"
+  ],
+  "simple": "Ford's algorithm starts with distance zero at the root and infinity elsewhere. Whenever it finds an arc whose start distance plus cost is less than its end distance, it corrects that arc: it lowers the end distance and records the start as the predecessor. It repeats until no arc can be corrected.",
+  "analogy": "It is like hearing news of a faster route and updating your answer every time one shows up.",
+  "example": "Start: a and b are infinity. Correct r to a: a becomes four. Correct r to b: b becomes one. Now b to a gives one plus two equals three, which beats four, so a becomes three with predecessor b.",
+  "why": "Each distance always matches the cost of a real path, and when no arc is incorrect the numbers form a feasible potential, so they are optimal.",
+  "trap": "Correcting an arc only ever lowers a distance estimate, and it never produces a number that is not the cost of an actual path.",
+  "check": "When the algorithm stops, why are the distances guaranteed optimal?"
+ },
+ {
+  "id": "negative_cycle",
+  "unit": "Shortest Paths",
+  "title": "Negative-cost circuits",
+  "refs": [
+   29,
+   47
+  ],
+  "aliases": [
+   "negative cycle",
+   "negative circuit",
+   "negative cost dicircuit",
+   "negative dicircuit",
+   "arbitrage",
+   "currency exchange",
+   "does not terminate",
+   "negative loop"
+  ],
+  "simple": "A negative-cost circuit is a directed loop whose total cost is below zero. Going around it again always lowers your cost, so shortest paths do not exist for nodes reachable through it, and Ford's algorithm never finishes.",
+  "analogy": "It is like a money machine that pays you every lap.",
+  "example": "Arcs a to b costs one, b to c costs one, c to a costs minus three. One lap costs minus one, so every lap makes the path cheaper without limit. The lecture connects currency exchanges that make money to negative circuits using minus logarithms of the rates.",
+  "why": "The problem is not a single negative arc. It is a loop whose arcs sum below zero.",
+  "trap": "Negative arcs alone are fine for Ford-Bellman. Only a negative circuit reachable from the root breaks things.",
+  "check": "Can a graph have a negative arc but no negative circuit, and what happens to shortest paths then?"
+ },
+ {
+  "id": "ford_bellman",
+  "unit": "Shortest Paths",
+  "title": "The Ford-Bellman algorithm",
+  "refs": [
+   66,
+   67,
+   68,
+   69
+  ],
+  "aliases": [
+   "bellman ford",
+   "ford bellman",
+   "bellman",
+   "passes",
+   "n minus 1 passes",
+   "o of mn",
+   "detect negative cycle",
+   "negative edges allowed"
+  ],
+  "simple": "Ford-Bellman is Ford's algorithm with a fixed schedule: sweep through all the arcs in any order, and repeat for n minus one passes. If there is no negative circuit, that is enough. If the numbers still are not a feasible potential afterward, a negative circuit exists. Running time is order m times n.",
+  "analogy": "Each pass lets good news travel one more hop.",
+  "example": "A graph with four nodes needs at most three passes, because a shortest simple path has at most three arcs.",
+  "why": "Every simple path has at most n minus one arcs, and each pass guarantees the next arc of any path is handled.",
+  "trap": "It handles negative arcs, unlike Dijkstra, but it is slower.",
+  "check": "Why is n minus one passes enough when there is no negative circuit?",
+  "contrast": {
+   "dijkstra": "Ford-Bellman allows negative arcs and takes order m times n. Dijkstra needs nonnegative costs but is faster because it handles each node once."
+  }
+ },
+ {
+  "id": "dag_shortest",
+  "unit": "Shortest Paths",
+  "title": "Shortest paths in acyclic digraphs",
+  "refs": [
+   70,
+   79,
+   82
+  ],
+  "aliases": [
+   "dag",
+   "acyclic digraph",
+   "topological sort",
+   "topological order",
+   "directed acyclic graph",
+   "one pass"
+  ],
+  "simple": "In a digraph with no directed circuit, you can list the nodes in a topological order, so every arc points forward. Process the arcs in that order and each path is handled in a single pass. Shortest paths then take order m time, and negative costs are fine.",
+  "analogy": "It is like getting dressed: socks before shoes. You handle things in an order where everything a step depends on is already done.",
+  "example": "With nodes in the order r, a, b, c, scan arcs leaving r, then a, then b. By the time you reach b, both routes into it are finalized.",
+  "why": "A digraph has a topological sort exactly when it is acyclic, and with no circuits there are no repeated passes to worry about.",
+  "trap": "This needs an acyclic graph. It does not apply to graphs with directed cycles.",
+  "check": "Why can negative arcs never cause trouble in an acyclic digraph?"
+ },
+ {
+  "id": "dijkstra",
+  "unit": "Shortest Paths",
+  "title": "Dijkstra's algorithm",
+  "refs": [
+   83,
+   84,
+   99,
+   100
+  ],
+  "aliases": [
+   "dijkstra",
+   "dijkstras",
+   "nonnegative",
+   "non negative",
+   "nonnegative costs",
+   "scan",
+   "greedy shortest path",
+   "why not negative",
+   "negative edges",
+   "negative weights",
+   "settle",
+   "settled"
+  ],
+  "simple": "Dijkstra's algorithm assumes every arc cost is zero or more. It repeatedly picks the unscanned node with the smallest current distance, finalizes it by scanning, and corrects its outgoing arcs. Each node is scanned exactly once.",
+  "analogy": "Think of ripples spreading from a pebble: the nearest places get reached, and locked in, first.",
+  "example": "On the demo graph from A: scan A, so B is four and C is two. Scan C: B improves to three, D becomes ten, E becomes twelve. Scan B: D improves to eight. Scan D: E improves to ten. Final: B three, C two, D eight, E ten.",
+  "why": "When a node is scanned, any other route to it must pass through unscanned nodes whose distances are already at least as large. With nonnegative arcs, extra arcs can never make that route cheaper. A negative arc breaks this: r to a costs two, r to b costs three, b to a costs minus two. Dijkstra locks in a at two, but the true distance is one.",
+  "trap": "Dijkstra is not just a slower or faster Ford. Its correctness depends on nonnegative costs, and a single negative arc can break it.",
+  "check": "Suppose arc r to a costs two, r to b costs three, and b to a costs minus two. At what moment does Dijkstra go wrong, and why?",
+  "demo": "dijkstra",
+  "contrast": {
+   "ford_bellman": "Dijkstra needs nonnegative costs but handles each node once. Ford-Bellman allows negative arcs at the price of repeated passes."
+  }
+ },
+ {
+  "id": "unit_costs_bfs",
+  "unit": "Shortest Paths",
+  "title": "Unit costs and breadth-first search",
+  "refs": [
+   101,
+   102,
+   103
+  ],
+  "aliases": [
+   "bfs",
+   "breadth first search",
+   "breadth-first search",
+   "unit costs",
+   "fewest arcs",
+   "all costs 1",
+   "queue"
+  ],
+  "simple": "When every arc costs one, a shortest path is just one with the fewest arcs. Then Dijkstra's priority choice becomes an ordinary first-in, first-out queue, which is breadth-first search.",
+  "analogy": "It is like checking all your friends, then their friends, then their friends, ring by ring.",
+  "example": "The first time breadth-first search reaches a node, that distance is already final.",
+  "why": "With equal costs, the first finite value assigned to a node is its final value.",
+  "trap": "This shortcut only works when all costs are equal.",
+  "check": "Why can a plain queue replace the priority choice when all costs are one?"
+ },
+ {
+  "id": "flow",
+  "unit": "Maximum Flow",
+  "title": "Flows and the maximum flow problem",
+  "refs": [
+   10,
+   14,
+   4
+  ],
+  "aliases": [
+   "flow",
+   "maximum flow",
+   "max flow",
+   "network flow",
+   "capacity",
+   "capacities",
+   "conservation",
+   "source",
+   "sink",
+   "trucks problem",
+   "feasible flow",
+   "integral flow"
+  ],
+  "simple": "A flow sends material from a source r to a sink s through a network where each arc has a capacity. Two rules: never exceed an arc's capacity, and at every node other than r and s, flow in equals flow out. The maximum flow problem asks for the largest total that can get from r to s.",
+  "analogy": "Think of water through pipes of different widths. No pipe can carry more than its width, and no water appears or vanishes at the junctions.",
+  "example": "Take arcs r to a with capacity three, r to b with capacity two, a to s with capacity two, and b to s with capacity two. The path through a is limited to two by the arc a to s, and the path through b is also two, so the maximum flow is four.",
+  "why": "Conservation at intermediate nodes is what makes a flow decomposable into paths from r to s.",
+  "trap": "Capacity is on arcs, not nodes, and conservation applies only to the intermediate nodes, not to the source or sink.",
+  "check": "Why must flow in equal flow out at an intermediate node?"
+ },
+ {
+  "id": "cut_capacity",
+  "unit": "Maximum Flow",
+  "title": "Cuts and their capacity",
+  "refs": [
+   16,
+   15,
+   18,
+   21
+  ],
+  "aliases": [
+   "cut",
+   "min cut",
+   "minimum cut",
+   "cut capacity",
+   "capacity of a cut",
+   "r s cut",
+   "upper bound on flow",
+   "bottleneck"
+  ],
+  "simple": "A cut picks a set R of nodes that contains the source but not the sink. Its capacity is the total capacity of the arcs leaving R. All flow from source to sink must cross that boundary, so every cut is an upper bound on the maximum flow.",
+  "analogy": "Imagine a toll gate across every road between two regions: it can only pass so many trucks per hour.",
+  "example": "Take arcs r to a with capacity three, r to b with capacity two, a to s with capacity two, and b to s with capacity two. Choosing R as just r gives capacity five. Choosing R as r, a, and b gives capacity four, since only a to s and b to s leave it. A flow of four exists, so that second cut proves nothing larger is possible.",
+  "why": "If you find a flow and a cut with the same value, both are optimal. That is a proof you can check.",
+  "trap": "Only arcs leaving R count toward capacity. Arcs coming back into R do not.",
+  "check": "Why does only the capacity of arcs leaving R matter?"
+ },
+ {
+  "id": "maxflow_mincut",
+  "unit": "Maximum Flow",
+  "title": "The Max-Flow Min-Cut theorem",
+  "refs": [
+   22,
+   31,
+   33
+  ],
+  "aliases": [
+   "max flow min cut",
+   "maxflow mincut",
+   "theorem 3.5",
+   "equal optimal values",
+   "duality",
+   "weakest link"
+  ],
+  "simple": "The maximum flow value always equals the minimum cut capacity. Every cut is an upper bound on flow, and the theorem says some cut is exactly tight.",
+  "analogy": "A chain is only as strong as its weakest link, and the minimum cut is that weakest link in the network.",
+  "example": "Take arcs r to a with capacity three, r to b with capacity two, a to s with capacity two, and b to s with capacity two. The best flow is four, and the smallest cut is also four. They match.",
+  "why": "When the augmenting path algorithm finds no more augmenting paths, the set of nodes reachable from the source gives a cut whose capacity equals the flow.",
+  "trap": "The theorem says the optimal values are equal. It does not say a flow and a cut are the same object.",
+  "check": "How does the final reachable set from the algorithm give you a minimum cut?"
+ },
+ {
+  "id": "augmenting_path",
+  "unit": "Maximum Flow",
+  "title": "The augmenting path algorithm",
+  "refs": [
+   29,
+   33,
+   34
+  ],
+  "aliases": [
+   "augmenting path",
+   "augment",
+   "augmenting",
+   "x augmenting",
+   "incrementing path",
+   "ford fulkerson",
+   "width",
+   "increase flow"
+  ],
+  "simple": "Start with zero flow. Repeatedly find an augmenting path from r to s, meaning every forward arc still has spare capacity and every backward arc carries some flow. Push as much as fits: add to forward arcs and subtract on backward arcs. When no such path exists, the flow is maximum.",
+  "analogy": "It is like squeezing more water through the pipes by finding a route with room, or by rerouting some existing water to free up space.",
+  "example": "Five arcs: r to a, r to b, a to b, a to s, b to s, all capacity one. If the first path used is r, a, b, s, then the path r, b, back along a to b, then a to s pushes one more unit and gives total flow two.",
+  "why": "Allowing backward arcs lets the algorithm undo earlier choices, so a bad early path never traps it.",
+  "trap": "Augmenting along forward arcs only would sometimes get stuck short of the maximum.",
+  "check": "Why can the algorithm sometimes need to reduce flow on an arc?"
+ },
+ {
+  "id": "auxiliary_digraph",
+  "unit": "Maximum Flow",
+  "title": "The auxiliary digraph (residual network)",
+  "refs": [
+   35,
+   36
+  ],
+  "aliases": [
+   "residual",
+   "residual network",
+   "residual graph",
+   "auxiliary digraph",
+   "auxiliary graph",
+   "g of x",
+   "reverse arc",
+   "backward arc",
+   "undo flow",
+   "how do you find augmenting paths"
+  ],
+  "simple": "To find augmenting paths, build an auxiliary digraph. This is what many textbooks call the residual network. Keep an arc where there is spare capacity, and add a reverse arc wherever flow could be undone. Then augmenting paths are exactly the paths from source to sink in this graph, found by breadth-first search.",
+  "analogy": "It is a map of where you can still push more, plus where you can take back what you already sent.",
+  "example": "Take five arcs, r to a, r to b, a to b, a to s, b to s, all with capacity one, and suppose one unit was already pushed along r, a, b, s. Now a to b is full, but its reverse arc b to a is available. So the path r, b, a, s is valid, and it pushes one more unit.",
+  "why": "Reverse arcs are what let the algorithm cancel earlier decisions. Searching one graph handles forward and backward moves together.",
+  "trap": "The course says auxiliary digraph. If you search other sources for residual network, it is the same idea.",
+  "check": "What does a reverse arc in the auxiliary digraph represent?"
+ },
+ {
+  "id": "shortest_augmenting",
+  "unit": "Maximum Flow",
+  "title": "How many augmentations?",
+  "refs": [
+   53,
+   54,
+   60,
+   61
+  ],
+  "aliases": [
+   "number of augmentations",
+   "shortest augmenting path",
+   "edmonds karp",
+   "theorem 3.9",
+   "theorem 3.10",
+   "o of nm squared",
+   "running time of max flow",
+   "bad example"
+  ],
+  "simple": "With whole-number capacities, the augmenting path algorithm needs at most K augmentations, where K is the maximum flow value. That can be huge. If each augmentation uses a path with the fewest arcs, found by breadth-first search, there are at most n times m augmentations no matter the capacities, so the total time is order n times m squared.",
+  "analogy": "Choosing the shortest route first keeps the algorithm from zig-zagging back and forth for ages.",
+  "example": "The lecture shows a graph where four arcs have capacity M and a middle arc has capacity one. Unlucky path choices can force about two M augmentations, even though the graph has only a handful of arcs.",
+  "why": "Capacities can be enormous while the graph stays small, so we want a bound that does not depend on them.",
+  "trap": "The bound K is not polynomial in the graph size, since K can be large while n and m stay small.",
+  "check": "Why does choosing shortest augmenting paths remove the dependence on the capacities?"
+ },
+ {
+  "id": "bipartite_konig",
+  "unit": "Maximum Flow",
+  "title": "Bipartite matching and König's theorem",
+  "refs": [
+   63,
+   65,
+   66,
+   67,
+   69
+  ],
+  "aliases": [
+   "bipartite",
+   "bipartite matching",
+   "konig",
+   "könig",
+   "konigs theorem",
+   "cover",
+   "vertex cover",
+   "matching and cover",
+   "people and jobs"
+  ],
+  "simple": "In a bipartite graph, a matching is a set of edges with no shared endpoints, and a cover is a set of nodes touching every edge. Any matching is no bigger than any cover. König's theorem says the biggest matching equals the smallest cover, and the lecture proves it using max flow and min cut.",
+  "analogy": "Think of assigning people to jobs they can do: a matching is a valid assignment, and a cover is a small set of people or jobs that every possible pairing involves.",
+  "example": "People p one and p two can both only do job q one. The best matching has size one, and the cover consisting of q one has size one. They match.",
+  "why": "Turn the bipartite graph into a flow network with a source and a sink and unit capacities, and a maximum flow gives a maximum matching.",
+  "trap": "This equality holds for bipartite graphs, not for every graph.",
+  "check": "Why is every matching no bigger than every cover?"
+ }
+]
