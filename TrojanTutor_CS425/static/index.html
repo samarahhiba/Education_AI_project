@@ -1,39 +1,641 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TrojanTutor CS 425</title><style>
-:root{font-family:Inter,system-ui,sans-serif;color:#17263b;background:#f2f5fa}*{box-sizing:border-box}body{margin:0}header{padding:22px max(20px,calc((100vw - 1180px)/2));background:#7d1628;color:white}header h1{margin:0 0 6px;font-size:27px}header p{margin:0;color:#ffe1e4}main{max-width:1180px;margin:24px auto;padding:0 16px}.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}.panel{background:white;border:1px solid #dae1ea;border-radius:14px;padding:20px;margin-bottom:18px;box-shadow:0 3px 14px #1a263d0d}h2{font-size:19px;margin:0 0 12px}h3{font-size:15px}label,small,.sub{font-size:13px;color:#53647c}select,input,button,textarea{font:inherit;border-radius:8px;padding:10px;border:1px solid #bec9d9}button{background:#7d1628;color:white;border:none;cursor:pointer;font-weight:600}button.secondary{background:#e9eef5;color:#223550}button:disabled{opacity:.5;cursor:default}button:hover{filter:brightness(.96)}input{width:100%}.controls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.controls button{font-size:13px}.status{background:#eff4fa;border-radius:8px;padding:10px;color:#354a61;font-size:13px}.chat{height:340px;overflow-y:auto;border:1px solid #e0e7ef;border-radius:10px;padding:10px;background:#fbfcfe}.msg{border-radius:9px;padding:10px;margin:8px 0;white-space:pre-wrap;line-height:1.5;font-size:14px}.msg.user{background:#e8effb;margin-left:10%}.msg.tutor{background:#f5edf0;margin-right:8%}.formrow{display:flex;gap:8px;margin-top:10px}.formrow input{flex:1;min-width:0}.evidence{border-left:3px solid #a67c48;background:#faf7f0;margin:10px 0;padding:10px;font-size:12px;line-height:1.4}.evidence a{color:#7d1628}.muted{color:#65738a}pre{white-space:pre-wrap;background:#f6f8fb;padding:10px;border-radius:8px;font-size:12px}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;border-bottom:1px solid #e5e9ef;padding:9px}#algorithmResults{max-height:330px;overflow:auto}.tag{display:inline-block;background:#ffeff1;color:#751428;padding:4px 8px;border-radius:20px;font-size:12px}footer{text-align:center;font-size:12px;color:#63738b;margin:22px auto 40px}@media(max-width:850px){.grid{grid-template-columns:1fr}}
-</style></head><body><header><h1>TrojanTutor <span style="font-weight:400">/ CS 425</span></h1><p>Voice-interruptible, course-grounded combinatorial optimization tutor · Week 1 baseline</p></header><main><div class="grid"><section class="panel"><h2>Live tutoring <span class="tag" id="mode">Starting</span></h2><label for="unit">Teaching unit</label><select id="unit" style="width:100%;margin:7px 0 12px"><option>Problems and Algorithms</option><option selected>Minimum Spanning Trees</option><option>Shortest Paths</option><option>Maximum Flow</option></select><div class="controls"><button id="lecture">▶ Start mini-lecture</button><button id="mic" class="secondary">🎙 Enable microphone</button><button id="stop" class="secondary">■ Stop voice</button><button id="resume" class="secondary">↻ Resume</button></div><div id="status" class="status" aria-live="polite">Initializing session…</div><div class="chat" id="chat" aria-live="polite"></div><form id="questionForm" class="formrow"><input id="question" placeholder="Ask about the selected unit…" maxlength="1200" required><button id="askButton">Ask</button></form><p class="sub">Barge-in: enable microphone and speak while the tutor is talking. Speech stops immediately when detected; your question is submitted when recognition completes. Say “resume” to continue the paused explanation. Headphones recommended.</p><h3>Retrieved slide evidence</h3><div id="sources" class="muted">Sources appear after a question.</div></section><div><section class="panel"><h2>Slide search</h2><p class="sub">Search the lecture slides (265 pages merged into 137 slides) across four uploaded CS 425 PDFs.</p><form id="searchForm" class="formrow"><input id="searchInput" value="Why does Kruskal avoid cycles?" required><button>Search</button></form><div id="searchResults"></div></section><section class="panel"><h2>Executable algorithm lab</h2><p class="sub">Independent Python verification; step through MST and shortest-path decisions.</p><label for="algorithm">Algorithm</label><select id="algorithm" style="width:100%;margin:7px 0"><option value="kruskal">Kruskal (undirected MST)</option><option value="dijkstra">Dijkstra (directed shortest paths)</option></select><div class="controls"><button id="run">Run algorithm</button><button id="previous" class="secondary">← Back</button><button id="next" class="secondary">Next →</button></div><div id="algorithmSummary" class="status">Choose Run algorithm.</div><div id="algorithmResults"></div></section></div></div><section class="panel" id="researchLab"><h2>Misconception Lab <span class="tag">research prototype</span></h2><p class="sub">Explain your reasoning, receive a targeted counterexample when a conservative rule recognizes a misconception, then try a transfer question. Diagnosis is tentative; this does not declare mastery.</p><label for="conceptTarget">Concept</label><select id="conceptTarget" style="width:100%;margin:7px 0 12px"><option value="kruskal">Kruskal: cycle avoidance</option><option value="dijkstra">Dijkstra: negative edge limitation</option></select><label for="studentReasoning">Explain the idea in your own words</label><textarea id="studentReasoning" rows="3" style="width:100%;margin:7px 0 10px" placeholder="e.g., Kruskal needs cycles to connect the graph"></textarea><div class="controls"><button id="diagnoseButton">Diagnose &amp; teach</button></div><div id="interventionResult" class="status" aria-live="polite">Submit an explanation to begin.</div><div id="transferArea" hidden><h3>Transfer check</h3><p id="transferPrompt"></p><textarea id="transferAnswer" rows="3" style="width:100%" placeholder="Explain why, not only the final choice"></textarea><div class="controls"><button id="reassessButton">Check my reasoning</button></div><div id="reassessmentResult" class="status" aria-live="polite"></div></div><h3>Matching lecture evidence</h3><div id="interventionSources"></div></section><section class="panel"><h2>Current baseline and limits</h2><p>The tutor retrieves from <strong>28 authored concept lessons</strong> and the lecture slides (animation frames merged), and narrates algorithm demos from <strong>tested code</strong>. It requires <strong>no API key</strong>. It includes <strong>limited rule-based feedback on selected misconception patterns</strong>, but cannot reliably grade arbitrary answers. It does <strong>not use a generative language model</strong>; every sentence is authored lesson text, narrated code output, or a slide excerpt. Voice recognition and speech synthesis are browser features; microphone audio is not uploaded directly to this FastAPI server, but browser recognition services may process speech. Instructor permission is required before redistribution or research study use.</p></section><footer>TrojanTutor v0.9 · CS425 slide-grounded prototype · Concept lessons + slide retrieval</footer></main>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TrojanTutor · CS 425</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%227%22 fill=%22%237d1628%22/%3E%3Ctext x=%2216%22 y=%2222%22 font-size=%2218%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22 font-weight=%22700%22%3ET%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/static/vendor/katex/katex.min.css">
+<script defer src="/static/vendor/katex/katex.min.js"></script>
+<script defer src="/static/vendor/katex/contrib/auto-render.min.js"></script>
+<style>
+:root{--cardinal:#7d1628;--cardinal-2:#9b2236;--gold:#c9952b;--gold-2:#e2ad3c;--ink:#17263b;--muted:#5d6b80;--line:#dde3eb;--bg:#f3f5f9;
+  --ok:#1f7a4d;--ok-bg:#e6f4ec;--warn:#8a5a00;--warn-bg:#fff4dc;--bad:#b42a35;--bad-bg:#fde8ea;--info-bg:#eef3fa;--focus:#2f6fd6;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg)}
+*{box-sizing:border-box}body{margin:0}
+header{background:var(--cardinal);color:#fff;padding:10px max(16px,calc((100vw - 1360px)/2));display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+header h1{margin:0;font-size:19px}header h1 span{font-weight:400;opacity:.85}
+header .meta{margin-left:auto;font-size:12px;display:flex;gap:8px;flex-wrap:wrap}
+header .pill{background:#ffffff22;border:1px solid #ffffff33;border-radius:999px;padding:3px 9px}
+.wrap{max-width:1360px;margin:14px auto;padding:0 14px}
+select,input,textarea,button{font:inherit;font-size:14px;border-radius:9px;border:1px solid #c6cfdc;padding:7px 10px;background:#fff;color:var(--ink)}
+button{background:var(--cardinal);border-color:var(--cardinal);color:#fff;font-weight:600;cursor:pointer}
+button:hover{background:var(--cardinal-2)}button:disabled{opacity:.45;cursor:default}
+button.ghost{background:#fff;color:var(--ink);border-color:#c6cfdc;font-weight:500}button.ghost:hover{background:#f2f5f9}
+button.ghost.on{background:var(--ok-bg);border-color:#9fd1b5;color:var(--ok)}
+.tag{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:2px 8px;font-size:11.5px;font-weight:600;border:1px solid transparent}
+.tag.ok{background:var(--ok-bg);color:var(--ok);border-color:#b9dfc9}.tag.warn{background:var(--warn-bg);color:var(--warn);border-color:#f0d9a6}
+.tag.bad{background:var(--bad-bg);color:var(--bad);border-color:#f3c3c8}.tag.info{background:var(--info-bg);color:#2d4a72;border-color:#cfdced}
+.panel{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 2px 10px #1a263d0b}
+.sub{font-size:12.5px;color:var(--muted);line-height:1.45}
+
+/* lesson bar */
+.lessonbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 14px;margin-bottom:12px}
+.lessonbar select{min-width:340px;max-width:100%}
+.lessonbar .goal{font-size:13px;color:var(--muted);flex:1;min-width:200px}
+#lessonProgress{height:4px;background:#eef1f6;border-radius:0 0 14px 14px;overflow:hidden}#lessonProgress div{height:100%;width:0;background:var(--cardinal);transition:width .3s}
+
+/* main split */
+.split{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);gap:14px;align-items:start}
+@media(max-width:1000px){.split{grid-template-columns:1fr}}
+#boardPanel{overflow:hidden;position:sticky;top:10px}
+.stage{background:#fdfcf8;background-image:radial-gradient(#e9e4d6 1px,transparent 1px);background-size:22px 22px;padding:8px;min-height:300px;display:flex;align-items:center;justify-content:center}
+#cv{width:100%;height:auto;overflow:visible}
+.stage .empty{color:var(--muted);font-size:14px;text-align:center;padding:40px}
+.caption{display:flex;gap:10px;align-items:flex-start;padding:10px 14px;border-top:1px solid var(--line)}
+.caption .who{font-size:11px;font-weight:700;color:#fff;background:var(--cardinal);border-radius:999px;padding:3px 9px;white-space:nowrap;margin-top:2px}
+.caption .who.you{background:var(--focus)}
+#captionText{font-size:15.5px;line-height:1.5;min-height:46px;flex:1}
+#captionText .w.todo{color:#9aa6b6}#captionText .w.now{background:#ffe9a6;border-radius:3px}
+.transport{display:flex;gap:7px;align-items:center;flex-wrap:wrap;padding:9px 14px;border-top:1px solid var(--line);background:#fafbfd}
+.transport .count{font-size:12.5px;color:var(--muted);min-width:58px;text-align:center}
+.transport input[type=range]{width:80px;padding:0}
+.transport label{font-size:12px;color:var(--muted)}
+
+/* conversation */
+#convPanel{display:flex;flex-direction:column;height:calc(100vh - 150px);min-height:560px}
+.convhead{padding:10px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.convhead h2{font-size:15px;margin:0}
+#chat{flex:1;overflow-y:auto;padding:8px 14px;scroll-behavior:smooth}
+.msg{margin:10px 0;line-height:1.6;font-size:15px;max-width:96%}
+.msg.you{margin-left:auto;background:#e7eefb;border-radius:14px 14px 4px 14px;padding:8px 13px;width:fit-content}
+.msg.tutor{padding:2px 2px}
+.msg.tutor .body p{margin:0 0 8px}.msg.tutor .body p:last-child{margin-bottom:0}
+.msg.tutor .body ul,.msg.tutor .body ol{margin:4px 0 8px;padding-left:22px}.msg.tutor .body li{margin:2px 0}
+.msg .head{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:4px;font-size:11.5px;color:var(--muted)}
+.msg .head button{font-size:11.5px;padding:2px 9px;border-radius:999px}
+.msg.lessoncard{background:linear-gradient(135deg,#fbf1f3,#fff);border:1px solid #efd7dc;border-radius:14px;padding:12px 14px}
+.msg.lessoncard h3{margin:0 0 4px;font-size:16px;color:var(--cardinal)}
+.msg.ask .body{background:#fff8e6;border:1px solid #f0d9a6;border-left:4px solid var(--gold);border-radius:4px 12px 12px 4px;padding:10px 12px}
+.msg.feedback .body{border-radius:12px;padding:9px 12px}
+.msg.feedback.correct .body{background:var(--ok-bg)}.msg.feedback.partial .body,.msg.feedback.unsure .body{background:var(--warn-bg)}
+.msg.feedback.revealed .body{background:var(--info-bg)}
+.msg.note{font-size:12px;color:var(--muted);text-align:center;margin:4px 0}
+.cite{font-size:11px;vertical-align:super;color:var(--cardinal);font-weight:700}
+.typing::after{content:"▍";animation:blink 1s steps(2) infinite;color:var(--cardinal)}@keyframes blink{to{opacity:0}}
+.katex-display{margin:6px 0;overflow-x:auto;overflow-y:hidden;padding:2px 0}
+.composer{border-top:1px solid var(--line);padding:10px 14px}
+.composer form{display:flex;gap:8px}.composer input{flex:1;min-width:0}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.chips button{background:#fff;color:var(--cardinal);border:1px solid #e3c7cd;font-weight:600;font-size:12.5px;padding:4px 11px;border-radius:999px}
+.chips button:hover{background:#fbf1f3}
+#status{font-size:12px;color:var(--muted);margin-top:6px;min-height:16px}
+#heard{font-size:12px;color:var(--focus);min-height:0}
+#mic.listening{background:var(--bad);border-color:var(--bad);color:#fff}
+
+/* graph marks */
+#cv .edge .base{stroke:#b8c2d0;stroke-width:3;fill:none;transition:stroke .35s,stroke-width .35s,stroke-dashoffset .7s ease-out,opacity .35s}
+#cv .edge .glow{stroke:transparent;stroke-width:14;fill:none;opacity:0;transition:opacity .3s,stroke .3s}
+#cv.instant .edge .base,#cv.instant .node,#cv.instant .ov{transition:none!important}
+#cv .edge.accept .base,#cv .edge.tree .base{stroke:var(--ok);stroke-width:6}
+#cv .edge.skip .base{stroke:var(--bad);stroke-width:4;stroke-dasharray:9 7}
+#cv .edge.full .base{stroke:#55657d;stroke-width:6}
+#cv .edge.cut .base{stroke:var(--bad);stroke-width:7}#cv .edge.cut .glow{stroke:var(--bad);opacity:.3;animation:pulse 1.4s ease-in-out infinite}
+#cv .edge.current .glow{stroke:var(--gold-2);opacity:.55}
+#cv .edge.candidate .base{stroke:var(--gold);stroke-dasharray:7 6;stroke-width:4}
+#cv .edge.cyc .glow{stroke:var(--bad);opacity:.35;animation:pulse 1.1s ease-in-out infinite}
+#cv .edge.aug .glow{stroke:var(--gold-2);opacity:.6}#cv .edge.aug .base{stroke-dasharray:12 7;animation:flow .7s linear infinite}
+#cv .edge.focus .glow{stroke:var(--focus);opacity:.45;animation:pulse 1s ease-in-out infinite}
+#cv .edge.hidden,#cv .node.hidden{opacity:.08}
+@keyframes pulse{50%{opacity:.12}}@keyframes flow{from{stroke-dashoffset:0}to{stroke-dashoffset:-19}}
+#cv .elabel{font:600 13px Inter,system-ui,sans-serif;fill:#4b5a70;paint-order:stroke;stroke:#fdfcf8;stroke-width:5px;text-anchor:middle;dominant-baseline:central;opacity:0;transition:opacity .4s}
+#cv .edge.shown .elabel{opacity:1}
+#cv .node{opacity:0;transition:opacity .4s}#cv .node.shown{opacity:1}#cv .node.hidden.shown{opacity:.1}
+#cv .node circle,#cv .node rect{fill:#fff;stroke:#3e4e66;stroke-width:2.5;transition:fill .3s,stroke .3s}
+#cv .node.point circle{fill:#3e4e66;stroke:none}
+#cv .node text{font:700 15px Inter,system-ui,sans-serif;fill:var(--ink);text-anchor:middle;dominant-baseline:central}
+#cv .node.point text{font-size:13px;fill:#4b5a70}
+#cv .node.settled circle,#cv .node.tree circle{fill:var(--ok-bg);stroke:var(--ok)}
+#cv .node.point.tree circle{fill:var(--ok)}
+#cv .node.source circle,#cv .node.source rect{fill:#fbe9ec;stroke:var(--cardinal)}#cv .node.sink circle{fill:#eef3fa;stroke:#2d4a72}
+#cv .node.current circle,#cv .node.current rect{fill:#fff1cf;stroke:var(--gold);stroke-width:4}
+#cv .node.point.current circle{fill:var(--gold);r:9}
+#cv .nlabel{font:700 13px Inter,system-ui,sans-serif;fill:var(--cardinal);paint-order:stroke;stroke:#fdfcf8;stroke-width:5px}
+#cv .shade circle{fill:#c9952b}#cv .shade{opacity:.16}
+#cv .shadelabel{font:700 15px Inter,system-ui,sans-serif;fill:#8a6a1e}
+#cv .ov{fill:none;stroke-linecap:round;stroke-linejoin:round;transition:opacity .3s}
+#cv .ov.alt{stroke:#7b889b;stroke-width:3;stroke-dasharray:8 6}#cv .ov.opt{stroke:var(--ok);stroke-width:4}
+#cv .ov.nn{stroke:var(--cardinal);stroke-width:4}#cv .ov.new{stroke:var(--focus);stroke-width:4;stroke-dasharray:9 6}
+#cv .ov.ray{stroke:var(--gold);stroke-width:1.6;stroke-dasharray:4 5;opacity:.9}
+#cv .note{font:700 13px Inter,system-ui,sans-serif;fill:#5d6b80;paint-order:stroke;stroke:#fdfcf8;stroke-width:5px}
+#cv .note.bad{fill:var(--bad)}
+
+.tools{margin-top:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.tools .panel{padding:12px 14px}
+details summary{cursor:pointer;font-weight:600;font-size:13.5px}
+.src{border-left:3px solid var(--gold);background:#fbf8f1;border-radius:0 8px 8px 0;padding:7px 10px;margin:7px 0;font-size:12.5px;line-height:1.45}
+.src b{color:var(--cardinal)}.src .perm{float:right}
+.labout{white-space:pre-wrap;font-size:13.5px;line-height:1.5;background:var(--info-bg);border-radius:9px;padding:9px 11px;margin-top:8px}
+textarea{width:100%;resize:vertical}
+.sr{position:absolute;left:-9999px}
+footer{max-width:1360px;margin:14px auto 30px;padding:0 14px;font-size:12px;color:var(--muted);line-height:1.5}
+</style>
+</head>
+<body>
+<header>
+  <h1>TrojanTutor <span>/ CS 425 Combinatorial Optimization</span></h1>
+  <div class="meta"><span class="pill" id="hdrCourse">course …</span><span class="pill" id="hdrVoice">voice …</span>
+    <span class="pill" id="hdrEngine">engine …</span><span class="pill" id="hdrSession">session …</span></div>
+</header>
+
+<div class="wrap">
+  <div class="panel" style="margin-bottom:12px">
+    <div class="lessonbar">
+      <select id="lessonSelect" aria-label="Lesson"></select>
+      <button class="ghost" id="prevLesson" type="button" title="Previous lesson">◀</button>
+      <button id="startLesson" type="button">▶ Start lesson</button>
+      <button class="ghost" id="nextLesson" type="button" title="Next lesson">▶▶</button>
+      <span class="goal" id="lessonGoal"></span>
+    </div>
+    <div id="lessonProgress"><div></div></div>
+  </div>
+
+  <div class="split">
+    <section class="panel" id="boardPanel" aria-label="Board">
+      <div class="stage" id="stage"><svg id="cv" viewBox="0 0 560 320" role="img" aria-label="Lesson diagram"></svg></div>
+      <div class="caption"><span class="who" id="captionWho">Tutor</span><div id="captionText" aria-live="polite"></div></div>
+      <div class="transport">
+        <button class="ghost" id="backBtn" type="button" title="Previous step">⏮</button>
+        <button class="ghost" id="pauseBtn" type="button" title="Pause / resume (space)">⏯</button>
+        <button class="ghost" id="fwdBtn" type="button" title="Next step">⏭</button>
+        <span class="count" id="stepCount">–</span>
+        <span style="flex:1"></span>
+        <label for="voiceSelect">Voice</label><select id="voiceSelect" style="max-width:210px"></select>
+        <label for="rate">Speed</label><input type="range" id="rate" min="0.75" max="1.35" step="0.05" value="1.0">
+        <button class="ghost" id="testVoice" type="button">Test voice</button>
+        <button class="ghost" id="muteBtn" type="button">🔊</button>
+      </div>
+    </section>
+
+    <section class="panel" id="convPanel" aria-label="Conversation">
+      <div class="convhead"><h2>Conversation</h2>
+        <span class="tag info" id="modeTag">free chat</span>
+        <span style="flex:1"></span>
+        <label class="sub" for="unit">Unit</label>
+        <select id="unit" style="font-size:12.5px;padding:4px 6px"><option>Problems and Algorithms</option><option selected>Minimum Spanning Trees</option><option>Shortest Paths</option><option>Maximum Flow</option></select>
+        <select id="engine" style="font-size:12.5px;padding:4px 6px" title="Answer engine for free questions"><option value="auto">Auto</option><option value="cards">Lesson cards</option><option value="llm">Grounded LLM</option></select>
+        <button class="ghost" id="newSession" type="button" style="font-size:12.5px;padding:4px 9px">New session</button>
+      </div>
+      <div id="chat" aria-live="polite"></div>
+      <div class="composer">
+        <div class="chips" id="chips">
+          <button data-cmd="continue">Continue</button><button data-cmd="repeat">Repeat that</button>
+          <button data-q="Explain that more simply">Simpler, please</button><button data-q="Give me a practice problem">Practice problem</button>
+          <button data-cmd="dontknow" id="dontKnow" hidden>I don't know</button>
+        </div>
+        <form id="askForm"><label class="sr" for="question">Message</label>
+          <input id="question" placeholder="Ask anything, or answer the tutor…" maxlength="1200" autocomplete="off">
+          <button class="ghost" id="mic" type="button" title="Talk (toggle)">🎙</button>
+          <button id="askBtn">Send</button></form>
+        <div id="heard"></div>
+        <div id="status" aria-live="polite">Starting…</div>
+      </div>
+    </section>
+  </div>
+
+  <div class="tools">
+    <div class="panel"><details open><summary>Lecture slides for this step</summary><div id="sources" class="sub" style="margin-top:6px">Start a lesson to see the slides it teaches.</div></details></div>
+    <div class="panel"><details><summary>Misconception Lab (research prototype)</summary>
+      <p class="sub">Explain an idea; a conservative rule may recognise a misconception and give a counterexample. Diagnosis is tentative.</p>
+      <select id="conceptTarget"><option value="kruskal">Kruskal: cycle avoidance</option><option value="dijkstra">Dijkstra: negative arc costs</option></select>
+      <textarea id="studentReasoning" rows="2" placeholder="e.g. A spanning tree needs a cycle" style="margin-top:8px"></textarea>
+      <div style="margin-top:8px"><button id="diagnoseButton" type="button">Diagnose &amp; teach</button></div>
+      <div id="interventionResult" class="labout" hidden></div>
+      <div id="transferArea" hidden><p id="transferPrompt" class="sub" style="color:var(--ink)"></p>
+        <textarea id="transferAnswer" rows="2" placeholder="Explain why, not only the final choice"></textarea>
+        <div style="margin-top:8px"><button id="reassessButton" type="button">Check my reasoning</button></div>
+        <div id="reassessmentResult" class="labout" hidden></div></div></details></div>
+    <div class="panel"><details><summary>Search the slides</summary>
+      <form id="searchForm" style="display:flex;gap:8px;margin-top:8px"><input id="searchInput" value="Why does Kruskal avoid cycles?" style="flex:1"><button>Search</button></form>
+      <div id="searchResults"></div></details></div>
+  </div>
+</div>
+<footer>TrojanTutor v0.12 · Every slide of the four CS 425 decks is taught as a lesson. Diagrams are redrawn from the slides; algorithm numbers come from tested code. Check questions are graded by simple rules and say so when unsure.</footer>
+
 <script>
-const $=id=>document.getElementById(id);let sid=null,recognition=null,micOn=false,speaking=false,speechToken=0,pausedText='',recognizing=false,working=false,steps=[],step=-1;
-function status(s){$('status').textContent=s}function textNode(tag,value,cls){const x=document.createElement(tag);if(cls)x.className=cls;x.textContent=value;return x}
-async function api(path,data){
-  let r;
-  try {r=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data||{})});}
-  catch(e){throw new Error('Cannot connect to the tutoring server. Check that uvicorn is running. ('+e.message+')');}
-  const raw=await r.text();let out;
-  try {out=JSON.parse(raw);}
-  catch(e){throw new Error('Server returned HTTP '+r.status+' instead of JSON. '+(r.status>=500?'The backend encountered an error; inspect the uvicorn terminal for details. ':'')+raw.slice(0,180));}
-  if(!r.ok){let detail=out?.detail||out?.error||'Request failed';if(typeof detail!=='string')detail=JSON.stringify(detail);throw new Error('HTTP '+r.status+': '+detail);}
+const $ = id => document.getElementById(id);
+const SKEY = 'tt_session_v10', VKEY = 'tt_voice', RKEY = 'tt_rate', LKEY = 'tt_lesson';
+let sid = null, busy = false, OUTLINE = [], PROGRESS = {};
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const norm = t => (t.toLowerCase().match(/[a-z0-9]+/g) || []).filter(w => w.length > 1 || /\d/.test(w));
+function status(t){ $('status').textContent = t; }
+function el(tag, cls, text){ const x = document.createElement(tag); if(cls) x.className = cls; if(text != null) x.textContent = text; return x; }
+function svg(tag, attrs, text){ const x = document.createElementNS('http://www.w3.org/2000/svg', tag); for(const k in attrs) x.setAttribute(k, attrs[k]); if(text != null) x.textContent = text; return x; }
+async function api(path, data){
+  let r; try { r = await fetch(path, {method: data === undefined ? 'GET' : 'POST', headers: {'Content-Type': 'application/json'}, body: data === undefined ? undefined : JSON.stringify(data)}); }
+  catch(e){ throw new Error('Cannot reach the tutoring server. Is uvicorn running?'); }
+  const raw = await r.text(); let out; try { out = JSON.parse(raw); } catch(e){ throw new Error('Server returned HTTP ' + r.status); }
+  if(!r.ok){ let d = out.detail || 'Request failed'; if(typeof d !== 'string') d = JSON.stringify(d); const err = new Error(d); err.status = r.status; throw err; }
   return out;
 }
-function log(role,text){const x=textNode('div',text,'msg '+(role==='You'?'user':'tutor'));$('chat').append(x);$('chat').scrollTop=$('chat').scrollHeight}
-function halt(preserve=true){if(preserve&&speaking)pausedText=currentSpeech; speechToken++;speaking=false;window.speechSynthesis?.cancel()}
-let currentSpeech='';function speak(t){halt(false);currentSpeech=t;if(!('speechSynthesis' in window)){status('Browser TTS unavailable; read response on screen.');return}const token=++speechToken;const speech=new SpeechSynthesisUtterance(t.replace(/\[[1-9]\]/g,''));speech.rate=.92;speech.onstart=()=>{if(token===speechToken){speaking=true;status('Speaking — interrupt with a question.')}};speech.onend=()=>{if(token===speechToken){speaking=false;pausedText='';status('Ready for questions.')}};speech.onerror=()=>{if(token===speechToken){speaking=false;status('Speech output unavailable; read text above.')}};window.speechSynthesis.speak(speech)}
-function showSources(target,sources){target.replaceChildren();if(!sources?.length){target.append(textNode('p','No matching slides.','muted'));return}sources.forEach((s,i)=>{let box=document.createElement('div');box.className='evidence';let title=textNode('strong',`[${i+1}] ${s.unit} · slide ${s.pages||s.page}`);box.append(title,document.createElement('br'));const link=document.createElement('a');link.href='/static/placeholder';link.textContent=s.file;link.removeAttribute('href');box.append(link,textNode('p',s.excerpt));target.append(box)})}
-async function newSession(){halt(false);$('chat').replaceChildren();$('sources').replaceChildren();let x=await api('/api/session?unit='+encodeURIComponent($('unit').value));sid=x.session_id;status('Session ready · '+x.unit);$('mode').textContent='Course '+x.unit}
-async function askQuestion(q){if(working)return;working=true;$('askButton').disabled=true;halt();log('You',q);status('Retrieving lecture evidence…');try{const a=await api('/api/ask',{session_id:sid,question:q});log('Tutor',a.answer);showSources($('sources'),a.sources);$('mode').textContent=a.title?('Concept: '+a.title):'Concept cards + slide retrieval';speak(a.spoken||a.answer)}catch(e){log('Tutor','Error: '+e.message);status('Could not complete request.')}finally{working=false;$('askButton').disabled=false}}
-const mini={
-'Problems and Algorithms':'Today we will compare combinatorial optimization problems, including the traveling salesman problem and matching. Why can a simple greedy heuristic be faster without being guaranteed optimal?',
-'Minimum Spanning Trees':'A minimum spanning tree connects every vertex at minimum total edge cost. Kruskal considers edges in increasing cost order, skipping any that would create a cycle. Why is avoiding cycles important?',
-'Shortest Paths':'The shortest path problem asks for minimum-cost directed paths from a source. Dijkstra requires nonnegative edge costs; Ford Bellman uses repeated relaxation. Why can a negative edge invalidate Dijkstra’s greedy step?',
-'Maximum Flow':'In maximum flow, edges have capacities and internal vertices must conserve flow. The max-flow min-cut theorem relates feasible flow value to cut capacity. Why does a cut give an upper bound?'};
-$('lecture').onclick=()=>askQuestion('Start the lesson');
-$('questionForm').onsubmit=e=>{e.preventDefault();let q=$('question').value.trim();$('question').value='';if(q)askQuestion(q)};
-$('unit').onchange=()=>newSession().catch(e=>status(e.message));$('stop').onclick=()=>{halt();status('Speech stopped; press Resume or ask a question.')};$('resume').onclick=()=>{if(pausedText)speak(pausedText);else speak(mini[$('unit').value])};
-$('mic').onclick=()=>{const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){status('Speech recognition unsupported. Chrome recommended.');return}if(micOn){micOn=false;recognition?.stop();recognition=null;$('mic').textContent='🎙 Enable microphone';return}recognition=new SR();recognition.lang='en-US';recognition.continuous=true;recognition.interimResults=true;micOn=true;$('mic').textContent='🎙 Disable microphone';recognition.onspeechstart=()=>{recognizing=true;if(speaking){halt();status('Interruption detected — listening…')}};let lastSent='';recognition.onresult=e=>{for(let i=e.resultIndex;i<e.results.length;i++){const r=e.results[i];if(r.isFinal){let q=r[0].transcript.trim();if(!q||q===lastSent)continue;lastSent=q;if(/^(resume|continue|go on)[.!]?$/i.test(q)){if(pausedText)speak(pausedText);else speak(mini[$('unit').value])}else if(/^(stop|pause)[.!]?$/i.test(q)){halt();status('Voice paused')}else askQuestion(q)}}};recognition.onerror=e=>{status('Microphone: '+e.error);if(['not-allowed','service-not-allowed'].includes(e.error)){micOn=false;$('mic').textContent='🎙 Enable microphone'}};recognition.onend=()=>{recognizing=false;if(micOn){try{recognition.start()}catch(e){status('Mic restart failed: '+e.message)}}};try{recognition.start();status('Mic enabled; you may interrupt spoken answers.')}catch(e){micOn=false;status(e.message)}};
-$('searchForm').onsubmit=async e=>{e.preventDefault();try{const r=await api('/api/search',{query:$('searchInput').value,unit:$('unit').value});showSources($('searchResults'),r.sources)}catch(e){status(e.message)}};
-$('diagnoseButton').onclick=async()=>{const explanation=$('studentReasoning').value.trim();if(!explanation){$('interventionResult').textContent='Please explain your reasoning first.';return}try{const r=await api('/api/intervene',{concept_id:$('conceptTarget').value,student_explanation:explanation});$('interventionResult').textContent='Tentative diagnosis: '+r.diagnosis+'\n\n'+r.feedback+(r.counterexample?'\n\nCounterexample: '+r.counterexample:'')+'\n\nPrerequisite: '+(r.prerequisite||'None selected');$('interventionResult').style.whiteSpace='pre-wrap';$('transferArea').hidden=false;$('transferPrompt').textContent=r.transfer_question;$('transferAnswer').value='';$('reassessmentResult').textContent='No reassessment attempted.';showSources($('interventionSources'),r.evidence)}catch(e){$('interventionResult').textContent=e.message}};
-$('reassessButton').onclick=async()=>{const response=$('transferAnswer').value.trim();if(!response){$('reassessmentResult').textContent='Enter your explanation.';return}try{const r=await api('/api/reassess',{concept_id:$('conceptTarget').value,student_explanation:response});$('reassessmentResult').textContent='Rule-based check: '+r.label+' — '+r.feedback+' No mastery is inferred from this attempt.'}catch(e){$('reassessmentResult').textContent=e.message}};
-$('conceptTarget').onchange=()=>{$('transferArea').hidden=true;$('interventionResult').textContent='Submit an explanation to begin.';$('interventionSources').replaceChildren()};
-$('run').onclick=async()=>{try{const r=await api('/api/algorithm',{algorithm:$('algorithm').value});steps=r.steps;step=0;$('algorithmSummary').textContent=r.algorithm+': '+steps.length+' algorithm decisions'+(r.total!==undefined?' · MST total '+r.total:'');showStep()}catch(e){status(e.message)}};
-function showStep(){const box=$('algorithmResults');box.replaceChildren();if(!steps.length)return;let s=steps[step];box.append(textNode('h3',`Step ${step+1} / ${steps.length}`));box.append(textNode('pre',JSON.stringify(s,null,2)));$('previous').disabled=step===0;$('next').disabled=step===steps.length-1}
-$('previous').onclick=()=>{step=Math.max(0,step-1);showStep()};$('next').onclick=()=>{step=Math.min(steps.length-1,step+1);showStep()};newSession().catch(e=>status(e.message));
-</script></body></html>
+
+// ================= text rendering: paragraphs, bullets, **bold**, $math$ =================
+function inline(parent, text){
+  for(const part of text.split(/(\*\*[^*]+\*\*|\[\d{1,2}\])/)){
+    if(/^\*\*[^*]+\*\*$/.test(part)) parent.append(el('strong', null, part.slice(2, -2)));
+    else if(/^\[\d{1,2}\]$/.test(part)) parent.append(el('span', 'cite', part));
+    else if(part) parent.append(document.createTextNode(part));
+  }
+}
+function renderMD(box, text){
+  box.replaceChildren(); let list = null, ordered = null;
+  for(const raw of text.split('\n')){
+    const line = raw.trimEnd();
+    if(/^\s*-\s+/.test(line)){ if(!list){ list = el('ul'); box.append(list); } const li = el('li'); inline(li, line.replace(/^\s*-\s+/, '')); list.append(li); ordered = null; continue; }
+    if(/^\s*\d+\.\s+/.test(line) && !/^\s*\d+\.\s+\$/.test(line) && line.length < 220 && box.lastChild && box.lastChild.tagName === 'OL'){ const li = el('li'); inline(li, line.replace(/^\s*\d+\.\s+/, '')); box.lastChild.append(li); continue; }
+    if(/^\s*1\.\s+/.test(line)){ ordered = el('ol'); box.append(ordered); const li = el('li'); inline(li, line.replace(/^\s*1\.\s+/, '')); ordered.append(li); list = null; continue; }
+    list = null; if(!line.trim()) continue; const p = el('p'); inline(p, line); box.append(p);
+  }
+  if(window.renderMathInElement) renderMathInElement(box, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}], throwOnError:false});
+}
+const plain = t => t.replace(/\*\*/g, '').replace(/\$\$?([^$]+)\$\$?/g, '$1').replace(/\\[a-zA-Z]+/g, ' ').replace(/[{}]/g, '');
+
+// ================= VOICE OUT: pronunciation + robust speech =================
+const LEXICON = [[/\bDijkstra('s)?\b/g, 'Dyke-struh$1'], [/\bK[öo]nig('s)?\b/g, 'Kur-nig$1'], [/\bTSP\b/g, 'T S P'], [/\bMST\b/g, 'M S T'],
+  [/\bBFS\b/g, 'B F S'], [/\bRRF\b/g, 'R R F'], [/δ/g, 'delta '], [/ε/g, 'epsilon'], [/∞/g, 'infinity'], [/≤/g, ' at most '], [/≥/g, ' at least '],
+  [/→/g, ' to '], [/\bO\(n\^?2\)/g, 'order n squared'], [/\bO\(mn\)|\bO\(nm\)/g, 'order m n'], [/\by=(\S+)/g, 'y equals $1'], [/\bvs\.?\b/g, 'versus'],
+  [/\be\.g\./g, 'for example'], [/\bi\.e\./g, 'that is'], [/\$[^$]*\$/g, '']];
+const pronounce = t => LEXICON.reduce((s, [a, b]) => s.replace(a, b), t);
+const NOVELTY = /albert|bad news|bahh|bells|boing|bubbles|cellos|good news|jester|organ|superstar|trinoids|whisper|wobble|zarvox|junior|ralph|fred|kathy|grandma|grandpa|eddy|flo|reed|rocko|sandy|shelley|hysterical/i;
+function scoreVoice(v){ if(!/^en[-_]/i.test(v.lang)) return -1000; let s = 0; const n = v.name;
+  if(NOVELTY.test(n)) s -= 200; if(/premium/i.test(n)) s += 60; if(/enhanced/i.test(n)) s += 50; if(/natural|neural/i.test(n)) s += 55;
+  if(/google us english/i.test(n)) s += 35; if(/google uk english female/i.test(n)) s += 30;
+  if(/\b(ava|zoe|samantha|allison|evan|nathan|susan|tom|serena|karen|daniel|moira|aria|jenny|guy|sonia)\b/i.test(n)) s += 15;
+  if(/en[-_]us/i.test(v.lang)) s += 6; if(v.localService) s += 3; return s; }
+const Voice = {
+  voices: [], chosen: null, rate: +(localStorage.getItem(RKEY) || 1.0), muted: false, neural: false, audio: null,
+  speaking: false, recent: [], keep: [], failures: 0, warned: false, broken: false,
+  load(){
+    if(!('speechSynthesis' in window)) return;
+    const vs = speechSynthesis.getVoices().filter(v => scoreVoice(v) > -1000).sort((a, b) => scoreVoice(b) - scoreVoice(a));
+    const sel = $('voiceSelect'); sel.replaceChildren();
+    if(this.neural){ const o = el('option', null, 'Neural voice (server)'); o.value = '__neural'; sel.append(o); }
+    if(!vs.length){ if(!this.neural) sel.append(el('option', null, 'Browser default')); $('hdrVoice').textContent = this.neural ? 'voice: neural' : 'voice: browser default'; return; }
+    this.voices = vs; const saved = localStorage.getItem(VKEY); this.chosen = vs.find(v => v.name === saved) || vs[0];
+    vs.slice(0, 14).forEach(v => { const o = el('option', null, v.name.replace(/\s*\(.*?\)\s*/, ' ').trim() + (scoreVoice(v) >= 45 ? ' ★' : '')); o.value = v.name; sel.append(o); });
+    sel.value = this.neural && (saved === '__neural' || !saved) ? '__neural' : this.chosen.name;
+    $('hdrVoice').textContent = 'voice: ' + (sel.value === '__neural' ? 'neural' : this.chosen.name.split(' (')[0]);
+  },
+  stop(){ this.speaking = false; if('speechSynthesis' in window) speechSynthesis.cancel(); if(this.audio){ this.audio.pause(); this.audio = null; } },
+  remember(t){ this.recent.push({text: t, t: performance.now()}); this.recent = this.recent.slice(-4); },
+  isEcho(t){ const words = norm(t); if(!words.length) return true; const now = performance.now();
+    const pool = new Set(this.recent.filter(r => now - r.t < 9000 || this.speaking).flatMap(r => norm(r.text))); if(!pool.size) return false;
+    return words.filter(w => pool.has(w)).length / words.length >= 0.6; },
+  timed(text, onFrac, token){ return new Promise(res => { const ms = 1000 * text.split(/\s+/).length / (2.6 * this.rate), t0 = performance.now();
+    const tick = () => { if(token.cancelled) return res(); const f = Math.min(1, (performance.now() - t0) / ms); onFrac && onFrac(f); f < 1 ? requestAnimationFrame(tick) : res(); }; tick(); }); },
+  // speak(text, onFrac(0..1)) — onFrac drives captions and the typing of the written explanation
+  async speak(text, onFrac, token){
+    if(!text) return; this.remember(text); const spoken = pronounce(text);
+    if(this.muted) return this.timed(text, onFrac, token);
+    if($('voiceSelect').value === '__neural'){ try { this.speaking = true; return await this.speakNeural(spoken, onFrac, token); } catch(e){ this.neural = false; this.load(); } finally { this.speaking = false; } }
+    if(!('speechSynthesis' in window) || this.broken) return this.timed(text, onFrac, token);
+    const sentences = spoken.match(/[^.!?]+[.!?]+["')\]]*\s*|[^.!?]+$/g) || [spoken]; const total = spoken.length; let offset = 0;
+    if(speechSynthesis.speaking || speechSynthesis.pending){ speechSynthesis.cancel(); await sleep(80); }
+    for(const s of sentences){ if(token.cancelled) return; const base = offset; offset += s.length;
+      const prog = ci => onFrac && onFrac(Math.min(1, (base + ci) / total));
+      const ok = await this.utter(s.trim(), prog, token); if(!ok && !token.cancelled) await this.timed(s, f => prog(f * s.length), token); prog(s.length); }
+  },
+  utter(s, onChar, token){ return new Promise(resolve => {
+    const u = new SpeechSynthesisUtterance(s); this.keep.push(u); this.keep = this.keep.slice(-6);
+    const v = this.chosen && speechSynthesis.getVoices().find(x => x.name === this.chosen.name); if(v) u.voice = v;
+    u.rate = this.rate; u.pitch = 1; let started = false, finished = false;
+    const finish = ok => { if(finished) return; finished = true; clearTimeout(watch); clearInterval(poll); this.speaking = false; resolve(ok); };
+    const watch = setTimeout(() => { if(!started){ speechSynthesis.cancel(); this.failures++;
+      if(this.failures >= 2 && !this.warned){ this.warned = true; status('The browser voice is not starting. Pick another voice or press “Test voice”. Captions and text continue.'); }
+      if(this.failures >= 2) this.broken = true; finish(false); } }, 2500);
+    const poll = setInterval(() => { if(token.cancelled){ speechSynthesis.cancel(); finish(true); } }, 100);
+    u.onstart = () => { started = true; this.speaking = true; this.failures = 0; this.broken = false; };
+    u.onboundary = e => onChar && onChar(e.charIndex);
+    u.onend = () => setTimeout(() => finish(true), 120);
+    u.onerror = e => finish(started || e.error === 'interrupted' || e.error === 'canceled');
+    speechSynthesis.resume(); speechSynthesis.speak(u); }); },
+  async speakNeural(text, onFrac, token){
+    const r = await fetch('/api/tts', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({text})}); if(!r.ok) throw new Error('tts');
+    const url = URL.createObjectURL(await r.blob()); if(token.cancelled) return; const a = new Audio(url); a.playbackRate = this.rate; this.audio = a;
+    await new Promise(res => { a.ontimeupdate = () => onFrac && a.duration && onFrac(a.currentTime / a.duration); a.onended = res; a.onerror = res; a.play().catch(res);
+      const iv = setInterval(() => { if(token.cancelled){ a.pause(); clearInterval(iv); res(); } }, 100); a.addEventListener('ended', () => clearInterval(iv)); }); }
+};
+if('speechSynthesis' in window){ speechSynthesis.onvoiceschanged = () => Voice.load(); Voice.load(); }
+$('voiceSelect').onchange = () => { const v = $('voiceSelect').value; localStorage.setItem(VKEY, v); if(v !== '__neural') Voice.chosen = Voice.voices.find(x => x.name === v) || Voice.chosen;
+  $('hdrVoice').textContent = 'voice: ' + (v === '__neural' ? 'neural' : (Voice.chosen ? Voice.chosen.name.split(' (')[0] : 'default')); };
+$('rate').value = Voice.rate; $('rate').oninput = () => { Voice.rate = +$('rate').value; localStorage.setItem(RKEY, Voice.rate); };
+$('muteBtn').onclick = () => { Voice.muted = !Voice.muted; $('muteBtn').textContent = Voice.muted ? '🔇' : '🔊'; if(Voice.muted) Voice.stop(); };
+$('testVoice').onclick = async () => { Object.assign(Voice, {broken: false, failures: 0, warned: false, muted: false}); $('muteBtn').textContent = '🔊';
+  const t = 'This is the tutor voice. If you can hear me, voice is working.'; const token = {cancelled: false}; setCaption(t); status('Testing voice…');
+  await Voice.speak(t, captionProgress, token); status(Voice.broken ? 'No audio started. Try another voice, check the volume, or use Chrome / Safari.' : 'Voice OK.'); };
+
+// ================= captions =================
+function setCaption(text, who){
+  $('captionWho').textContent = who || 'Tutor'; $('captionWho').className = 'who' + (who === 'You' ? ' you' : '');
+  const box = $('captionText'); box.replaceChildren(); let pos = 0; const t = plain(text); box.dataset.len = t.length;
+  for(const w of t.split(/(\s+)/)){ if(!w) continue; if(/^\s+$/.test(w)){ box.append(w); pos += w.length; continue; }
+    const s = el('span', 'w todo', w); s.dataset.a = pos; s.dataset.b = pos + w.length; box.append(s); pos += w.length; }
+}
+function captionProgress(f){ const box = $('captionText'), ci = f * (+box.dataset.len || 1);
+  for(const s of box.querySelectorAll('.w')){ const a = +s.dataset.a, b = +s.dataset.b; s.className = 'w ' + (b <= ci ? '' : (a <= ci ? 'now' : 'todo')); } }
+
+// ================= BOARD (diagram renderer) =================
+const Board = {
+  fig: null, E: {}, N: {}, P: {}, ov: {},
+  clearAll(){ $('cv').replaceChildren(); this.fig = null; this.E = {}; this.N = {}; this.ov = {}; },
+  build(f){
+    const g = $('cv'); g.replaceChildren(); this.fig = f; this.E = {}; this.N = {}; this.ov = {}; this.P = {};
+    g.setAttribute('viewBox', `0 0 ${f.width} ${f.height}`);
+    const defs = svg('defs', {}); for(const [id, c] of [['ah', '#7b889b'], ['ahg', '#1f7a4d'], ['ahr', '#b42a35'], ['ahs', '#55657d']]){
+      const m = svg('marker', {id, viewBox:'0 0 10 10', refX:'8.5', refY:'5', markerWidth:'11', markerHeight:'11', markerUnits:'userSpaceOnUse', orient:'auto'});
+      m.append(svg('path', {d:'M0,0 L10,5 L0,10 z', fill: c})); defs.append(m); } g.append(defs);
+    for(const n of f.nodes) this.P[n.id] = [n.x, n.y];
+    this.shadeG = svg('g', {class:'shade'}); g.append(this.shadeG); this.shadeL = svg('text', {class:'shadelabel'}); g.append(this.shadeL);
+    this.edgeG = svg('g', {}); g.append(this.edgeG); this.ovG = svg('g', {}); g.append(this.ovG); this.nodeG = svg('g', {}); g.append(this.nodeG); this.noteG = svg('g', {}); g.append(this.noteG);
+    const R = n => (f.nodes.find(x => x.id === n) || {}).style === 'point' ? 9 : 21;
+    for(const e of f.edges){
+      const [x1, y1] = this.P[e.u], [x2, y2] = this.P[e.v], dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy) || 1, nx = -dy / L, ny = dx / L;
+      const cx = (x1 + x2) / 2 + nx * (e.bend || 0) * 2, cy = (y1 + y2) / 2 + ny * (e.bend || 0) * 2;
+      const r1 = R(e.u), r2 = R(e.v) + (f.directed ? 4 : 0);
+      const sx = x1 + (cx - x1) / Math.hypot(cx - x1, cy - y1) * r1, sy = y1 + (cy - y1) / Math.hypot(cx - x1, cy - y1) * r1;
+      const ex = x2 + (cx - x2) / Math.hypot(cx - x2, cy - y2) * r2, ey = y2 + (cy - y2) / Math.hypot(cx - x2, cy - y2) * r2;
+      const d = `M${sx},${sy} Q${cx},${cy} ${ex},${ey}`;
+      const grp = svg('g', {class:'edge'}); grp.append(svg('path', {d, class:'glow'})); const base = svg('path', {d, class:'base'}); grp.append(base);
+      const t = f.directed && !e.bend ? 0.4 : 0.5, mx = (1 - t) ** 2 * sx + 2 * t * (1 - t) * cx + t * t * ex, my = (1 - t) ** 2 * sy + 2 * t * (1 - t) * cy + t * t * ey;
+      const lab = svg('text', {class:'elabel', x: mx + nx * 13, y: my + ny * 13}, e.label || ''); grp.append(lab);
+      grp.style.cursor = 'pointer'; grp.append(svg('title', {}, `Ask about ${e.u}–${e.v}`));
+      grp.addEventListener('click', () => onBoardClick(e.u, e.v));
+      this.edgeG.append(grp); const len = base.getTotalLength ? base.getTotalLength() : L; base.style.strokeDasharray = len; base.style.strokeDashoffset = len;
+      this.E[e.id] = {g: grp, base, lab, state: 'plain', flags: new Set(), shown: false, drawn: false};
+    }
+    for(const n of f.nodes){
+      const grp = svg('g', {class: 'node ' + (n.style || 'node')});
+      if(n.style === 'point'){ grp.append(svg('circle', {cx: n.x, cy: n.y, r: 6})); grp.append(svg('text', {x: n.x, y: n.y - 16}, n.id)); }
+      else if(n.style === 'base'){ grp.append(svg('rect', {x: n.x - 13, y: n.y - 13, width: 26, height: 26, rx: 4})); grp.append(svg('text', {x: n.x, y: n.y}, n.id)); }
+      else { grp.append(svg('circle', {cx: n.x, cy: n.y, r: 20})); grp.append(svg('text', {x: n.x, y: n.y}, n.id)); }
+      const lab = svg('text', {class:'nlabel', x: n.x + (n.x > f.width - 90 ? -26 : 24), y: n.y - 24, 'text-anchor': n.x > f.width - 90 ? 'end' : 'start'}); grp.append(lab);
+      this.nodeG.append(grp); this.N[n.id] = {g: grp, lab, style: n.style || 'node', state: 'plain', flag: false, shown: false, hidden: false};
+    }
+  },
+  paintE(id){ const e = this.E[id]; if(!e) return;
+    if(e.shown && !e.drawn){ e.drawn = true; e.base.style.strokeDashoffset = '0'; const done = () => { e.base.style.strokeDasharray = ''; e.base.style.strokeDashoffset = ''; };
+      $('cv').classList.contains('instant') ? done() : setTimeout(done, 750); }
+    e.g.setAttribute('class', ['edge', e.shown ? 'shown' : '', e.hidden ? 'hidden' : '', e.state, ...e.flags].join(' '));
+    if(this.fig.directed) e.base.setAttribute('marker-end', ['tree', 'accept'].includes(e.state) ? 'url(#ahg)' : e.state === 'cut' ? 'url(#ahr)' : e.state === 'full' ? 'url(#ahs)' : 'url(#ah)'); },
+  paintN(id){ const n = this.N[id]; if(!n) return; n.g.setAttribute('class', ['node', n.style, n.shown ? 'shown' : '', n.hidden ? 'hidden' : '', n.state, n.flag ? 'current' : ''].join(' ')); },
+  poly(id, pts, cls){ if(this.ov[id]) this.ov[id].remove(); const d = 'M' + pts.map(p => p.join(',')).join(' L'); const p = svg('path', {d, class: 'ov ' + cls}); this.ovG.append(p); this.ov[id] = p; },
+  multi(id, segs, cls){ if(this.ov[id]) this.ov[id].remove(); const g = svg('g', {}); for(const [a, b] of segs) g.append(svg('path', {d: `M${a.join(',')} L${b.join(',')}`, class: 'ov ' + cls})); this.ovG.append(g); this.ov[id] = g; },
+  apply(op, animate){
+    const TR = new Set(['current', 'candidate']);
+    switch(op.op){
+      case 'figure': this.build(op.figure); break;
+      case 'reveal': case 'show': op.ids.forEach((id, j) => { const t = this.E[id] || this.N[id]; if(!t) return; const go = () => { t.shown = true; t.hidden = false; this.E[id] ? this.paintE(id) : this.paintN(id); };
+        animate && op.op === 'reveal' ? setTimeout(go, j * 60) : go(); }); break;
+      case 'hide': op.ids.forEach(id => { const t = this.E[id] || this.N[id]; if(!t) return; t.hidden = true; this.E[id] ? this.paintE(id) : this.paintN(id); }); break;
+      case 'edge': { const e = this.E[op.id]; if(!e) break; if(TR.has(op.state)) e.flags.add(op.state); else { e.state = op.state; e.flags.delete('candidate'); } this.paintE(op.id); break; }
+      case 'node': { const n = this.N[op.id]; if(!n) break; if(op.state === 'current') n.flag = true; else n.state = op.state; this.paintN(op.id); break; }
+      case 'label': { const n = this.N[op.id]; if(n) n.lab.textContent = op.text; break; }
+      case 'elabel': { const e = this.E[op.id]; if(e) e.lab.textContent = op.text; break; }
+      case 'path': { const f = {cycle: 'cyc', augment: 'aug', focus: 'focus'}[op.style] || 'focus'; op.ids.forEach(id => { const e = this.E[id]; if(e){ e.flags.add(f); this.paintE(id); } }); break; }
+      case 'shade': { this.shadeG.replaceChildren(); this.shadeL.textContent = ''; if(!op.nodes.length) break; op.nodes.forEach(n => { const [x, y] = this.P[n]; this.shadeG.append(svg('circle', {cx: x, cy: y, r: 44})); });
+        const [x, y] = this.P[op.nodes[0]]; this.shadeL.setAttribute('x', x - 40); this.shadeL.setAttribute('y', Math.max(14, y - 47)); this.shadeL.textContent = op.label || ''; break; }
+      case 'clear': for(const id in this.E){ ['current', 'candidate', 'cyc', 'aug', 'focus'].forEach(f => this.E[id].flags.delete(f)); this.paintE(id); } for(const id in this.N){ this.N[id].flag = false; this.paintN(id); } break;
+      case 'tour': this.poly(op.id, op.ids.map(k => this.P[k]), op.style || 'opt'); break;
+      case 'untour': case 'unrays': case 'unpairs': if(this.ov[op.id]){ this.ov[op.id].remove(); delete this.ov[op.id]; } break;
+      case 'rays': this.multi(op.id, op.to.map(k => [this.P[op.from], this.P[k]]), 'ray'); break;
+      case 'pairs': this.multi(op.id, op.pairs.map(([a, b]) => [this.P[a], this.P[b]]), op.style || 'new'); break;
+      case 'note': { const old = this.noteG.querySelector(`[data-id="${op.id}"]`); if(old) old.remove();
+        const t = svg('text', {class: 'note ' + (op.style || ''), x: op.x, y: op.y, 'data-id': op.id}, op.text); this.noteG.append(t); break; }
+      case 'unnote': { const old = this.noteG.querySelector(`[data-id="${op.id}"]`); if(old) old.remove(); break; }
+    }
+  },
+  clearFocus(){ for(const id in this.E){ if(this.E[id].flags.delete('focus')) this.paintE(id); } }
+};
+
+// ================= CHAT =================
+const GROUND = {'lecture-grounded':['ok','Lecture-grounded'], 'partially-grounded':['warn','Partly grounded'], 'retrieved-only':['warn','Closest slide only'],
+  'not-grounded':['bad','Not source-grounded'], 'not-covered':['bad','Not in course slides'], 'n/a':['info','Navigation']};
+function groundTag(g){ if(!g) return null; const [c, t] = GROUND[g.status] || ['info', g.status]; const x = el('span', 'tag ' + c, t); x.title = g.label || ''; return x; }
+function scrollChat(){ const c = $('chat'); c.scrollTop = c.scrollHeight; }
+function addYou(text){ const m = el('div', 'msg you', text); $('chat').append(m); scrollChat(); return m; }
+function addNote(text){ $('chat').append(el('div', 'msg note', text)); scrollChat(); }
+function addTutor(cls){ const m = el('div', 'msg tutor ' + (cls || '')); const head = el('div', 'head'); const body = el('div', 'body'); m.append(head, body); $('chat').append(m); scrollChat(); return {m, head, body}; }
+// Type the written explanation in step with the voice: show the fraction of the text the voice has reached.
+function typer(body, text){ const flat = plain(text); body.classList.add('typing');
+  return { update(f){ body.textContent = flat.slice(0, Math.ceil(Math.max(0, Math.min(1, f)) * flat.length)); scrollChat(); },
+           done(){ body.classList.remove('typing'); renderMD(body, text); scrollChat(); } }; }
+
+// ================= COURSE PLAYER =================
+const Course = {
+  lesson: null, i: -1, playing: false, waiting: false, token: {cancelled: true}, paused: false, gen: 0,
+  async load(id){
+    this.stop(); this.lesson = await api('/api/course/lesson/' + encodeURIComponent(id)); this.i = -1; this.waiting = false;
+    localStorage.setItem(LKEY, id); $('lessonSelect').value = id; $('lessonGoal').textContent = this.lesson.goal; $('unit').value = this.lesson.unit;
+    Board.clearAll(); setCaption(''); this.update(); $('modeTag').textContent = 'lesson'; $('modeTag').className = 'tag ok';
+    const {head, body, m} = addTutor('lessoncard'); m.classList.add('lessoncard'); head.append(el('span', 'tag info', this.lesson.unit));
+    body.append(el('h3', null, this.lesson.title), el('div', 'sub', this.lesson.goal + ` · ${this.lesson.steps.length} steps, ${this.lesson.steps.filter(s => s.ask).length} question(s)`));
+  },
+  async play(from){
+    if(!this.lesson || this.playing) return; this.playing = true; this.paused = false; this.update();
+    let i = from != null ? from : this.i + 1;
+    if(i !== this.i + 1) this.rebuild(i);
+    while(this.playing && i < this.lesson.steps.length){
+      const ok = await this.runStep(i); if(!ok || !this.playing) break;
+      if(this.lesson.steps[i].ask){ this.playing = false; this.waiting = true; this.update(); return; }   // wait for the student's answer
+      await sleep(450); i++;
+    }
+    if(this.playing && i >= this.lesson.steps.length) this.finish();
+    this.playing = false; this.update();
+  },
+  async runStep(i){
+    const st = this.lesson.steps[i]; this.i = i; this.update();
+    const token = this.token = {cancelled: false};
+    $('cv').classList.remove('instant'); st.draw.forEach(op => Board.apply(op, true));
+    showStepSources(st);
+    const {head, body, m} = addTutor(st.ask ? 'ask' : ''); if(st.ask){ head.append(el('span', 'tag warn', 'Your turn')); }
+    const ty = typer(body, st.text); setCaption(st.say, 'Tutor');
+    await Voice.speak(st.say, f => { captionProgress(f); ty.update(f); }, token);
+    ty.done(); m.dataset.step = i;
+    api('/api/course/progress', {session_id: sid, lesson_id: this.lesson.id, step: i, completed: false}).catch(() => {});
+    if(st.ask && !token.cancelled){ $('question').placeholder = 'Type or say your answer… (or “I don’t know”)'; $('dontKnow').hidden = false; $('question').focus();
+      status('Your turn: answer in your own words. I’ll wait.'); }
+    return !token.cancelled;
+  },
+  async answer(text){
+    const i = this.i; this.waiting = false; $('dontKnow').hidden = true; $('question').placeholder = 'Ask anything, or answer the tutor…';
+    addYou(text || "I don't know"); setCaption(text || "I don't know", 'You');
+    const r = await api('/api/course/check', {session_id: sid, lesson_id: this.lesson.id, step: i, answer: text});
+    const {head, body} = addTutor('feedback ' + r.verdict);
+    head.append(el('span', 'tag ' + ({correct: 'ok', partial: 'warn', unsure: 'warn', revealed: 'info'}[r.verdict]), {correct: 'Correct', partial: 'Partly right', unsure: 'Compare', revealed: 'Answer'}[r.verdict]));
+    const ty = typer(body, r.feedback); const token = this.token = {cancelled: false}; setCaption(r.feedback, 'Tutor');
+    await Voice.speak(r.feedback, f => { captionProgress(f); ty.update(f); }, token); ty.done();
+    if(!token.cancelled && !this.paused){ await sleep(500); this.play(i + 1); }
+  },
+  finish(){ PROGRESS[this.lesson.id] = {completed: true}; refreshLessonSelect();
+    api('/api/course/progress', {session_id: sid, lesson_id: this.lesson.id, step: this.lesson.steps.length - 1, completed: true}).catch(() => {});
+    const k = OUTLINE.findIndex(l => l.id === this.lesson.id); const next = OUTLINE[k + 1];
+    addNote('Lesson complete ✓' + (next ? ` · Next: ${next.title}` : ' · That was the last lesson!')); status(next ? 'Press ▶▶ for the next lesson, or ask anything.' : 'Course complete.'); },
+  pause(){ if(!this.playing && !this.waiting) return; this.playing = false; this.paused = true; this.token.cancelled = true; Voice.stop(); this.update(); },
+  stop(){ this.playing = false; this.token.cancelled = true; Voice.stop(); },
+  resume(){ if(!this.lesson) return; this.gen++; this.token.cancelled = true; Voice.stop(); Board.clearFocus(); if(this.waiting) return; this.paused = false;
+    const i = Math.max(0, this.i); const done = !!$('chat').querySelector(`.msg[data-step="${i}"]`);
+    this.play(done ? i + 1 : i); },
+  rebuild(i){ $('cv').classList.add('instant'); Board.clearAll(); for(let k = 0; k < i; k++) this.lesson.steps[k].draw.forEach(op => Board.apply(op, false));
+    void $('cv').getBoundingClientRect(); requestAnimationFrame(() => $('cv').classList.remove('instant')); },
+  step(d){ if(!this.lesson) return; this.stop(); this.waiting = false; $('dontKnow').hidden = true;
+    const i = Math.max(0, Math.min(this.lesson.steps.length - 1, this.i + d)); this.rebuild(i); addNote(`(step ${i + 1})`); this.i = i - 1; this.play(i); },
+  repeat(){ if(!this.lesson || this.i < 0) return; const i = this.i; this.stop(); this.waiting = false; this.rebuild(i); this.i = i - 1; this.play(i); },
+  active(){ return !!this.lesson && this.i >= 0 && this.i < this.lesson.steps.length - 1 + (this.waiting ? 1 : 0); },
+  update(){
+    const n = this.lesson ? this.lesson.steps.length : 0;
+    $('stepCount').textContent = n ? `${Math.max(0, this.i) + 1} / ${n}` : '–';
+    $('lessonProgress').firstElementChild.style.width = n ? (100 * (this.i + 1) / n) + '%' : '0';
+    $('startLesson').textContent = this.playing ? '⏸ Pause' : (this.lesson && this.i >= 0 && this.i < n - 1 ? '▶ Resume' : '▶ Start lesson');
+    $('pauseBtn').textContent = this.playing ? '⏸' : '▶';
+  }
+};
+async function showStepSources(st){
+  if(!st.slides || !st.slides.length) return;
+  try { const r = await api(`/api/slides?unit=${encodeURIComponent(Course.lesson.unit)}&pages=${st.slides.join(',')}`); const box = $('sources'); box.replaceChildren();
+    box.append(el('div', 'sub', `${Course.lesson.unit} · slide${st.slides.length > 1 ? 's' : ''} ${compactPages(st.slides)}`));
+    for(const s of r.sources){ const d = el('div', 'src'); if(s.permission && s.permission !== 'approved'){ const p = el('span', 'tag warn perm', 'permission ' + s.permission); d.append(p); }
+      d.append(el('b', null, 'slide ' + s.pages + ' — ' + s.title), el('br'), el('span', null, s.excerpt)); box.append(d); } } catch(e){}
+}
+function compactPages(ps){ ps = [...new Set(ps)].sort((a, b) => a - b); const out = []; for(let k = 0; k < ps.length; k++){ let j = k; while(j + 1 < ps.length && ps[j + 1] === ps[j] + 1) j++; out.push(j > k ? `${ps[k]}–${ps[j]}` : `${ps[k]}`); k = j; } return out.join(', '); }
+function onBoardClick(u, v){ if(Course.lesson) send(`What about ${u} to ${v}?`); }
+
+// ================= sending messages: answer / interrupt / free chat =================
+async function send(q, fromVoice){
+  q = (q || '').trim(); if(busy) return; busy = true; $('askBtn').disabled = true;
+  try {
+    if(Course.waiting) return await Course.answer(q);
+    if(!q) return;
+    if(Course.lesson && (Course.playing || Course.paused || Course.active())) return await askLesson(q);
+    await askFree(q);
+  } catch(e){ status('Request failed: ' + e.message); }
+  finally { busy = false; $('askBtn').disabled = false; }
+}
+async function askLesson(q){
+  const wasPlaying = Course.playing; Course.pause(); const at = Math.max(0, Course.i); const gen = ++Course.gen;
+  addYou(q); setCaption(q, 'You'); status('Paused the lesson to answer…');
+  const r = await api('/api/course/ask', {session_id: sid, lesson_id: Course.lesson.id, step: at, question: q, engine: $('engine').value});
+  if(gen !== Course.gen){ const {body} = addTutor(); renderMD(body, r.answer); return; }   // student already moved on: show, don't take over
+  if(r.heard && r.heard.toLowerCase() !== q.toLowerCase()) $('heard').textContent = 'I understood: “' + r.heard + '”';
+  if(r.step != null && r.step !== at){ Course.rebuild(r.step); Course.lesson.steps[r.step].draw.forEach(op => Board.apply(op, false)); }
+  (r.draw || []).forEach(op => Board.apply(op, true));
+  const {head, body} = addTutor(); const g = groundTag(r.grounding); if(g) head.append(g);
+  if(r.engine === 'course') head.append(el('span', 'tag info', 'about step ' + (r.step + 1)));
+  const ty = typer(body, r.answer); const token = Course.token = {cancelled: false}; setCaption(r.spoken || r.answer, 'Tutor');
+  await Voice.speak(r.spoken || r.answer, f => { captionProgress(f); ty.update(f); }, token); ty.done();
+  if(token.cancelled || gen !== Course.gen) return;   // the student already said "continue" (or asked again)
+  if(r.step != null && r.step !== at){ Course.rebuild(at); Course.lesson.steps[at].draw.forEach(op => Board.apply(op, false)); }
+  Course.paused = true; Course.update();
+  status(wasPlaying ? 'Say “continue” or press Continue to pick up where we stopped.' : 'Ask another question, or press Continue.');
+}
+async function askFree(q){
+  Voice.stop(); addYou(q); const {head, body} = addTutor(); let text = '', result = null; status('Thinking…');
+  const r = await fetch('/api/ask/stream', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({session_id: sid, question: q, engine: $('engine').value})});
+  if(!r.ok){ if(r.status === 404){ await newSession(); throw new Error('Session expired; started a new one. Please ask again.'); } throw new Error('HTTP ' + r.status); }
+  const reader = r.body.getReader(), dec = new TextDecoder(); let buf = '';
+  for(;;){ const {value, done} = await reader.read(); if(done) break; buf += dec.decode(value, {stream: true}); let k;
+    while((k = buf.indexOf('\n\n')) >= 0){ const block = buf.slice(0, k); buf = buf.slice(k + 2);
+      const ev = (block.match(/^event: (.*)$/m) || [])[1], line = (block.match(/^data: (.*)$/m) || [])[1]; if(!ev || !line) continue; const data = JSON.parse(line);
+      if(ev === 'delta'){ text += data.text; body.textContent = plain(text); scrollChat(); } else if(ev === 'replace'){ text = data.text; body.textContent = plain(text); }
+      else if(ev === 'notice'){ status(data.message); } else if(ev === 'error'){ throw new Error(data.detail); } else if(ev === 'done'){ result = data; } } }
+  if(!result) throw new Error('The answer stream ended early.');
+  renderMD(body, result.answer); const g = groundTag(result.grounding); if(g) head.append(g); if(result.title) head.append(el('span', 'tag info', result.title));
+  const les = lessonForConcept(result); if(les){ const b = el('button', 'ghost', '▶ Teach me this lesson'); b.type = 'button'; b.onclick = async () => { await Course.load(les.id); Course.play(0); }; head.append(b); }
+  status('Ready.'); setCaption(result.spoken || result.answer); const token = Course.token = {cancelled: false};
+  Voice.speak(result.spoken || result.answer, captionProgress, token);
+}
+function lessonForConcept(r){ if(!r.title) return null; const words = norm(r.title).filter(w => w.length > 3 && !['algorithm', 'problem', 'theorem'].includes(w));
+  let best = null, bs = 0; for(const l of OUTLINE){ const t = norm(l.title + ' ' + l.goal); const s = words.filter(w => t.some(x => x.startsWith(w.slice(0, 5)))).length; if(s > bs){ bs = s; best = l; } } return bs ? best : null; }
+
+$('askForm').onsubmit = e => { e.preventDefault(); const q = $('question').value; $('question').value = ''; $('heard').textContent = ''; send(q); };
+$('chips').onclick = e => { const b = e.target.closest('button'); if(!b) return;
+  if(b.dataset.cmd === 'continue') return Course.lesson ? (Course.waiting ? null : Course.resume()) : status('Start a lesson first.');
+  if(b.dataset.cmd === 'repeat') return Course.repeat();
+  if(b.dataset.cmd === 'dontknow') return send('');
+  send(b.dataset.q); };
+$('pauseBtn').onclick = () => { if(!Course.lesson) return $('startLesson').click(); Course.playing ? Course.pause() : Course.resume(); };
+$('backBtn').onclick = () => Course.step(-1); $('fwdBtn').onclick = () => Course.step(+1);
+$('startLesson').onclick = async () => { if(Course.playing) return Course.pause();
+  if(!Course.lesson || Course.lesson.id !== $('lessonSelect').value) await Course.load($('lessonSelect').value);
+  if(Course.i >= 0 && Course.i < Course.lesson.steps.length - 1) Course.resume(); else { if(Course.i >= 0) await Course.load(Course.lesson.id); Course.play(0); } };
+$('lessonSelect').onchange = () => Course.load($('lessonSelect').value).catch(e => status(e.message));
+function moveLesson(d){ const k = OUTLINE.findIndex(l => l.id === $('lessonSelect').value); const n = OUTLINE[k + d]; if(n){ Course.load(n.id).then(() => Course.play(0)); } }
+$('prevLesson').onclick = () => moveLesson(-1); $('nextLesson').onclick = () => moveLesson(+1);
+document.addEventListener('keydown', e => { if(e.code === 'Space' && !/input|textarea|select|button/i.test(document.activeElement.tagName)){ e.preventDefault(); $('pauseBtn').click(); } });
+
+// ================= VOICE IN: recognition with course vocabulary, echo filter, barge-in =================
+let micOn = false, recognition = null;
+const COMMAND = /^(continue|resume|go on|keep going|next|okay continue|stop|pause|wait|hold on|back|go back|previous|repeat|repeat that|say that again|again)[.!]?$/i;
+function handleSpoken(t){
+  if(/^(continue|resume|go on|keep going|next|okay continue)[.!]?$/i.test(t)) return Course.waiting ? send(t) : Course.resume();
+  if(/^(stop|pause|wait|hold on)[.!]?$/i.test(t)) return Course.pause();
+  if(/^(back|go back|previous)[.!]?$/i.test(t)) return Course.step(-1);
+  if(/^(repeat|repeat that|say that again|again)[.!]?$/i.test(t)) return Course.repeat();
+  send(t, true);
+}
+$('mic').onclick = () => {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR){ status('Voice input needs Chrome, Edge or Safari. Typing works everywhere.'); return; }
+  if(micOn){ micOn = false; recognition && recognition.stop(); $('mic').classList.remove('listening'); $('mic').textContent = '🎙'; status('Voice input off.'); return; }
+  recognition = new SR(); recognition.lang = 'en-US'; recognition.continuous = true; recognition.interimResults = true; recognition.maxAlternatives = 4;
+  let barged = false;
+  recognition.onresult = async e => {
+    for(let k = e.resultIndex; k < e.results.length; k++){
+      const r = e.results[k], t = r[0].transcript.trim(); if(!t) continue;
+      const echo = Voice.isEcho(t), n = norm(t).length, talking = Voice.speaking || Course.playing;
+      if(!r.isFinal){ $('heard').textContent = '… ' + t; if(!echo && !barged && n >= (talking ? 2 : 1)){ barged = true; if(talking){ Course.playing ? Course.pause() : Voice.stop(); setCaption('…', 'You'); } } continue; }
+      barged = false;
+      const cmd = COMMAND.test(t.trim()), tutorSaidIt = Voice.recent.length && norm(Voice.recent[Voice.recent.length - 1].text).includes(norm(t)[0]);
+      if(cmd && !(echo && tutorSaidIt)){ $('heard').textContent = 'Heard: “' + t + '”'; handleSpoken(t.trim()); continue; }
+      if(echo){ $('heard').textContent = ''; continue; } if(talking && n < 2) continue;
+      const alts = []; for(let a = 0; a < r.length; a++) alts.push([r[a].transcript, r[a].confidence || 0]);
+      let fixed = t; try { const x = await api('/api/speech/normalize', {alternatives: alts}); fixed = x.text || t; } catch(_){}
+      $('heard').textContent = 'Heard: “' + fixed + '”' + (fixed.toLowerCase() !== t.toLowerCase() ? '  (from “' + t + '”)' : '');
+      handleSpoken(fixed);
+    }
+  };
+  recognition.onerror = e => { if(e.error !== 'no-speech') status('Microphone: ' + e.error); };
+  recognition.onend = () => { if(micOn) try { recognition.start(); } catch(_){} };
+  recognition.start(); micOn = true; $('mic').classList.add('listening'); $('mic').textContent = '■';
+  status('Listening. Talk any time: answer, ask, or say “continue”, “repeat”, “back”, “stop”. Headphones work best.');
+};
+
+// ================= sessions & tools =================
+async function newSession(){ const x = await api('/api/session?unit=' + encodeURIComponent($('unit').value), {}); sid = x.session_id; localStorage.setItem(SKEY, sid);
+  $('hdrSession').textContent = 'session ' + sid.slice(0, 6); PROGRESS = {}; refreshLessonSelect(); }
+async function restoreSession(){ const saved = localStorage.getItem(SKEY); if(!saved) return newSession();
+  try { const s = await api('/api/session/' + saved); sid = s.id || saved; $('hdrSession').textContent = 'session ' + sid.slice(0, 6); }
+  catch(e){ if(e.status === 404) return newSession(); throw e; } }
+$('newSession').onclick = () => { $('chat').replaceChildren(); newSession().then(() => status('New session.')).catch(e => status(e.message)); };
+$('unit').onchange = () => { if(sid) api('/api/session/' + sid + '/unit?unit=' + encodeURIComponent($('unit').value), {}).catch(() => {}); };
+function refreshLessonSelect(){ const sel = $('lessonSelect'), cur = sel.value; sel.replaceChildren(); let done = 0;
+  for(const u of ['Problems and Algorithms', 'Minimum Spanning Trees', 'Shortest Paths', 'Maximum Flow']){ const og = el('optgroup'); og.label = u;
+    for(const l of OUTLINE.filter(x => x.unit === u)){ const p = PROGRESS[l.id]; if(p && p.completed) done++;
+      const o = el('option', null, (p && p.completed ? '✓ ' : '') + l.title); o.value = l.id; og.append(o); } sel.append(og); }
+  if(cur) sel.value = cur; $('hdrCourse').textContent = `${done}/${OUTLINE.length} lessons done`; }
+$('diagnoseButton').onclick = async () => { const t = $('studentReasoning').value.trim(), out = $('interventionResult'); out.hidden = false; if(!t){ out.textContent = 'Write your explanation first.'; return; }
+  try { const r = await api('/api/intervene', {concept_id: $('conceptTarget').value, student_explanation: t});
+    out.textContent = 'Tentative diagnosis: ' + r.diagnosis + '\n\n' + r.feedback + (r.counterexample ? '\n\nCounterexample: ' + r.counterexample : '');
+    $('transferArea').hidden = false; $('transferPrompt').textContent = r.transfer_question; $('transferAnswer').value = ''; $('reassessmentResult').hidden = true; } catch(e){ out.textContent = e.message; } };
+$('reassessButton').onclick = async () => { const t = $('transferAnswer').value.trim(), out = $('reassessmentResult'); out.hidden = false; if(!t){ out.textContent = 'Write your reasoning first.'; return; }
+  try { const r = await api('/api/reassess', {concept_id: $('conceptTarget').value, student_explanation: t}); out.textContent = 'Rule-based check: ' + r.label + '\n' + r.feedback; } catch(e){ out.textContent = e.message; } };
+$('searchForm').onsubmit = async e => { e.preventDefault(); try { const r = await api('/api/search', {query: $('searchInput').value, unit: $('unit').value}); const box = $('searchResults'); box.replaceChildren();
+  for(const s of r.sources){ const d = el('div', 'src'); d.append(el('b', null, s.unit + ' · slide ' + s.pages), el('br'), el('span', null, s.excerpt)); box.append(d); } } catch(err){ status(err.message); } };
+
+(async () => {
+  try {
+    const h = await api('/api/health'); $('hdrEngine').textContent = h.llm.available ? 'LLM: ' + h.llm.model : 'engine: lesson cards';
+    if(!h.llm.available){ const o = $('engine').querySelector('option[value=llm]'); o.disabled = true; o.textContent = 'Grounded LLM (off)'; }
+    Voice.neural = !!h.tts; Voice.load();
+    await restoreSession();
+    const c = await api('/api/course?session_id=' + sid); OUTLINE = c.lessons; PROGRESS = c.progress || {}; refreshLessonSelect();
+    const saved = localStorage.getItem(LKEY); const first = OUTLINE.find(l => !(PROGRESS[l.id] || {}).completed) || OUTLINE[0];
+    $('lessonSelect').value = saved && OUTLINE.some(l => l.id === saved) ? saved : first.id;
+    const l = OUTLINE.find(x => x.id === $('lessonSelect').value); $('lessonGoal').textContent = l ? l.goal : '';
+    const b = $('cv'); b.replaceChildren(); const t = svg('text', {x: 280, y: 160, 'text-anchor': 'middle', fill: '#5d6b80', 'font-size': 15}, 'Press ▶ Start lesson. I’ll talk, write it out, and draw as we go.'); b.append(t);
+    addNote(`${OUTLINE.length} lessons cover every slide of the four CS 425 decks. Pick one above, or just ask a question.`);
+    status('Ready. Press ▶ Start lesson, or ask anything.');
+  } catch(e){ status(e.message); }
+})();
+</script>
+</body>
+</html>

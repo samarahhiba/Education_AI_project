@@ -1,6 +1,10 @@
 fastapi>=0.110,<1
 uvicorn>=0.27,<1
 pydantic>=2,<3
+scikit-learn>=1.1,<2      # local LSA embeddings (also the legacy classifier)
+numpy>=1.24
+pypdf>=4                  # PDF ingestion fallback (pdftotext/pdfplumber preferred if present)
 pytest>=8,<10
-scikit-learn>=1.1,<2
-joblib>=1.2,<2
+httpx>=0.27               # FastAPI TestClient in tests
+joblib>=1.2,<2            # legacy classifier only
+# optional: pdfplumber, sentence-transformers

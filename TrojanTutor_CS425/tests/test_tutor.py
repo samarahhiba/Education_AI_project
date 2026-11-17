@@ -20,6 +20,7 @@ def test_offline():
 
 
 def test_exact_student_cycle_answer_succeeds():
+    pytest.importorskip('httpx')
     from fastapi.testclient import TestClient
     from app.main import app
     c=TestClient(app)
@@ -30,6 +31,7 @@ def test_exact_student_cycle_answer_succeeds():
     assert isinstance(r.json()['answer'],str)
 
 def test_unexpected_errors_are_json():
+    pytest.importorskip('httpx')
     from fastapi.testclient import TestClient
     from app.main import app
     # exercise generic exception handler using a temporary test-only route
@@ -168,7 +170,7 @@ def test_deeper_cycle_answer_recognized():
 
 def test_uncertain_answer_does_not_claim_correct():
     _, r = _chat('Minimum Spanning Trees', ['what is kruskal', 'I like pizza and graphs are interesting today'])
-    assert 'cannot reliably grade' in r['answer']
+    assert r['intent'] != 'answer' and not r['answer'].startswith(('Exactly', 'Yes', 'Correct', 'Right'))
 
 
 def test_negative_dijkstra_answer_recognized():
@@ -180,3 +182,19 @@ def test_negative_dijkstra_answer_recognized():
 def test_wrong_cycle_claim_corrected():
     _, r = _chat('Minimum Spanning Trees', ['what is kruskal', 'A spanning tree must have a cycle'])
     assert 'Not quite' in r['answer']
+
+
+# ---------- v0.11.1: spoken input (no "?", leading fillers) must not be graded as an answer ----------
+@pytest.mark.parametrize('q,cid', [('so explain prim to me', 'prim'), ('um what is a cut', 'cut'),
+                                    ('okay tell me about dijkstra', 'dijkstra'), ('wait how does prim work', 'prim')])
+def test_spoken_questions_are_questions(q, cid):
+    h = _chat('Minimum Spanning Trees', ['how does kruskal work'])[0]
+    hist = [{'role': 'user', 'content': 'x'}, {'role': 'assistant', 'content': h['answer'], 'concept': 'kruskal', 'intent': 'explain'}]
+    r = answer(q, 'Minimum Spanning Trees', hist)
+    assert r['intent'] != 'answer' and r['concept_id'] == cid and 'cannot reliably grade' not in r['answer']
+
+
+def test_tutor_echo_or_offtopic_never_gets_the_grading_disclaimer():
+    hist = [{'role': 'user', 'content': 'x'}, {'role': 'assistant', 'content': 'Kruskal...', 'concept': 'kruskal', 'intent': 'explain'}]
+    for q in ['the weather is nice today in los angeles', 'Here is a small network five places A through E']:
+        assert 'cannot reliably grade' not in answer(q, 'Minimum Spanning Trees', hist)['answer']

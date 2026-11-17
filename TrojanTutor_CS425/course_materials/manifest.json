@@ -1,0 +1,122 @@
+{
+  "course": "ISyE/Math/CS 425 Introduction to Combinatorial Optimization (UW-Madison, Prof. Carla Michini)",
+  "policy": {
+    "_doc": "Permission boundary. Only files listed here are ingested; a file whose sha256 does not match is refused. status: approved | pending | revoked. In TROJANTUTOR_DEPLOYMENT=shared, only 'approved' sources are retrievable or quotable. In local (default) mode 'pending' sources are usable for development but every response carries the permission status. 'revoked' sources are never used.",
+    "max_excerpt_chars": 330,
+    "serve_raw_pdfs": false,
+    "homework_policy": "hints-only",
+    "_homework_doc": "Assignments are indexed as exercises, not as retrievable evidence. If a student's question closely matches a graded exercise, the tutor gives concept help and a Socratic hint, never a worked solution. Student-written solutions are never ingested."
+  },
+  "sources": [
+    {
+      "file": "1. Problems and Algorithms (1).pdf",
+      "unit": "Problems and Algorithms",
+      "sha256": "90c4d00ae0aea2b08e0d1e77c734d9c1ac832c546133948b3fb7082f0a3c2b32",
+      "pages": 34,
+      "status": "pending",
+      "approved_by": null,
+      "notes": "Lecture slides supplied by the student. Request written instructor permission before shared deployment or a study.",
+      "kind": "lecture"
+    },
+    {
+      "file": "2.1 Minimum Spanning Trees (1).pdf",
+      "unit": "Minimum Spanning Trees",
+      "sha256": "ac7a98871026ff9c257e17a0ce72bf1e73a5e95af55360f89120c4634305bef8",
+      "pages": 54,
+      "status": "pending",
+      "approved_by": null,
+      "notes": "Lecture slides supplied by the student. Request written instructor permission before shared deployment or a study.",
+      "kind": "lecture"
+    },
+    {
+      "file": "2.2 Shortest paths (1) (4).pdf",
+      "unit": "Shortest Paths",
+      "sha256": "1e1e04c55fb1a24242c5831b9bb2ee46347cd5c86da2984081c632de6f9ad48b",
+      "pages": 115,
+      "status": "pending",
+      "approved_by": null,
+      "notes": "Lecture slides supplied by the student. Request written instructor permission before shared deployment or a study.",
+      "kind": "lecture"
+    },
+    {
+      "file": "3. Maximum Flow (1) (1).pdf",
+      "unit": "Maximum Flow",
+      "sha256": "411033e63a79fd787443b658eb62e373295ef9e787b2fea320f8b568d70b6a16",
+      "pages": 77,
+      "status": "pending",
+      "approved_by": null,
+      "notes": "Lecture slides supplied by the student. Request written instructor permission before shared deployment or a study.",
+      "kind": "lecture"
+    },
+    {
+      "file": "assignments/Assignment 0.pdf",
+      "kind": "assignment",
+      "unit": null,
+      "sha256": "77dbd9293ba62d5965f82816bf4700ad70def699d8a4514b04c68301f71df612",
+      "pages": 2,
+      "status": "pending",
+      "approved_by": null,
+      "notes": "Fall 2025 homework (UW-Madison 425). Used for practice prompts, the homework-integrity guard and the held-out evaluation."
+    },
+    {
+      "file": "assignments/Assignment 1.pdf",
+      "kind": "assignment",
+      "unit": null,
+      "sha256": "1b3415ca685e08eb3d1a9d43eca6c9cf9bd93b440fcc7b0c215f99229afb36e5",
+      "pages": 3,
+      "status": "pending",
+      "approved_by": null,
+      "notes": "Fall 2025 homework (UW-Madison 425). Used for practice prompts, the homework-integrity guard and the held-out evaluation."
+    },
+    {
+      "file": "assignments/Assignment 2.pdf",
+      "kind": "assignment",
+      "unit": null,
+      "sha256": "493235db47075cbd47521004eb0fbefd18204e77f94b64a2c9696e641fff234b",
+      "pages": 2,
+      "status": "pending",
+      "approved_by": null,
+      "notes": "Fall 2025 homework (UW-Madison 425). Used for practice prompts, the homework-integrity guard and the held-out evaluation."
+    },
+    {
+      "file": "assignments/Assignment 3.pdf",
+      "kind": "assignment",
+      "unit": null,
+      "sha256": "dc63b70de2057a4511624dfccf01bacb683d1a547c14ae8fc45392a34129f897",
+      "pages": 1,
+      "status": "pending",
+      "approved_by": null,
+      "notes": "Fall 2025 homework (UW-Madison 425). Used for practice prompts, the homework-integrity guard and the held-out evaluation."
+    },
+    {
+      "file": "assignments/Assignment 4.pdf",
+      "kind": "assignment",
+      "unit": null,
+      "sha256": "57ef0066ad7131ee27058733191cbe790b8b54d627ff6fa2d3f52c80c2e97b5b",
+      "pages": 3,
+      "status": "pending",
+      "approved_by": null,
+      "notes": "Fall 2025 homework (UW-Madison 425). Used for practice prompts, the homework-integrity guard and the held-out evaluation."
+    },
+    {
+      "file": "assignments/Assignment 5.pdf",
+      "kind": "assignment",
+      "unit": null,
+      "sha256": "b96b6e59944b23b425ce1f5630eb2e0e208331a3e3c9386faf8b3c896c6ced7c",
+      "pages": 2,
+      "status": "pending",
+      "approved_by": null,
+      "notes": "Fall 2025 homework (UW-Madison 425). Used for practice prompts, the homework-integrity guard and the held-out evaluation."
+    },
+    {
+      "file": "assignments/Assignment 6.pdf",
+      "kind": "assignment",
+      "unit": null,
+      "sha256": "391c96f257eb9e0582aed6bccb7d16efa267a23f2163e41bf6262b9548810747",
+      "pages": 3,
+      "status": "pending",
+      "approved_by": null,
+      "notes": "Fall 2025 homework (UW-Madison 425). Used for practice prompts, the homework-integrity guard and the held-out evaluation."
+    }
+  ]
+}

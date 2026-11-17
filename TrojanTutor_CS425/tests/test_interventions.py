@@ -1,5 +1,3 @@
-from app.main import intervention, intervention_reassessment, InterventionRequest, ReassessmentRequest
-from fastapi import HTTPException
 import pytest
 from app.interventions import intervene, reassess
 
@@ -28,6 +26,9 @@ def test_unknown_or_unguarded_claim_abstains():
 
 
 def test_intervention_api_and_validation():
+    pytest.importorskip('fastapi')
+    from fastapi import HTTPException
+    from app.main import intervention, intervention_reassessment, InterventionRequest, ReassessmentRequest
     r=intervention(InterventionRequest(concept_id='kruskal',student_explanation='A spanning tree needs a cycle'))
     assert r['evidence']
     with pytest.raises(HTTPException) as exc:

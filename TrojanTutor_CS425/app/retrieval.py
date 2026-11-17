@@ -12,10 +12,16 @@ Public API (kept compatible with the earlier version):
 """
 from pathlib import Path
 from collections import Counter
-import json, math, re
+import json, math, os, re
 
 ROOT = Path(__file__).resolve().parents[1]
-CHUNKS = json.loads((ROOT / 'data' / 'chunks.json').read_text(encoding='utf-8'))
+# Permission boundary (see course_materials/manifest.json). 'local' = development: approved and
+# pending sources are usable and every source carries its status. 'shared' = anything other
+# people can reach: ONLY instructor-approved sources are loaded at all.
+DEPLOYMENT = os.getenv('TROJANTUTOR_DEPLOYMENT', 'local').lower()
+_ALLOWED = {'approved'} if DEPLOYMENT == 'shared' else {'approved', 'pending', 'unlisted'}
+ALL_CHUNKS = json.loads((ROOT / 'data' / 'chunks.json').read_text(encoding='utf-8'))
+CHUNKS = [c for c in ALL_CHUNKS if c.get('permission', 'unlisted') in _ALLOWED]
 CARDS = json.loads((ROOT / 'data' / 'concepts.json').read_text(encoding='utf-8'))
 SLIDES = CHUNKS  # backwards-compatible name used by tests
 
@@ -81,19 +87,55 @@ ALIAS = [[norm_phrase(a) for a in c['aliases'] + [c['title']]] for c in CARDS]
 CARD_BY_ID = {c['id']: c for c in CARDS}
 
 
+def _card_word_df():
+    """How many cards mention each word: a one-word alias that most cards use ("edge", "node")
+    is weak evidence for any single card."""
+    df = Counter()
+    for c in CARDS:
+        df.update(set(norm_phrase(' '.join([c['title'], c['simple'], c['example'], c['why'],
+                                             c['trap'], c['analogy']])).split()))
+    return df
+
+
+CARD_WORD_DF = _card_word_df()
+TITLE_WORDS = [set(norm_phrase(c['title']).split()) for c in CARDS]
+
+
+def _alias_match(alias, qwords):
+    """Alias words must appear in order; up to 2 extra words may sit between them
+    ("max flow EQUALS min cut" still matches "max flow min cut")."""
+    aw = alias.split()
+    if not aw:
+        return False
+    for start in (i for i, w in enumerate(qwords) if w == aw[0]):
+        pos, gaps, ok = start, 0, True
+        for w in aw[1:]:
+            nxt = next((j for j in range(pos + 1, min(len(qwords), pos + 4)) if qwords[j] == w), None)
+            if nxt is None:
+                ok = False
+                break
+            gaps += nxt - pos - 1
+            pos = nxt
+        if ok and gaps <= 2:
+            return True
+    return False
+
+
 def find_concepts(query, unit=None, limit=3):
     """Rank concept cards. Alias phrase hits dominate; BM25 breaks ties.
     Cards in the selected unit get a boost but other units are NOT excluded, so a
     cross-unit question can be answered (and the tutor can say where it is covered)."""
-    q = norm_phrase(query)
-    padded = f' {q} '
+    qwords = norm_phrase(query).split()
     terms = tokenize(query)
     results = []
     for i, c in enumerate(CARDS):
         alias_hits = 0.0
         for a in ALIAS[i]:
-            if a and f' {a} ' in padded:
-                alias_hits = max(alias_hits, 2.0 + 0.6 * len(a.split()))     # longer phrase = more specific
+            if a and _alias_match(a, qwords):
+                w = 2.0 + 0.6 * len(a.split())     # longer phrase = more specific
+                if len(a.split()) == 1 and a not in TITLE_WORDS[i] and CARD_WORD_DF[a] >= len(CARDS) // 5:
+                    w *= 0.5                       # generic vocabulary, not a concept name
+                alias_hits = max(alias_hits, w)
         bm = CARD_IDX.score(i, terms) if terms else 0.0
         score = alias_hits * 3 + bm
         if score <= 0:

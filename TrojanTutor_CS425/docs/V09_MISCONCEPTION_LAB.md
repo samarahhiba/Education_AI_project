@@ -28,7 +28,7 @@ python -m uvicorn app.main:app --reload
 
 Open http://127.0.0.1:8000 . Do **not** paste `# http://127.0.0.1:8000` after a `uvicorn` command when launching; your shell may pass it as command arguments.
 
-If `data/slides.json` is changed, re-run `python -m app.ingest`; otherwise the included `data/chunks.json` works immediately.
+If `data/slides.json` is changed, re-run `python -m app.ingest`; otherwise a locally available `data/chunks.json` works immediately. Course data is excluded from Git pending permission.
 
 ### Try a deterministic demonstration
 

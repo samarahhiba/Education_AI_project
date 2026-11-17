@@ -24,7 +24,7 @@ Provided PDFs: Problems and Algorithms (34 pages); Minimum Spanning Trees (54); 
 
 - FastAPI skeleton, browser UI, tests: implemented and locally tested.
 - Scoped slide retrieval and provenance: implemented.
-- Socratic multi-turn LLM: implemented as *optional API path*, requires live API credentials for verification; offline fallback is extractive only.
+- Socratic multi-turn LLM: **corrected in v0.10**. Earlier versions claimed an optional API path that was not actually in the code. v0.10 adds `app/llm.py` (off by default, constrained to retrieved slides, citations checked, falls back to lesson cards).
 - Voice interruption/resume: implemented using browser APIs, should be manually tested in Chrome.
 - Research outcomes, diagnosis, adaptation, delayed tests: planned for later phases, **not yet implemented**.
 

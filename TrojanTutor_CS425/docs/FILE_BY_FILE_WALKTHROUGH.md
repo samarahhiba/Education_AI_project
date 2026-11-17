@@ -1,3 +1,5 @@
+> **v0.10 note:** for the current architecture (engine, sessions, grounding, ingestion, evaluation) read `docs/V010_WEEK2_3.md`. This walkthrough describes earlier versions.
+
 > **v0.7 note:** the topic classifier described below is no longer in the answer path. See README.md for the concept-lesson + hybrid retrieval design (`app/ingest.py`, `app/retrieval.py`, `app/tutor.py`, `data/concepts.json`).
 
 > **Updated for v0.6:** The earlier v0.5 walkthrough below describes an optional hosted LLM, which has now been removed. For the current trained-model architecture and correct demonstration, use `docs/TRAINING_AND_DEMO.md` and the README.
@@ -20,15 +22,15 @@
 
 **`static/index.html` — learner interaction and voice (90 seconds).** The UI renders chat, citations, search, and algorithm steps. `SpeechRecognition` captures spoken text; `SpeechSynthesisUtterance` speaks the answer. `onspeechstart` cancels audio for barge-in before the final transcript arrives. Recognized final transcript is sent to `/api/ask`; 'resume' restarts the paused full explanation. Caveat: resume restarts the text rather than resuming at the exact phoneme, and browser echo suppression is imperfect. Text input works without voice support.
 
-**`data/slides.json` — course evidence (30 seconds).** A build-time extraction of 265 substantial pages from the four supplied PDFs. Each object retains its origin filename, page number, unit, and text. Formulae/figures may be partly omitted by text extraction.
+**`data/slides.json` — course evidence (30 seconds).** A local build-time extraction of 265 substantial pages from the four supplied PDFs. Each object retains its origin filename, page number, unit, and text. Formulae/figures may be partly omitted by text extraction. The source PDFs and derived course data are excluded from Git pending permission.
 
-**`course_materials/*.pdf` — original lecture documents (30 seconds).** The exact four slidesets supplied for the prototype. Explain content provenance and permissions. Slide-specific excerpts are used rather than pretending to have trained a domain model.
+**`course_materials/*.pdf` — original lecture documents (30 seconds).** The four slidesets supplied for the prototype are local-only and excluded from Git. Explain content provenance and permissions. Slide-specific excerpts are used rather than pretending to have trained a domain model.
 
 **`tests/test_tutor.py` — verification (30 seconds).** Run `python -m pytest -q`. Tests ensure index loads, filtering works, unrelated search can abstain, Kruskal cost is 10 on demo graph, Dijkstra returns B=3/E=10, and negative Dijkstra edges are rejected. Tests do not prove teaching quality or voice latency.
 
 **`docs/RESEARCH_SCOPE.md` — scientific framing (30 seconds).** The initial misconception set contrasts MST with shortest paths, cycle rejection, negative costs, and max-flow/min-cut reasoning. This is a proposed evaluation target, not measured student behavior.
 
-**`requirements.txt` + `README.md` — reproducibility (20 seconds).** Install and run commands, API key configuration, browser notes, and limitations. Four PDFs remain in the repo for demonstration; avoid sharing without permission.
+**`requirements.txt` + `README.md` — reproducibility (20 seconds).** Install and run commands, API key configuration, browser notes, and limitations. Provide authorized source PDFs locally for demonstrations; do not share them without permission.
 
 ## Live demo script (4–6 minutes)
 

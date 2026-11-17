@@ -1,7 +1,5 @@
 import pytest
-from fastapi import HTTPException
 from app.pedagogical_retrieval import retrieve_evidence
-from app.main import evidence, EvidenceRequest
 
 def test_baseline_retrieval_cites_original_slides():
     response = retrieve_evidence('Kruskal cycle minimum spanning tree', 'Minimum Spanning Trees', mode='bm25')
@@ -16,6 +14,9 @@ def test_pedagogical_diagnosis_is_tentative():
     assert response['sources']
 
 def test_api_evidence_and_invalid_mode():
+    pytest.importorskip('fastapi')
+    from fastapi import HTTPException
+    from app.main import evidence, EvidenceRequest
     result = evidence(EvidenceRequest(query='Dijkstra negative weights',mode='bm25'))
     assert result['sources']
     with pytest.raises(HTTPException) as exc:

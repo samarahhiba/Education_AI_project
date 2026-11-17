@@ -1,26 +1,20 @@
-"""Research-oriented evidence retrieval; preserves original BM25 baseline.
+"""Research-oriented evidence retrieval with explicit provenance.
 
-Dense search is OPTIONAL: install sentence-transformers to enable embeddings. Without
-it the module reports lexical-only rather than pretending to run semantic search.
-No generative student grading is performed here. Misconception labels are tentative.
+Modes (all share the same chunk set, filters and output schema, so they can be compared):
+  bm25         original stemmed BM25 + synonyms — the evaluation baseline, unchanged.
+  dense        local embeddings only (LSA by default; MiniLM if TROJANTUTOR_ENABLE_DENSE=1).
+  hybrid       BM25 + dense fused with reciprocal rank fusion (RRF).
+  pedagogical  hybrid, with the query enriched by the concept card ONLY when the conservative
+               rule-based feedback recognises a misconception/partial answer.
+
+No generative grading happens here. Misconception labels are tentative. A returned source is a
+candidate, not verified entailment; app/grounding.py scores support separately.
 """
-from functools import lru_cache
-import os
 from .retrieval import CHUNKS, CHUNK_IDX, tokenize, best_bullets, CARD_BY_ID
 from .feedback import assess
+from .embeddings import dense_rank
 
-@lru_cache(maxsize=1)
-def _dense_index():
-    if os.getenv("TROJANTUTOR_ENABLE_DENSE", "0") != "1":
-        return None
-    try:
-        from sentence_transformers import SentenceTransformer
-        model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
-        texts = [f"{c['title']}\n{c['text']}" for c in CHUNKS]
-        vectors = model.encode(texts, normalize_embeddings=True, show_progress_bar=False)
-        return model, vectors
-    except (ImportError, OSError, RuntimeError, ValueError):
-        return None
+MODES = ('bm25', 'dense', 'hybrid', 'pedagogical')
 
 
 def _rrf(ranked_lists, k=60):
@@ -31,15 +25,34 @@ def _rrf(ranked_lists, k=60):
     return sorted(scores, key=lambda idx: (-scores[idx], idx))
 
 
+def rank_ids(query, mode='hybrid', unit=None, lecture=None):
+    """Return (ranked chunk indices, backend name). Shared by the API and the offline evaluation."""
+    terms = tokenize(query)
+    eligible = [i for i, c in enumerate(CHUNKS)
+                if (not unit or c['unit'] == unit)
+                and (not lecture or lecture.lower() in (c.get('file', '') + ' ' + c.get('title', '')).lower())]
+    if not eligible:
+        return [], 'none'
+    lexical = []
+    if terms:
+        scored = [(CHUNK_IDX.score(i, terms), i) for i in eligible]
+        lexical = [i for s, i in sorted(scored, key=lambda z: (-z[0], z[1])) if s > 0]
+    if mode == 'bm25':
+        return lexical, 'bm25'
+    backend, dense = dense_rank(query, eligible)
+    if backend is None:
+        return lexical, 'bm25-fallback'
+    if mode == 'dense':
+        return dense, backend
+    if not lexical:                      # no lexical evidence at all: do not let dense invent relevance
+        return [], f'bm25+{backend}'
+    return _rrf([lexical, dense[:max(20, len(lexical))]]), f'bm25+{backend}'
+
+
 def retrieve_evidence(query, unit=None, concept=None, student_explanation=None,
                       mode='hybrid', limit=5, lecture=None):
-    """Return slide-grounded evidence and explicit retrieval provenance.
-
-    mode: bm25 | hybrid | pedagogical. The latter enriches the query only when
-    conservative feedback identifies an actionable misconception.
-    """
-    if mode not in ('bm25', 'hybrid', 'pedagogical'):
-        raise ValueError('mode must be bm25, hybrid, or pedagogical')
+    if mode not in MODES:
+        raise ValueError('mode must be one of ' + ', '.join(MODES))
     if not 1 <= limit <= 25:
         raise ValueError('limit must be between 1 and 25')
     if concept is not None and concept not in CARD_BY_ID:
@@ -51,36 +64,17 @@ def retrieve_evidence(query, unit=None, concept=None, student_explanation=None,
         if label in ('partial', 'misconception'):
             card = CARD_BY_ID[concept]
             enriched = ' '.join((query, card['title'], card['why'], card['trap']))
-    terms = tokenize(enriched)
-    eligible = [i for i, c in enumerate(CHUNKS)
-                if (not unit or c['unit'] == unit)
-                and (not lecture or lecture.lower() in (c.get('source','')+' '+c.get('title','')).lower())]
-    if not terms or not eligible:
-        return {'sources': [], 'retrieval_mode': 'bm25', 'dense_available': False,
+    order, backend = rank_ids(enriched, 'hybrid' if mode == 'pedagogical' else mode, unit, lecture)
+    if not tokenize(enriched) or not order:
+        return {'sources': [], 'retrieval_mode': backend, 'dense_available': '+' in backend or backend in ('lsa', 'minilm'),
                 'diagnosis': label, 'sufficiency': 'insufficient'}
-    lexical = sorted(eligible, key=lambda i: (-CHUNK_IDX.score(i, terms), i))
-    lexical = [i for i in lexical if CHUNK_IDX.score(i, terms) > 0]
-    rankings = [lexical]
-    dense_available = False
-    if mode != 'bm25':
-        index = _dense_index()
-        if index is not None:
-            model, matrix = index
-            vector = model.encode([enriched], normalize_embeddings=True)[0]
-            ranked = sorted(eligible, key=lambda i: (-float(matrix[i] @ vector), i))
-            rankings.append(ranked)
-            dense_available = True
-    order = lexical if len(rankings) == 1 else _rrf(rankings)
-    # Preserve BM25 behavior when semantic retrieval is unavailable.
-    selected = order[:limit]
+    terms = tokenize(enriched)
     sources = []
-    for idx in selected:
+    for idx in order[:limit]:
         c = CHUNKS[idx]
-        score = CHUNK_IDX.score(idx, terms)
-        sources.append({**c, 'score': round(score, 3),
+        sources.append({**c, 'score': round(CHUNK_IDX.score(idx, terms), 3),
                         'excerpt': best_bullets(c['text'], query, title=c['title'])})
-    sufficiency = 'candidate-evidence' if sources else 'insufficient'
-    return {'sources': sources, 'retrieval_mode': mode if dense_available or mode=='bm25' else 'bm25-fallback',
-            'dense_available': dense_available, 'diagnosis': label,
-            'sufficiency': sufficiency,
+    return {'sources': sources, 'retrieval_mode': backend,
+            'dense_available': '+' in backend or backend in ('lsa', 'minilm'),
+            'diagnosis': label, 'sufficiency': 'candidate-evidence',
             'note': 'Candidate evidence requires verification; presence of a citation does not prove entailment.'}
